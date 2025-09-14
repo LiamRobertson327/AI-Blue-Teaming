@@ -1,0 +1,20 @@
+version: '3.9'
+services:
+  receiver:
+    build:
+      context: .
+      dockerfile: Dockerfile.receiver
+    ports:
+      - "8088:8088"
+  vuln_agent:
+    build:
+      context: .
+      dockerfile: Dockerfile.vuln
+    depends_on:
+      - receiver
+  defended_agent:
+    build:
+      context: .
+      dockerfile: Dockerfile.defended
+    depends_on:
+      - receiver

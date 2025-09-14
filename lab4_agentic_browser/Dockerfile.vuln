@@ -1,0 +1,7 @@
+# Lab 4 (Vulnerable): agent that exfiltrates secret based on page instructions
+FROM python:3.11-slim
+WORKDIR /app
+COPY . /app
+RUN pip install --no-cache-dir requests beautifulsoup4
+# One-shot run against included phishing.html
+CMD ["python", "agent_browser_vulnerable.py", "phishing.html"]

@@ -1,0 +1,1 @@
+# Example Bandit config idea: flag B307 (eval), B608 (SQL injection)

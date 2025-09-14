@@ -1,0 +1,14 @@
+version: '3.9'
+services:
+  vuln:
+    build:
+      context: .
+      dockerfile: Dockerfile.vuln
+    ports:
+      - "7001:7001"
+  defended:
+    build:
+      context: .
+      dockerfile: Dockerfile.defended
+    ports:
+      - "7002:7002"
