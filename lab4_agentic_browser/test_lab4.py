@@ -8,10 +8,12 @@ if __name__ == "__main__":
     time.sleep(0.5)
     # vulnerable posts secret
     out = subprocess.check_output([sys.executable, "agent_browser_vulnerable.py", "phishing.html"], cwd=os.path.dirname(__file__), text=True)
+    print(out)
     assert "Posted secret" in out
     print("vulnerable posted secret (as expected)")
     # defended refuses
     out = subprocess.check_output([sys.executable, "agent_browser_defended.py", "phishing.html"], cwd=os.path.dirname(__file__), text=True)
+    print(out)
     assert "Ignoring page-supplied instructions" in out or "denied" in out
     print("defended blocked exfil")
     p.terminate()

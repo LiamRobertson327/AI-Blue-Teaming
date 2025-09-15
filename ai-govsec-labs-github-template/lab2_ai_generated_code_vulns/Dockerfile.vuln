@@ -1,8 +1,0 @@
-# Lab 2 (Vulnerable): Flask app with eval and string-built SQL
-FROM python:3.11-slim
-WORKDIR /app
-COPY . /app
-RUN pip install --no-cache-dir flask requests
-RUN python seed_db.py
-EXPOSE 5001
-CMD ["python", "app_vulnerable.py"]
