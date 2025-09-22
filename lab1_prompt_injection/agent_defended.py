@@ -1,9 +1,9 @@
 # lab1_prompt_injection/agent_defended.py
 
 # Same fake secret (should never be leaked)
-SECRET = "API_KEY=sk_live_THIS_IS_FAKE_DO_NOT_USE"
+SECRET = "SESSION_TOKEN=tok_live_THIS_IS_FAKE"
 
-DENY_PHRASES = ["SECRET", "API_KEY", "password"]
+DENY_PHRASES = ["SECRET", "SESSION_TOKEN", "password"]
 
 def agent(prompt: str) -> str:
     """

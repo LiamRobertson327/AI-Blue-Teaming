@@ -14,11 +14,12 @@ or lacks command validation; then lock it down.
 # start vulnerable server in new terminal(dev only)
 python3 server_vulnerable.py  # port 7001
 
+# start defended server in new terminal(dev only)
+python3 server_defended.py    # port 7002
+
 # test exploit on vulnerable server
 python3 exploit.py
 
-# start defended server in new terminal(dev only)
-python3 server_defended.py    # port 7002
 # test exploit on defended server
 python3 exploit.py --defended
 

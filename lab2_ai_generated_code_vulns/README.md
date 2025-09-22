@@ -20,12 +20,12 @@ and how to fix with safe evaluation and parameterized queries.
 # start vulnerable server in new terminal(dev only)
 FLASK_APP=app_vulnerable.py flask run -p 5001
 
+# start defended server in new terminal(dev only)
+FLASK_APP=app_defended.py flask run -p 5002
+
 # test exploit on vulnerable server
 python3 exploit_calc.py
 python3 exploit_sqli.py
-
-# start defended server in new terminal(dev only)
-FLASK_APP=app_defended.py flask run -p 5002
 
 # run test on vulnerable and defended server
 python3 test_lab2.py

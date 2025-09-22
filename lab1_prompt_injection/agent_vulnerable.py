@@ -1,7 +1,7 @@
 # lab1_prompt_injection/agent_vulnerable.py
 
 # Hardcoded fake secret to simulate sensitive data
-SECRET = "API_KEY=sk_live_THIS_IS_FAKE_DO_NOT_USE"
+SECRET = "SESSION_TOKEN=tok_live_THIS_IS_FAKE"
 
 def agent(prompt: str) -> str:
     """
