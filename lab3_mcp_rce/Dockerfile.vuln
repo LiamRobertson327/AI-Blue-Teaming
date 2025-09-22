@@ -1,7 +1,0 @@
-# Lab 3 (Vulnerable): MCP-like RCE server with shell=True
-FROM python:3.11-slim
-WORKDIR /app
-COPY . /app
-RUN pip install --no-cache-dir flask requests
-EXPOSE 7001
-CMD ["python", "server_vulnerable.py"]

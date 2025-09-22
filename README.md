@@ -1,35 +1,22 @@
 # AI Governance & Cybersecurity — Labs Template
 
-A ready-to-teach repository template for a 10-week course (20 lectures) blending AI governance with hands-on cybersecurity.  
-Includes **four exploit+defense labs**, **Docker/Compose**, **GitHub Actions (Semgrep & Bandit)**, and a **Dev Container** for one-click Codespaces.
+Lab repository template for course on AI governance with hands-on cybersecurity.  
+Includes **four exploit+defense labs**, with mapping to governance requirements.
 
 > **Ethical use only**. All secrets are fake. Run locally in controlled environments.
 
 ## Quick Start
 
-### Option A — GitHub Codespaces (recommended)
-1. Click **Use this template → Create a new repository** on GitHub.
-2. Open your new repo and click **Code → Codespaces → Create codespace on main**.
-3. Wait for the dev container to build; dependencies install automatically.
-4. Run a lab:
-   ```bash
-   cd lab2_ai_generated_code_vulns
-   docker compose up --build   # or run Flask directly
-   ```
+### GitHub Repo (clone or download)
+1. Clone or download COEN256 GitHub repository.
+2. Open your new repo in your IDE (such as Codespaces) or local terminal.
+3. Cd to the lab you want to run and follow instructions in README file.
 
-### Option B — Local Docker
-```bash
-# Lab 3 example
-cd lab3_mcp_rce
-docker compose up --build
-python exploit.py            # vulnerable
-python exploit.py --defended # defended
-```
 
-### Option C — Local Python
+### Run Python
 ```bash
-pip install flask requests beautifulsoup4
-python lab1_prompt_injection/exploit.py
+#Install dependencies when running the labs for first time
+pip -m install flask requests beautifulsoup4
 ```
 
 ## What’s Inside
@@ -38,18 +25,8 @@ python lab1_prompt_injection/exploit.py
 - `lab2_ai_generated_code_vulns/` — `eval` misuse & SQL injection (exploit + defense).
 - `lab3_mcp_rce/` — Command execution endpoint (MCP-like) RCE (exploit + defense).
 - `lab4_agentic_browser/` — Agentic browser prompt injection & exfiltration (exploit + defense).
-- `.github/workflows/` — Semgrep & Bandit CI.
-- `.devcontainer/` — Pre-configured Codespaces dev container.
-
-## Teaching Materials (in `docs/`)
-- Student **Getting Started** (Word, PDF) and **Slides** (PPTX).
-- **Lab & Capstone rubrics** (Word) and **grading sheet** (Excel/CSV).
-- **Instructor demo script** (PDF).
-- **Capstone project templates** (Word & Markdown).
 
 ## Safety & Governance
 - These labs are for **education and defense**.
 - Map exercises to governance frameworks (EU AI Act, NIST AI RMF, ISO/IEC 42001, SOC‑2).
-- Use CI scans (Semgrep/Bandit) to demonstrate secure SDLC & continuous assurance.
-
 ---

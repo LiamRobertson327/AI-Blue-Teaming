@@ -13,6 +13,9 @@ then harden the agent using separation of concerns, allowlists, and output filte
 
 ## Run
 ```bash
+# test exploit on vulnerable agent
 python3 exploit.py
+
+#run test on vulnerable and defended agent
 python3 test_lab1.py
 ```

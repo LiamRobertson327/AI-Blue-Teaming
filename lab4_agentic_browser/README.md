@@ -14,10 +14,17 @@ no-page-instructions policy, and consent checkpoints.
 
 ## Run
 ```bash
+#use the following to clear existing process on port 8000 (uncomment if needed)
+#lsof -i :8000
+#kill -9 <PID>
+
 # terminal 1: start attacker receiver
 python3 receiver_server.py
 # terminal 2: run vulnerable agent against local phishing page
 python3 agent_browser_vulnerable.py phishing.html
 # terminal 3: run defended agent
 python3 agent_browser_defended.py phishing.html
+
+# run attack on vulnerable and defended agent
+python3 test_lab4.py
 ```

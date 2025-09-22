@@ -13,14 +13,20 @@ and how to fix with safe evaluation and parameterized queries.
 
 ## Run
 ```bash
-python3 seed_db.py
-# vulnerable server (dev only)
+#Set up (one time- uncomment after first time)
+#python3 -m pip install flask requests beautifulsoup4
+#python3 seed_db.py
+
+# start vulnerable server in new terminal(dev only)
 FLASK_APP=app_vulnerable.py flask run -p 5001
 
-# in another terminal
+# test exploit on vulnerable server
 python3 exploit_calc.py
 python3 exploit_sqli.py
 
-# defended server
+# start defended server in new terminal(dev only)
 FLASK_APP=app_defended.py flask run -p 5002
+
+# run test on vulnerable and defended server
+python3 test_lab2.py
 ```
