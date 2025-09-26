@@ -16,7 +16,7 @@ Includes **four exploit+defense labs**, with mapping to governance requirements.
 ### Run Python
 ```bash
 #Install dependencies when running the labs for first time
-pip -m install flask requests beautifulsoup4
+python3 -m pip install flask requests beautifulsoup4
 ```
 
 ## What’s Inside
