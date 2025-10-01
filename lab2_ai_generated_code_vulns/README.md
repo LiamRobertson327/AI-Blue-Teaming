@@ -8,7 +8,6 @@ and how to fix with safe evaluation and parameterized queries.
 - `exploit_calc.py` — leverages `eval` to execute OS commands.
 - `exploit_sqli.py` — extracts all users via `' OR '1'='1` injection.
 - `app_defended.py` — uses `ast.literal_eval` for math and parameterized SQLite queries.
-- `semgrep_rules.yml`, `bandit_baseline.txt` — examples of static analysis configurations.
 - `seed_db.py` — seeds a local SQLite DB.
 
 ## Run
