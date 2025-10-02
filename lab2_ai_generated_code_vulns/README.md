@@ -9,6 +9,7 @@ and how to fix with safe evaluation and parameterized queries.
 - `exploit_sqli.py` — extracts all users via `' OR '1'='1` injection.
 - `app_defended.py` — uses `ast.literal_eval` for math and parameterized SQLite queries.
 - `seed_db.py` — seeds a local SQLite DB.
+- `test_lab2.py` — sanity tests.
 
 ## Run
 ```bash
