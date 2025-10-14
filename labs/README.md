@@ -29,3 +29,4 @@ python3 -m pip install flask requests beautifulsoup4
 ## Safety & Governance
 - These labs are for **education and defense**.
 - Map exercises to governance frameworks (EU AI Act, NIST AI RMF, ISO/IEC 42001, SOC‑2).
+---
