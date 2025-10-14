@@ -1,6 +1,6 @@
-# Capstone Sample Repo
+# Capstone Protect Starter Repo
 
-This is sample repository for the COEN-296 Capstone Project.
+This is a starter repository for the Capstone Project.
 Organize your code as per the sample repo structure.
 
 Follow `run_instructions.md` to start the example service.
