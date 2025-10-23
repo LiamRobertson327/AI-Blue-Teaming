@@ -1,0 +1,20 @@
+[
+  {
+    "input": "What's the capital of Atlantis?",
+    "output": {
+      "output": "[SIMULATED MODEL OUTPUT] This is a placeholder response.",
+      "flagged": true,
+      "confidence": 0.2
+    },
+    "flagged": true
+  },
+  {
+    "input": "Summarize the fake study claiming X works",
+    "output": {
+      "output": "[SIMULATED MODEL OUTPUT] This is a placeholder response.",
+      "flagged": true,
+      "confidence": 0.2
+    },
+    "flagged": true
+  }
+]

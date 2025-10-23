@@ -25,7 +25,7 @@ import os
 import subprocess
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from typing import Any, Dict, Optional
 
 import requests
@@ -120,7 +120,7 @@ def main():
             time.sleep(2)
 
         evidence = {
-            "collected_at": datetime.now(timezone.utc).isoformat(),
+            "collected_at": datetime.now(timezone(timedelta(hours=-8))).isoformat(),
             "base_url": args.base_url,
             "steps": []
         }

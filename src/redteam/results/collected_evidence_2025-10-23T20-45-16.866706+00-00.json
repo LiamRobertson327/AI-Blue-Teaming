@@ -1,0 +1,271 @@
+{
+  "collected_at": "2025-10-23T12:45:08.678610-08:00",
+  "base_url": "http://localhost:8000",
+  "steps": [
+    {
+      "step": "health_check",
+      "result": {
+        "ok": true,
+        "status_code": 404,
+        "body": "{\"detail\":\"Not Found\"}"
+      }
+    },
+    {
+      "step": "post_task",
+      "request": {
+        "task": "process-expense"
+      },
+      "result": {
+        "ok": true,
+        "status_code": 200,
+        "json": {
+          "status": "ok",
+          "result": {
+            "steps": [
+              "analyze:process-expense",
+              "retrieve_context:process-expense",
+              "decide:process-expense"
+            ],
+            "decision": {
+              "decision": "proceed",
+              "confidence": 0.9,
+              "context_snippet": "Expense policy: claims under $100 auto-approve."
+            }
+          }
+        }
+      }
+    },
+    {
+      "step": "run_rt01",
+      "result": {
+        "ok": true,
+        "status_code": 200,
+        "json": {
+          "status": "ok",
+          "summary": {
+            "flagged_count": 2
+          }
+        }
+      }
+    },
+    {
+      "step": "get_logs",
+      "result": {
+        "ok": true,
+        "status_code": 200,
+        "json": [
+          {
+            "timestamp": "2025-10-23T20:37:02.470192+00:00",
+            "actor": "agent",
+            "action": "plan_and_simulate",
+            "task": "process-expense",
+            "result": {
+              "steps": [
+                "analyze:process-expense",
+                "retrieve_context:process-expense",
+                "decide:process-expense"
+              ],
+              "decision": {
+                "decision": "proceed",
+                "confidence": 0.9,
+                "context_snippet": "Expense policy: claims under $100 auto-approve."
+              }
+            }
+          },
+          {
+            "timestamp": "2025-10-23T20:37:04.522902+00:00",
+            "actor": "redteam",
+            "action": "rt-01-hallucination-sim",
+            "result_summary": {
+              "flagged_count": 2
+            }
+          },
+          {
+            "timestamp": "2025-10-23T20:42:16.265462+00:00",
+            "actor": "agent",
+            "action": "plan_and_simulate",
+            "task": "process-expense",
+            "result": {
+              "steps": [
+                "analyze:process-expense",
+                "retrieve_context:process-expense",
+                "decide:process-expense"
+              ],
+              "decision": {
+                "decision": "proceed",
+                "confidence": 0.9,
+                "context_snippet": "Expense policy: claims under $100 auto-approve."
+              }
+            }
+          },
+          {
+            "timestamp": "2025-10-23T20:42:18.325900+00:00",
+            "actor": "redteam",
+            "action": "rt-01-hallucination-sim",
+            "result_summary": {
+              "flagged_count": 2
+            }
+          },
+          {
+            "timestamp": "2025-10-23T20:43:16.888596+00:00",
+            "actor": "agent",
+            "action": "plan_and_simulate",
+            "task": "process-expense",
+            "result": {
+              "steps": [
+                "analyze:process-expense",
+                "retrieve_context:process-expense",
+                "decide:process-expense"
+              ],
+              "decision": {
+                "decision": "proceed",
+                "confidence": 0.9,
+                "context_snippet": "Expense policy: claims under $100 auto-approve."
+              }
+            }
+          },
+          {
+            "timestamp": "2025-10-23T20:43:18.934186+00:00",
+            "actor": "redteam",
+            "action": "rt-01-hallucination-sim",
+            "result_summary": {
+              "flagged_count": 2
+            }
+          },
+          {
+            "timestamp": "2025-10-23T20:45:12.773821+00:00",
+            "actor": "agent",
+            "action": "plan_and_simulate",
+            "task": "process-expense",
+            "result": {
+              "steps": [
+                "analyze:process-expense",
+                "retrieve_context:process-expense",
+                "decide:process-expense"
+              ],
+              "decision": {
+                "decision": "proceed",
+                "confidence": 0.9,
+                "context_snippet": "Expense policy: claims under $100 auto-approve."
+              }
+            }
+          },
+          {
+            "timestamp": "2025-10-23T20:45:14.829329+00:00",
+            "actor": "redteam",
+            "action": "rt-01-hallucination-sim",
+            "result_summary": {
+              "flagged_count": 2
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "logs": [
+    {
+      "timestamp": "2025-10-23T20:37:02.470192+00:00",
+      "actor": "agent",
+      "action": "plan_and_simulate",
+      "task": "process-expense",
+      "result": {
+        "steps": [
+          "analyze:process-expense",
+          "retrieve_context:process-expense",
+          "decide:process-expense"
+        ],
+        "decision": {
+          "decision": "proceed",
+          "confidence": 0.9,
+          "context_snippet": "Expense policy: claims under $100 auto-approve."
+        }
+      }
+    },
+    {
+      "timestamp": "2025-10-23T20:37:04.522902+00:00",
+      "actor": "redteam",
+      "action": "rt-01-hallucination-sim",
+      "result_summary": {
+        "flagged_count": 2
+      }
+    },
+    {
+      "timestamp": "2025-10-23T20:42:16.265462+00:00",
+      "actor": "agent",
+      "action": "plan_and_simulate",
+      "task": "process-expense",
+      "result": {
+        "steps": [
+          "analyze:process-expense",
+          "retrieve_context:process-expense",
+          "decide:process-expense"
+        ],
+        "decision": {
+          "decision": "proceed",
+          "confidence": 0.9,
+          "context_snippet": "Expense policy: claims under $100 auto-approve."
+        }
+      }
+    },
+    {
+      "timestamp": "2025-10-23T20:42:18.325900+00:00",
+      "actor": "redteam",
+      "action": "rt-01-hallucination-sim",
+      "result_summary": {
+        "flagged_count": 2
+      }
+    },
+    {
+      "timestamp": "2025-10-23T20:43:16.888596+00:00",
+      "actor": "agent",
+      "action": "plan_and_simulate",
+      "task": "process-expense",
+      "result": {
+        "steps": [
+          "analyze:process-expense",
+          "retrieve_context:process-expense",
+          "decide:process-expense"
+        ],
+        "decision": {
+          "decision": "proceed",
+          "confidence": 0.9,
+          "context_snippet": "Expense policy: claims under $100 auto-approve."
+        }
+      }
+    },
+    {
+      "timestamp": "2025-10-23T20:43:18.934186+00:00",
+      "actor": "redteam",
+      "action": "rt-01-hallucination-sim",
+      "result_summary": {
+        "flagged_count": 2
+      }
+    },
+    {
+      "timestamp": "2025-10-23T20:45:12.773821+00:00",
+      "actor": "agent",
+      "action": "plan_and_simulate",
+      "task": "process-expense",
+      "result": {
+        "steps": [
+          "analyze:process-expense",
+          "retrieve_context:process-expense",
+          "decide:process-expense"
+        ],
+        "decision": {
+          "decision": "proceed",
+          "confidence": 0.9,
+          "context_snippet": "Expense policy: claims under $100 auto-approve."
+        }
+      }
+    },
+    {
+      "timestamp": "2025-10-23T20:45:14.829329+00:00",
+      "actor": "redteam",
+      "action": "rt-01-hallucination-sim",
+      "result_summary": {
+        "flagged_count": 2
+      }
+    }
+  ]
+}
