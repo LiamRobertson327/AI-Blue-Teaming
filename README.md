@@ -14,3 +14,4 @@ Includes sub-folders for:
 - The course contents, including labs and project, are for **education and defense**.
 - Map exercises to governance frameworks (EU AI Act, NIST AI RMF, ISO/IEC 42001, SOC‑2).
 ---
+ 
