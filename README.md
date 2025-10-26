@@ -1,17 +1,10 @@
-# AI Governance & Cybersecurity
+# Lighthouse - Hub for Growth & Journeys
 
-Course repository for AI governance with hands-on cybersecurity.  
+This project mimics an Enterprise Copilot that integrates multiple agents, such as email, document, and expense management agents
 
 ## What’s Inside
 
 Includes sub-folders for:
-1. Labs
-2. Projects
-3. Markdown (helper scripts)
-
-
-## Safety & Governance
-- The course contents, including labs and project, are for **education and defense**.
-- Map exercises to governance frameworks (EU AI Act, NIST AI RMF, ISO/IEC 42001, SOC‑2).
----
- 
+1. docs - helper scripts, other documents, userguide
+2. labs - code to be referenced and used in main project
+3. src - files relevant to the main project
