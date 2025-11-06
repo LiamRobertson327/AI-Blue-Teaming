@@ -1,0 +1,56 @@
+{
+    "expense_report_paradigm":{
+        "TransactionID":{
+            "dtype": "object",
+            "required": true
+        },
+        "EmployeeID":{
+            "dtype": "object",
+            "required": true
+        },
+        "DateIncurred":{
+            "dtype": "datetime64[ns]",
+            "required": true
+        },
+        "DateSubmitted":{
+            "dtype": "datetime64[ns]",
+            "required": false
+        },
+        "Description":{
+            "dtype": "object",
+            "required": false
+        },
+        "Vendor":{
+            "dtype": "object",
+            "required": false
+        },
+        "PaymentMethod":{
+            "dtype": "object",
+            "required": true
+        },
+        "Currency":{
+            "dtype": "object",
+            "required": true
+        },
+        "Amount":{
+            "dtype": "float64",
+            "required": true
+        },
+        "AmountUSD":{
+            "dtype": "float64",
+            "required": false
+        },
+        "Category":{
+            "dtype": "object",
+            "required": true
+        },
+        "ReceiptAttached":{
+            "dtype": "object",
+            "required": false
+        },
+        "ReimbursementType":{
+            "dtype": "object",
+            "required": true
+        }
+    }
+}

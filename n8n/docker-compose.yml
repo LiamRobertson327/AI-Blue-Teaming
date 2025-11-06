@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n_orchestrator
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      # Authentication
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_ADMIN_USER}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_ADMIN_PASS}
+
+      # General configuration
+      - GENERIC_TIMEZONE=America/Los_Angeles
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+    depends_on:
+      - filter-service
+    networks:
+      - internal
+
+  filter-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: filter-service
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - FILTER_API_TOKEN=${FILTER_API_TOKEN}
+    networks:
+      - internal
+
+volumes:
+  n8n_data:
+
+networks:
+  internal:
+    driver: bridge
