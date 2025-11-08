@@ -83,19 +83,16 @@ services:
        interval: 10s
        retries: 5
 
-  promtail:
-     image: grafana/promtail:2.9.3
-     container_name: promtail
+  alloy:
+     image: grafana/alloy:latest
+     container_name: alloy
      restart: always
      volumes:
       - n8n_logs:/var/log/n8n:ro
-      - ./promtail-config.yml:/etc/promtail/promtail-config.yml:ro
-      - promtail_positions:/tmp
+      - ./alloy-config.yml:/etc/alloy/alloy-config.yml:ro
      networks:
       - internal
-     command: -config.file=/etc/promtail/promtail-config.yml
-
-
+     command: -config.file=/etc/alloy/alloy-config.yml
 
 volumes:
   n8n_data:
