@@ -1,10 +1,8 @@
-<p align="center">
+
 <h1 align='center'>🚀 Lighthouse - Hub for Growth & Journeys</h1>
-[![Docker](https://img.shields.io/badge/Docker-Desktop-blue)](https://www.docker.com/products/docker-desktop/)
-[![n8n](https://img.shields.io/badge/n8n-EA4B71?style=for-the-badge&logo=n8n&logoColor=white)](https://n8n.io/)
 
-
-</p>
+[![Docker](https://img.shields.io/badge/Docker-Desktop-blue)](https://www.docker.com/products/docker-desktop/) 
+[![n8n](https://img.shields.io/badge/n8n-EA4B71?logo=n8n?logoColor=white)](https://n8n.io/)
 
 ## **⚠️ WARNING!**
 *This project is built as an Enterprise Copilot that integrates multiple agents, including email, document, and expense management.  It is built with n8n and hosted in docker containers and is meant to be run locally on a machine.*
