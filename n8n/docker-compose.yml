@@ -21,7 +21,6 @@ services:
       - N8N_LOG_OUTPUT=file
       - N8N_LOG_FILE_LOCATION=/home/node/.n8n/logs/n8n.log
 
-
     volumes:
       - n8n_data:/home/node/.n8n
       - n8n_logs:/home/node/.n8n/logs
@@ -76,6 +75,8 @@ services:
        - "3000:3000"
      volumes:
       - grafana_data:/var/lib/grafana
+      - grafana_logs:/var/lib/grafana
+      - grafana_config:/etc/grafana
      networks:
        - internal
      healthcheck:
@@ -90,16 +91,33 @@ services:
      volumes:
       - n8n_logs:/var/log/n8n:ro
       - ./alloy-config.yml:/etc/alloy/alloy-config.yml:ro
+      - alloy_positions:/tmp
      networks:
       - internal
-     command: -config.file=/etc/alloy/alloy-config.yml
+     command: -config.file=/etc/alloy/alloy-config.yml -storage.path=/tmp
+
+  qdrant:
+     image: qdrant/qdrant:latest
+     container_name: qdrant
+     restart: always
+     ports:
+       - "6333:6333"
+       - "6334:6334"
+     volumes:
+       - qdrant_data:/qdrant/storage
+     networks:
+       - internal
 
 volumes:
   n8n_data:
   n8n_logs:
   loki_data:
   grafana_data:
+  grafana_logs:
+  grafana_config:
   promtail_positions:
+  alloy_positions:
+  qdrant_data:
 
 networks:
   internal:
