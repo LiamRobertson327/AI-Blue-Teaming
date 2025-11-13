@@ -1,5 +1,4 @@
 # User Guide
-
 ## System Overview
 Lighthouse.ai is an enterprise AI Copilot that automates:
 * Expense submission and validation
@@ -160,3 +159,7 @@ Admins receive email alerts for:
     * All anomalies
     * All agent calls
     * All admin actions
+
+
+## Userflow Guide:
+![logo](/images/userflow.jpg)
