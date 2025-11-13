@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   n8n:
@@ -20,6 +19,18 @@ services:
       - N8N_PROTOCOL=http
       - N8N_LOG_OUTPUT=file
       - N8N_LOG_FILE_LOCATION=/home/node/.n8n/logs/n8n.log
+      
+      # Execution Data
+      - EXECUTIONS_DATA_SAVE_ON_ERROR=all
+      - EXECUTIONS_DATA_SAVE_ON_SUCCESS=none
+      - EXECUTIONS_DATA_SAVE_ON_PROGRESS=true
+      - EXECUTIONS_DATA_SAVE_MANUAL_EXECUTIONS=false
+      
+      # Execution Data Pruning
+      - EXECUTIONS_DATA_PRUNE=true
+      - EXECUTIONS_DATA_MAX_AGE=1
+            - EXECUTIONS_DATA_PRUNE_MAX_COUNT=50000
+      - DB_SQLITE_VACUUM_ON_STARTUP=true
 
     volumes:
       - n8n_data:/home/node/.n8n
