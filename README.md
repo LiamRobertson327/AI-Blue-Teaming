@@ -1,6 +1,8 @@
 
 <h1 align='center'>🚀 Lighthouse - Hub for Growth & Journeys</h1>
 
+![logo](images/logo.jpg)
+
 [![Docker](https://img.shields.io/badge/Docker-Desktop-2496ED?logo=Docker&logoColor=2496ED)](https://www.docker.com/products/docker-desktop/) 
 [![n8n](https://img.shields.io/badge/n8n-Workflow-EA4B71?logo=n8n&logoColor=EA4B71)](https://n8n.io/)
 [![grafana](https://img.shields.io/badge/Grafana-Labs-F46800?logo=Grafana&logoColor=F46800)](https://grafana.com/)
@@ -31,7 +33,7 @@
 AI-Blue-Teaming
 ├── docs/
 │    ├── markdown/                      # Misc material *Not related to AI Agent*
-│    └──user/                           # Contains the userguide
+│    └── user/                           # Contains the userguide
 │
 ├── labs/                               # Labs that demonstrate vulnerabilities and defenses
 │    ├── lab1_prompt_injection/         

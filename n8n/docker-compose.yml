@@ -75,7 +75,7 @@ services:
        - "3000:3000"
      volumes:
       - grafana_data:/var/lib/grafana
-      - grafana_logs:/var/lib/grafana
+      - grafana_logs:/var/log/grafana
       - grafana_config:/etc/grafana
      networks:
        - internal
@@ -90,11 +90,11 @@ services:
      restart: always
      volumes:
       - n8n_logs:/var/log/n8n:ro
-      - ./alloy-config.yml:/etc/alloy/alloy-config.yml:ro
+      - ./alloy-config.hcl:/etc/alloy/alloy-config.hcl:ro
       - alloy_positions:/tmp
      networks:
       - internal
-     command: -config.file=/etc/alloy/alloy-config.yml -storage.path=/tmp
+     command: ["run","/etc/alloy/alloy-config.hcl","--storage.path=/tmp"]
 
   qdrant:
      image: qdrant/qdrant:latest
