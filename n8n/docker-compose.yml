@@ -10,7 +10,6 @@ services:
       - N8N_BASIC_AUTH_ACTIVE=true
       - N8N_BASIC_AUTH_USER=${N8N_ADMIN_USER}
       - N8N_BASIC_AUTH_PASSWORD=${N8N_ADMIN_PASS}
-
       # General configuration
       - GENERIC_TIMEZONE=America/Los_Angeles
       - N8N_HOST=localhost
@@ -18,23 +17,19 @@ services:
       - N8N_PROTOCOL=http
       - N8N_LOG_OUTPUT=file
       - N8N_LOG_FILE_LOCATION=/home/node/.n8n/logs/n8n.log
-      
       # Execution Data
       - EXECUTIONS_DATA_SAVE_ON_ERROR=all
       - EXECUTIONS_DATA_SAVE_ON_SUCCESS=none
       - EXECUTIONS_DATA_SAVE_ON_PROGRESS=true
       - EXECUTIONS_DATA_SAVE_MANUAL_EXECUTIONS=false
-      
-      # Execution Data Pruning (KEPT as requested)
+      # Execution Data Pruning
       - EXECUTIONS_DATA_PRUNE=true
       - EXECUTIONS_DATA_MAX_AGE=1
       - EXECUTIONS_DATA_PRUNE_MAX_COUNT=50000
       - DB_SQLITE_VACUUM_ON_STARTUP=true
 
     volumes:
-      # BIND MOUNT: Loads n8n application data from the unzipped folder
       - ./package/n8n_data:/home/node/.n8n
-      # BIND MOUNT: Loads n8n logs from the unzipped folder
       - ./package/n8n_logs:/home/node/.n8n/logs
 
     depends_on:
@@ -71,8 +66,7 @@ services:
     ports:
       - "3100:3100"
     volumes:
-      # BIND MOUNT: Loads loki data from the unzipped folder
-      - ./package/n8n_loki_data:/loki
+      - ./package/loki_data:/loki
     networks:
       - internal
     healthcheck:
@@ -87,10 +81,9 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      # BIND MOUNTS: Loads grafana data from the unzipped folder
-      - ./package/n8n_grafana_data:/var/lib/grafana
-      - ./package/n8n_grafana_logs:/var/log/grafana
-      - ./package/n8n_grafana_config:/etc/grafana
+      - ./package/grafana_data:/var/lib/grafana
+      - ./package/grafana_logs:/var/log/grafana
+      - ./package/grafana_config:/etc/grafana
     networks:
       - internal
     healthcheck:
@@ -103,10 +96,9 @@ services:
     container_name: alloy
     restart: always
     volumes:
-      # BIND MOUNTS: Loads n8n_logs (read-only) and alloy positions
       - ./package/n8n_logs:/var/log/n8n:ro
       - ./alloy-config.hcl:/etc/alloy/alloy-config.hcl:ro
-      - ./package/n8n_alloy_positions:/tmp
+      - ./package/alloy_positions:/tmp
     networks:
       - internal
     command: ["run","/etc/alloy/alloy-config.hcl","--storage.path=/tmp"]
@@ -119,13 +111,9 @@ services:
       - "6333:6333"
       - "6334:6334"
     volumes:
-      # BIND MOUNT: Loads qdrant data from the unzipped folder
-      - ./package/n8n_qdrant_data:/qdrant/storage
+      - ./package/qdrant_data:/qdrant/storage
     networks:
       - internal
-
-# REMOVED: The top-level 'volumes' section is removed/commented out 
-# to ensure Docker does not try to create new, empty named volumes.
 
 networks:
   internal:
