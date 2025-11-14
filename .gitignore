@@ -1,4 +1,4 @@
 *.pyc
 *.env
-package
+package/
 n8n_backup
