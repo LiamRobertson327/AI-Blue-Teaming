@@ -65,9 +65,11 @@ AI-Blue-Teaming
 * Login or make an account - It's free.  Don't worry. 😄
 
 ### 3. Run the docker compose file
-* *Note: Documentation will be added in the future*
+* *Open a terminal window and navigate to the ./n8n foler and follow the instructions found below:*  
+[![howtouse](https://img.shields.io/badge/User-Setup-55D4E6)](https://github.com/LiamRobertson327/AI-Blue-Teaming/blob/main/n8n/README.md)
 
 ## 🙋🏻‍♂️ How to Use
-*Full documentation of how to use this product can be found here [![userguide](https://img.shields.io/badge/User-guide-c471de)](https://github.com/LiamRobertson327/AI-Blue-Teaming/blob/main/docs/usr/userguide.md)*
+*Full documentation of how to use this product can be found below:  
+[![userguide](https://img.shields.io/badge/User-guide-c471de)](https://github.com/LiamRobertson327/AI-Blue-Teaming/blob/main/docs/usr/userguide.md)*
 
 * *Note: Brief documentation will be added in the future*
