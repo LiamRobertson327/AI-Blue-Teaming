@@ -40,7 +40,7 @@ sudo chown -R 0:0 ./package/qdrant_data
 
 ## Start the Docker Containers
 ```
-docker compose up -d
+docker compose up -d --build
 ```
 
 ## Stop the Docker Containers

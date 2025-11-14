@@ -3,3 +3,5 @@
 package/
 n8n_backup
 Update Images.txt
+docker-compose-liam.yml
+docs/deprecated/config/CSEN 296B Blue Team Model.json
