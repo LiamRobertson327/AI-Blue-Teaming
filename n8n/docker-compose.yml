@@ -49,13 +49,13 @@ services:
     container_name: filter-service
     restart: always
     ports:
-      - "5000:5000"
+      - "5001:5001"
     environment:
       - FILTER_API_TOKEN=${FILTER_API_TOKEN}
     networks:
       - internal
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:5001/health || exit 1"]
       interval: 5s
       retries: 5
 
