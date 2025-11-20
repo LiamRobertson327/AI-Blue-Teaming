@@ -1,0 +1,9 @@
+TransactionID,DateIncurred,DateSubmitted,Description,Vendor,PaymentMethod,Currency,Amount,AmountUSD,Category,ReceiptAttached,ReimbursementType
+T-001,2025-09-10,,Flight to NYC,Delta Airlines,Corporate Card,USD,450.75,,Travel,Y,Corporate Card Issuer
+T-002,EMP-401,2025-09-11,,Dinner with Client,Local Bistro,Personal Card,EUR,85.50,,Meals & Entertainment,Y,Employee
+T-003,EMP-402,2025-10-01,,Monthly Software Sub,,Corporate Card,GBP,12.99,,Software,N,Corporate Card Issuer
+T-004,EMP-403,2025-10-25,2025-10-26,Taxi to Airport,Local Taxi,,JPY,2000,14.50,Travel,Y,Employee
+T-005,EMP-404,2025-11-05,,Lunch,,,USD,Not a Number,,Meals & Entertainment,Y,Employee
+T-006,EMP-405,Invalid Date,2025-11-01,Fuel for Rental,Shell,Personal Card,CAD,75.00,,Travel,N,Employee
+T-007,,2025-11-02,,Conference Fee,Event Corp,Corporate Card,USD,1200.00,,Training,Y,Corporate Card Issuer
+T-008,EMP-406,2025-11-03,2025-11-04,Office Supplies,Staples,Personal Card,AUD,-10.00,,Supplies,Y,Employee

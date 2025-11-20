@@ -26,30 +26,28 @@ def validate_expense_report(df, req):
     }
     
     df_to_validate = df.copy()
-    
+        
     # Expected number of colums for an expense report
-    expected_num_cols = set(req.keys())
+    required_cols = {col for col, data in req.items() if data.get("required")}
     
     # Number of columns in the received expense report
-    actual_num_cols = set(df.columns)   
+    received_cols = set(df_to_validate.columns)   
     
     # If columns are missing raise an eror
-    missing_columns = expected_num_cols - actual_num_cols
+    missing_columns = required_cols - received_cols
+    
     if missing_columns:
         result["is_valid"] = False
         return result
     
     # If extra columns are present, drop them and continue processing
-    extra_columns = actual_num_cols - expected_num_cols
+    extra_columns = received_cols - set(req.keys())
     if extra_columns:
-        df = df.drop(columns=list(extra_columns))
+        df_to_validate = df_to_validate.drop(columns=list(extra_columns))
         print(f"Extra columns were present.  Dropping: {extra_columns}")
-        
-    
-    
+
     for col, data in req.items():
         target_type = data['dtype']
-        
         try:
             if 'float' in target_type:
                 df_to_validate[col] = pd.to_numeric(df_to_validate[col], errors='coerce')
@@ -57,13 +55,10 @@ def validate_expense_report(df, req):
                 df_to_validate[col] = pd.to_datetime(df_to_validate[col], errors='coerce')
         except Exception as e:
             print(f"Critical Error: {e}")
-            pass
-    
-    required_columns = [col for col, data in req.items() if data['required']]
     
     missing = False
     val = {}
-    for col in required_columns:
+    for col in required_cols:
         missing_values = df_to_validate[col].isnull().sum()
         if missing_values > 0:
             val[col] = int(missing_values)
@@ -75,21 +70,19 @@ def validate_expense_report(df, req):
     
     #Fill in missing Dates
     current_datetime = datetime.now()
+    
     if 'DateSubmitted' in df_to_validate.columns:
-        if df_to_validate['DateSubmitted'].dtype == 'datetime64[ns]':
-            df_to_validate['DateSubmitted'] = df_to_validate['DateSubmitted'].fillna(current_datetime).dt.normalize()
-        else:
-            df_to_validate['DateSubmitted'] = df_to_validate['DateSubmitted'].fillna(current_datetime.date())
+        df_to_validate["DateSubmitted"] = pd.to_datetime(df_to_validate["DateSubmitted"], errors="coerce")
+        df_to_validate["DateSubmitted"] = df_to_validate['DateSubmitted'].fillna(current_datetime)
     
-    invalid_dates_mask =  df_to_validate['DateSubmitted'].dt.normalize() > current_datetime
+        invalid_dates_mask =  df_to_validate['DateSubmitted'] > current_datetime
+        
+        if invalid_dates_mask.sum() > 0:
+            print(f"Found supicious entries:\n{df_to_validate[invalid_dates_mask]}")
+            print(f"Supicious entries will be dropped.")
+            df_to_validate = df_to_validate[~invalid_dates_mask]
     
-    if invalid_dates_mask.sum() > 0:
-        print(f"Found supicious entries:\n{df_to_validate[invalid_dates_mask]}")
-        print(f"Supicious entries will be dropped.")
-        df_to_validate = df_to_validate[~invalid_dates_mask]
-    
-    result["validated_df"] = df_to_validate
-         
+    result["validated_df"] = df_to_validate 
     return result
 
 
@@ -118,16 +111,12 @@ def verify_file():
 
     try:
         data = request.get_json()
-        # Check if it's the wrapped format from n8n
-        if isinstance(data, list) and len(data) == 1 and isinstance(data[0], dict) and "data" in data[0]:
-            data = data[0]["data"]
-
-        # After unwrapping, it must be a list of rows
-        if not isinstance(data, list):
-           return jsonify({"allowed": False, "error": "Server configuration error: Expense template not loaded."}), 400
-
+        if not isinstance(data,list):
+            return json({"allowed": False, "error": "Expected list of rows"})
+         
         df = pd.DataFrame(data)
         validated_df = validate_expense_report(df, template_stru)
+
         if validated_df['is_valid'] is False:
             return jsonify({"allowed": False, "error":"Required columns were missing"}), 200
         

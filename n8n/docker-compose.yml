@@ -44,8 +44,7 @@ services:
 
   filter-service:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ./filter-service
     container_name: filter-service
     restart: always
     ports:
@@ -55,9 +54,21 @@ services:
     networks:
       - internal
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:5001/health || exit 1"]
+      #test: ["CMD-SHELL", "curl -f http://localhost:5001/health || exit 1"]
+      test: ["CMD-SHELL", "python -c 'import urllib.request; urllib.request.urlopen(\"http://localhost:5001/health\")'"]
       interval: 5s
       retries: 5
+  
+  # streamlit-service:
+  #   build:
+  #     context: ./streamlit-service
+  #   container_name: streamlit-service
+  #   ports:
+  #     - "8501:8501"
+  #   environment:
+  #     - N8N_API_KEY=${N8N_API_KEY}
+  #   networks:
+  #     - internal
 
   loki:
     image: grafana/loki:2.9.3

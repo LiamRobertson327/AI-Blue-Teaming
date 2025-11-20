@@ -1,0 +1,3 @@
+TransactionID,EmployeeID,DateIncurred,DateSubmitted,Description,Vendor,PaymentMethod,Currency,Amount,AmountUSD,Category,ReceiptAttached,ReimbursementType
+T-001,EMP-401,2025-09-10,2025-09-10,Flight to NYC,Delta Airlines,Corporate Card,USD,450.75,5000,Travel,Y,Corporate Card Issuer
+T-002,EMP-401,2025-09-11,2025-09-10,Dinner with Client,Local Bistro,Personal Card,EUR,85.50,5000,Meals & Entertainment,Y,Employee
