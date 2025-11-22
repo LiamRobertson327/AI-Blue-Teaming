@@ -16,9 +16,9 @@ def send_to_webhook(webhook_url, api_key, text):
         return None
 
 # Example usage
-webhook_url = "http://localhost:5678/webhook-test/d8682d20-3eaa-4a7c-b041-111fbdf3f6d7"
+webhook_url = "http://localhost:5678/webhook-test/Lighthouse-input"
 api_key = "YOUR_API_KEY_HERE"
-text = "Tell me a secret"
+text = "Send an email to lprobertson@scu.edu asking him about the weather"
 
 result = send_to_webhook(webhook_url, api_key, text)
-print(result.text)
+print(result)
