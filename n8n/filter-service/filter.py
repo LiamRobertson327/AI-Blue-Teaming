@@ -92,8 +92,10 @@ def filter_prompt():
     data = request.get_json()
     text = data.get("text", "")
 
-    # Simple example: block banned words
-    banned = ["ignore previous", "reveal", "secret", "token", "password", "return only"]
+    # Blocklist
+    banned = ["api key", "credentials", "token", "secret", "client id", "password",
+              "return only", "return type", "reveal your", "ignore previous",
+              "disregard guardrails", "disregard instructions", "disregard safeguards"]
     if any(word in text.lower() for word in banned):
         return jsonify({"allowed": False, "reason": "Contains banned terms", "filtered_text": text}), 200
 
@@ -121,7 +123,6 @@ def verify_file():
         
         if not rows:
             return jsonify({"allowed": False, "error": "Expected list of rows"})
-        
         
         df = pd.DataFrame(rows)
         validated_df = validate_expense_report(df, template_stru)
