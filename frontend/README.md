@@ -2,6 +2,27 @@
 
 A React + TypeScript frontend for the Lighthouse AI expense management system. This application provides separate interfaces for employees and administrators to manage expense submissions, approvals, and policy management.
 
+## 🚀 Quick Start
+
+```bash
+# 1. Navigate to frontend directory
+cd frontend
+
+# 2. Install dependencies
+npm install
+
+# 3. Set up environment variables
+cp .env.example .env
+# Edit .env with your Firebase credentials
+
+# 4. Start the development server
+npm start
+
+# App runs at http://localhost:3000
+```
+
+> **Note:** Make sure n8n is running at `http://localhost:5678` for backend integration.
+
 ## Table of Contents
 
 - [Overview](#overview)
