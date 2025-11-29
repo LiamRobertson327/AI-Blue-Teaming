@@ -1,0 +1,289 @@
+/**
+ * =============================================================================
+ * FORM STYLES
+ * =============================================================================
+ * Styles for form pages (expense submission, etc.)
+ * =============================================================================
+ */
+
+/* === Form Page === */
+.form-page {
+  padding: var(--spacing-lg);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* === Tab Navigation === */
+.tab-navigation {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xl);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--spacing-sm);
+}
+
+.tab-button {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  background-color: transparent;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.tab-button:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+}
+
+.tab-button.active {
+  color: var(--color-primary);
+  background-color: var(--bg-primary);
+  border-bottom: 2px solid var(--color-primary);
+  margin-bottom: -1px;
+}
+
+/* === Expense Form === */
+.expense-form {
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-xl);
+}
+
+/* === Form Grid === */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.form-group--full {
+  grid-column: 1 / -1;
+}
+
+.form-row {
+  display: flex;
+  gap: var(--spacing-lg);
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.form-row .form-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.form-group--button {
+  flex: 0 0 auto;
+}
+
+/* === Form Elements === */
+.form-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-primary);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  width: 100%;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-input:disabled,
+.form-select:disabled,
+.form-textarea:disabled {
+  background-color: var(--color-gray-100);
+  cursor: not-allowed;
+}
+
+.form-input--readonly {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+  cursor: default;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-file-input {
+  padding: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-secondary);
+  cursor: pointer;
+  width: 100%;
+}
+
+.form-file-input:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
+  background-color: rgba(37, 99, 235, 0.05);
+}
+
+.form-hint {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  margin-top: var(--spacing-xs);
+}
+
+/* === Form Actions === */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--border-color);
+}
+
+/* === CSV Upload Section === */
+.csv-upload-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.csv-info {
+  padding: var(--spacing-lg);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
+}
+
+.csv-info h3 {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-sm);
+}
+
+.csv-info p {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.csv-headers {
+  display: block;
+  padding: var(--spacing-sm);
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+/* === File Preview === */
+.file-preview {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
+}
+
+.file-icon {
+  font-size: 24px;
+}
+
+.file-name {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.file-size {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+
+/* === Upload Form === */
+.upload-form {
+  margin-bottom: var(--spacing-md);
+}
+
+/* === Policy ID === */
+.policy-id {
+  font-family: 'Fira Code', monospace;
+  font-size: var(--font-size-xs);
+  background-color: var(--bg-tertiary);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+
+.limits-cell {
+  max-width: 250px;
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .form-page {
+    padding: var(--spacing-md);
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tab-navigation {
+    flex-direction: column;
+  }
+
+  .tab-button {
+    width: 100%;
+    justify-content: center;
+    border-radius: var(--radius-md);
+  }
+
+  .tab-button.active {
+    border-bottom: none;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .form-row .form-group {
+    min-width: 100%;
+  }
+}
