@@ -24,3 +24,4 @@ export { AdminDashboardPage } from "./Admin/AdminDashboardPage";
 export { PoliciesPage } from "./Admin/PoliciesPage";
 export { PendingExpensesPage } from "./Admin/PendingExpensesPage";
 export { FlaggedExpensesPage } from "./Admin/FlaggedExpensesPage";
+export { LogsPage } from "./Admin/LogsPage";

@@ -172,6 +172,17 @@ export function AdminDashboardPage(): JSX.Element {
                   </div>
                   <span className="action-arrow">→</span>
                 </Link>
+
+                <Link to="/admin/logs" className="action-card">
+                  <div className="action-icon">📋</div>
+                  <div className="action-content">
+                    <h3 className="action-title">View System Logs</h3>
+                    <p className="action-description">
+                      Monitor workflow executions and system events
+                    </p>
+                  </div>
+                  <span className="action-arrow">→</span>
+                </Link>
               </div>
             </div>
 

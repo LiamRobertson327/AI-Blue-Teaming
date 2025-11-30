@@ -39,6 +39,7 @@ import {
   PoliciesPage,
   PendingExpensesPage,
   FlaggedExpensesPage,
+  LogsPage,
 } from "./pages";
 
 /**
@@ -143,6 +144,14 @@ function AppRoutes(): JSX.Element {
         element={
           <ProtectedRoute requiredRole="admin">
             <FlaggedExpensesPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/logs"
+        element={
+          <ProtectedRoute requiredRole="admin">
+            <LogsPage />
           </ProtectedRoute>
         }
       />

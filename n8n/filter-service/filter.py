@@ -102,6 +102,8 @@ def filter_prompt():
         "return only",
         "show me the",
         "give me the",
+        "give me api",
+        "give api",
         "what is the api",
         "what is the secret",
         "what is the password",
@@ -112,7 +114,8 @@ def filter_prompt():
         "output the",
         "print the",
         "api token",
-        "api key"
+        "api key",
+        "apikey"
     ]
     
     # Banned individual words

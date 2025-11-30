@@ -48,6 +48,7 @@ export function EmployeeDashboardPage(): JSX.Element {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedExpense, setSelectedExpense] = useState<Expense | null>(null);
 
   /**
    * Fetch user profile and dashboard data on component mount.
@@ -248,6 +249,7 @@ export function EmployeeDashboardPage(): JSX.Element {
                         <th>Status</th>
                         <th>Decision Reason</th>
                         <th>Log ID</th>
+                        <th>Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -264,6 +266,14 @@ export function EmployeeDashboardPage(): JSX.Element {
                           <td>{expense.decisionReason || "-"}</td>
                           <td>
                             <code className="log-id">{expense.logId || "-"}</code>
+                          </td>
+                          <td>
+                            <button 
+                              className="open-button"
+                              onClick={() => setSelectedExpense(expense)}
+                            >
+                              Open
+                            </button>
                           </td>
                         </tr>
                       ))}
@@ -282,6 +292,117 @@ export function EmployeeDashboardPage(): JSX.Element {
               </div>
             )}
           </>
+        )}
+
+        {/* === Expense Detail Modal === */}
+        {selectedExpense && (
+          <div className="modal-overlay" onClick={() => setSelectedExpense(null)}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <div className="modal-header">
+                <h2>Expense Details</h2>
+                <button 
+                  className="modal-close"
+                  onClick={() => setSelectedExpense(null)}
+                >
+                  ×
+                </button>
+              </div>
+              <div className="modal-body">
+                <div className="expense-detail-grid">
+                  <div className="detail-item">
+                    <label>Transaction ID</label>
+                    <span>{selectedExpense.transactionId || selectedExpense.id}</span>
+                  </div>
+                  <div className="detail-item">
+                    <label>Employee ID</label>
+                    <span>{selectedExpense.employeeId}</span>
+                  </div>
+                  <div className="detail-item">
+                    <label>Date Incurred</label>
+                    <span>{formatDate(selectedExpense.dateIncurred)}</span>
+                  </div>
+                  <div className="detail-item">
+                    <label>Date Submitted</label>
+                    <span>{selectedExpense.dateSubmitted ? formatDate(selectedExpense.dateSubmitted) : "-"}</span>
+                  </div>
+                  <div className="detail-item">
+                    <label>Description</label>
+                    <span>{selectedExpense.description || "-"}</span>
+                  </div>
+                  <div className="detail-item">
+                    <label>Vendor</label>
+                    <span>{selectedExpense.vendor || "-"}</span>
+                  </div>
+                  <div className="detail-item">
+                    <label>Category</label>
+                    <span>{selectedExpense.category}</span>
+                  </div>
+                  <div className="detail-item">
+                    <label>Payment Method</label>
+                    <span>{selectedExpense.paymentMethod}</span>
+                  </div>
+                  <div className="detail-item">
+                    <label>Amount</label>
+                    <span>{formatCurrency(selectedExpense.amount, selectedExpense.currency)}</span>
+                  </div>
+                  <div className="detail-item">
+                    <label>Amount (USD)</label>
+                    <span>{selectedExpense.amountUSD ? formatCurrency(selectedExpense.amountUSD, "USD") : "-"}</span>
+                  </div>
+                  <div className="detail-item">
+                    <label>Currency</label>
+                    <span>{selectedExpense.currency}</span>
+                  </div>
+                  <div className="detail-item">
+                    <label>Receipt Attached</label>
+                    <span>{selectedExpense.receiptAttached === "Y" ? "Yes" : "No"}</span>
+                  </div>
+                  <div className="detail-item">
+                    <label>Reimbursement Type</label>
+                    <span>{selectedExpense.reimbursementType}</span>
+                  </div>
+                  <div className="detail-item">
+                    <label>Status</label>
+                    <span className={getStatusClass(selectedExpense.status)}>
+                      {selectedExpense.status}
+                    </span>
+                  </div>
+                  <div className="detail-item">
+                    <label>Decision Reason</label>
+                    <span>{selectedExpense.decisionReason || "-"}</span>
+                  </div>
+                  <div className="detail-item">
+                    <label>Policy Used</label>
+                    <span>{selectedExpense.policyUsed || "-"}</span>
+                  </div>
+                  <div className="detail-item">
+                    <label>Log ID</label>
+                    <span><code className="log-id">{selectedExpense.logId || "-"}</code></span>
+                  </div>
+                  {selectedExpense.riskScore !== undefined && (
+                    <div className="detail-item">
+                      <label>Risk Score</label>
+                      <span>{selectedExpense.riskScore}</span>
+                    </div>
+                  )}
+                  {selectedExpense.flagReason && (
+                    <div className="detail-item full-width">
+                      <label>Flag Reason</label>
+                      <span>{selectedExpense.flagReason}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button 
+                  className="secondary-button"
+                  onClick={() => setSelectedExpense(null)}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </MainLayout>

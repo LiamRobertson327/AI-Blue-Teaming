@@ -124,6 +124,12 @@ export function MainLayout({ children }: MainLayoutProps): JSX.Element {
                 >
                   Flagged
                 </Link>
+                <Link
+                  to="/admin/logs"
+                  className={`nav-link ${isActive("/admin/logs") ? "active" : ""}`}
+                >
+                  Logs
+                </Link>
               </>
             )}
           </nav>
@@ -202,6 +208,13 @@ export function MainLayout({ children }: MainLayoutProps): JSX.Element {
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Flagged Expenses
+                </Link>
+                <Link
+                  to="/admin/logs"
+                  className={`mobile-nav-link ${isActive("/admin/logs") ? "active" : ""}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  System Logs
                 </Link>
               </>
             )}
