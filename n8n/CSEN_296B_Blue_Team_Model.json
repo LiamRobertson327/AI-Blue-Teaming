@@ -6,10 +6,10 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        208,
-        -1008
+        -144,
+        1200
       ],
-      "id": "5ff520eb-67be-4eff-a5a3-343e79e1ba5c",
+      "id": "94a253d2-8ffa-4502-b121-58e590264637",
       "name": "Simple Memory",
       "disabled": true
     },
@@ -41,10 +41,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -1952,
-        -1184
+        -2304,
+        1024
       ],
-      "id": "70f3efcf-b7f1-49c0-9b0d-d970b4ffd9ef",
+      "id": "7cb2dc0a-fb0f-405f-be15-9c857714c9f7",
       "name": "If1"
     },
     {
@@ -57,10 +57,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -2960,
-        -1312
+        -3296,
+        816
       ],
-      "id": "c3bf983d-1086-4b15-b8b5-e1e7cb4c64c0",
+      "id": "2101eeb8-b5b9-4a84-a92d-405fa200c374",
       "name": "Upload Document",
       "webhookId": "d5e75ac9-e43d-4a1c-a861-18d7e56dbd95",
       "alwaysOutputData": true,
@@ -74,10 +74,10 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        -2480,
-        -1072
+        -2832,
+        1136
       ],
-      "id": "6588fece-ed77-45ab-8636-0ada5d022383",
+      "id": "11120a94-76aa-4d7f-b24f-aeb913b78117",
       "name": "xls to json"
     },
     {
@@ -87,10 +87,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -2288,
-        -1072
+        -2640,
+        1136
       ],
-      "id": "8b366d6e-8ff8-4250-9a54-ae89915c11f6",
+      "id": "6b581ab6-2f86-4cb9-8572-8f806670d800",
       "name": "Format json into json string"
     },
     {
@@ -112,10 +112,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -2096,
-        -1072
+        -2448,
+        1136
       ],
-      "id": "31101457-4697-484b-a865-3e93b72b26ba",
+      "id": "a99e9226-eac9-485d-bebc-56748f5ccb23",
       "name": "Verify Document",
       "alwaysOutputData": false
     },
@@ -132,10 +132,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        80,
-        -1120
+        -272,
+        1088
       ],
-      "id": "8f89196d-1508-422b-a64e-977fac89af49",
+      "id": "8c26c473-3e00-4211-be5e-869cfada4699",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
@@ -165,10 +165,10 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        816,
-        -1360
+        480,
+        848
       ],
-      "id": "c2ab80cd-2bc1-47f4-bba9-947743fc4e18",
+      "id": "87ea126e-f81a-43ff-a78f-d01cd6743eb1",
       "name": "Create file from text",
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -184,10 +184,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        320,
-        -1168
+        -32,
+        1040
       ],
-      "id": "7776b372-04aa-46e0-ab27-6b866cfd4375",
+      "id": "752d3d1c-71fa-4564-a220-6c4b9366591d",
       "name": "Structured Output Parser"
     },
     {
@@ -195,10 +195,10 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        224,
-        -272
+        -128,
+        1936
       ],
-      "id": "6ccccdb1-02e3-4e3d-8134-2c3d73a474c0",
+      "id": "aee82690-1fcf-4d36-bcf2-426b4b8aaa04",
       "name": "Simple Memory1",
       "disabled": true
     },
@@ -215,10 +215,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        64,
-        -336
+        -288,
+        1872
       ],
-      "id": "7087f645-046c-4d09-8a80-bcd048f837c0",
+      "id": "9d9f99cc-54a9-4a90-8183-08ef7424db42",
       "name": "OpenAI Chat Model2",
       "credentials": {
         "openAiApi": {
@@ -234,10 +234,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        416,
-        -320
+        80,
+        1888
       ],
-      "id": "10b5aa46-29d7-4a7b-be85-7715959b3be9",
+      "id": "f036f6e2-b8ac-4abe-9e16-51dea5f1d10d",
       "name": "Structured Output Parser1"
     },
     {
@@ -260,10 +260,10 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        720,
-        -1520
+        384,
+        688
       ],
-      "id": "7555d678-235c-456f-a0b8-3cab6b444de4",
+      "id": "a7a79e60-7848-4971-abd2-16d03e530358",
       "name": "Create folder",
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -397,10 +397,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.3,
       "position": [
-        480,
-        -1344
+        144,
+        864
       ],
-      "id": "60d93060-8788-455d-935d-11b55e100331",
+      "id": "b7a6a5d0-4d84-41a5-b77e-4abcdba75bf5",
       "name": "Switch"
     },
     {
@@ -416,10 +416,10 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        768,
-        -432
+        432,
+        1776
       ],
-      "id": "0c3a36a1-0a44-4524-a1d4-fc4d6653ca48",
+      "id": "e45421ba-4116-4ed3-a1ff-411b9079d4ae",
       "name": "Send a message",
       "webhookId": "091e86df-71dc-4958-9e73-656f72e2a98a",
       "credentials": {
@@ -437,12 +437,12 @@
           "splitPages": true
         }
       },
-      "id": "6261cb67-1485-4a44-89bc-edc55573bdb8",
+      "id": "237fb721-ee83-4664-8cb4-fb6c45dc8194",
       "name": "Default Data Loader1",
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "position": [
-        -2384,
-        -1952
+        -2736,
+        256
       ],
       "typeVersion": 1.1
     },
@@ -453,10 +453,10 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -2496,
-        -1776
+        -2848,
+        432
       ],
-      "id": "72d335fd-1832-4e0f-8745-48b62783c5dd",
+      "id": "223e32c2-e2ec-402a-9a7c-67b34a930633",
       "name": "Embeddings OpenAI2",
       "credentials": {
         "openAiApi": {
@@ -478,10 +478,10 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -2656,
-        -2112
+        -3008,
+        96
       ],
-      "id": "5fcb2714-f8c3-40ca-b75c-be20dec1fa55",
+      "id": "c45ef3b4-8675-4d5d-8f70-e7964b691fd6",
       "name": "Download file1",
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -503,10 +503,10 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
       "typeVersion": 1.3,
       "position": [
-        -2400,
-        -2112
+        -2752,
+        96
       ],
-      "id": "079c421b-6f43-41f3-a9c7-e6a19ae006cd",
+      "id": "0a6b2c4c-d952-415f-8ca1-a80e3aa59d70",
       "name": "Qdrant Vector Store",
       "notesInFlow": false,
       "credentials": {
@@ -542,10 +542,10 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -1936,
-        -1792
+        -2288,
+        416
       ],
-      "id": "e4e830ca-6763-4d94-87c1-bc2aa0616840",
+      "id": "a3f70de9-76e0-4ec9-9af9-b3a525204d3f",
       "name": "Move file",
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -561,10 +561,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        -2880,
-        -2032
+        -3232,
+        176
       ],
-      "id": "6c627896-164b-42de-8c68-c1e41f43346f",
+      "id": "3226e212-471a-443f-8391-33264e5dc23b",
       "name": "Loop Over Items"
     },
     {
@@ -585,10 +585,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -3392,
-        -1728
+        -3744,
+        480
       ],
-      "id": "4f155aa7-5e12-46c7-93e1-37a682267b4f",
+      "id": "bcce8f6a-4e0f-4db6-8a5f-256b962c940a",
       "name": "Delete Qdrant collections",
       "disabled": true
     },
@@ -601,20 +601,20 @@
       "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
       "typeVersion": 1,
       "position": [
-        -2288,
-        -1792
+        -2640,
+        416
       ],
-      "id": "00d7920e-ae83-45d1-b807-1f5aaa6c1bfb",
+      "id": "ac8c9fe4-7017-4f71-8733-6d3585f7218e",
       "name": "Recursive Character Text Splitter"
     },
     {
       "parameters": {},
-      "id": "6a16e792-dc48-4685-b6f9-561e3a8d882b",
+      "id": "81a13e0c-f131-41fa-b968-05f98d6880dc",
       "name": "When clicking ‘Test workflow’",
       "type": "n8n-nodes-base.manualTrigger",
       "position": [
-        -3296,
-        -2032
+        -3648,
+        176
       ],
       "typeVersion": 1
     },
@@ -636,10 +636,10 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -3104,
-        -2208
+        -3456,
+        -16
       ],
-      "id": "132e490a-baa4-487f-b08b-1765fe97a3c2",
+      "id": "e27c6a74-46f8-4371-be09-bdd3cdd05cb1",
       "name": "Search files and folders",
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -669,10 +669,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -1744,
-        -1792
+        -2096,
+        416
       ],
-      "id": "563f59fc-a3fc-4c21-a535-a03e470c46c5",
+      "id": "c4fb9c65-d75c-4af5-bea3-09e2f60062bb",
       "name": "HTTP Request2"
     },
     {
@@ -689,10 +689,10 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -3360,
-        -2208
+        -3712,
+        -16
       ],
-      "id": "7e5506d7-0288-431a-ae6b-fb161c70d5e8",
+      "id": "619ae97f-3db5-41cd-a4c8-be4fab6d3a1e",
       "name": "Schedule Trigger",
       "disabled": true
     },
@@ -724,10 +724,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -2896,
-        -2208
+        -3248,
+        -16
       ],
-      "id": "53450101-29d0-441c-957a-5090ae6b1f69",
+      "id": "ad2f6939-e44f-4d31-a9c0-be36fd90bab8",
       "name": "If2"
     },
     {
@@ -740,10 +740,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3,
       "position": [
-        -1056,
-        -896
+        -1408,
+        1312
       ],
-      "id": "05a40040-51e8-45a9-8d0d-d96f17a86d12",
+      "id": "85c4815c-c0b1-45ee-bc55-f6c308e80e9b",
       "name": "Task Decomposition",
       "alwaysOutputData": false
     },
@@ -849,10 +849,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.3,
       "position": [
-        -336,
-        -800
+        -688,
+        1408
       ],
-      "id": "79d224d7-4b8f-44d0-8eb7-755a6c35c01d",
+      "id": "a47b28bd-7217-4a38-836d-629b2eb08d45",
       "name": "Agent Router"
     },
     {
@@ -864,10 +864,10 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        -2048,
-        64
+        -2400,
+        2272
       ],
-      "id": "3d5a1aad-281f-4358-9775-b2cd852134f0",
+      "id": "cfa386c0-c46e-410e-aac3-895111ad9942",
       "name": "Merge",
       "alwaysOutputData": true,
       "disabled": true
@@ -880,10 +880,10 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        768,
-        -2000
+        432,
+        208
       ],
-      "id": "ca5bbcfa-16bb-4b76-927c-7cef2adec23e",
+      "id": "c2d1e6cc-d830-4614-98fc-c7fa759ebfb4",
       "name": "Create spreadsheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -1054,10 +1054,10 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        768,
-        -2160
+        432,
+        48
       ],
-      "id": "50567cef-59bc-41f8-853a-9b2683eb1608",
+      "id": "b2ce87d0-3e4b-4aa0-8049-d3145cc375e1",
       "name": "Update row in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -1168,10 +1168,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.3,
       "position": [
-        480,
-        -2048
+        144,
+        160
       ],
-      "id": "d9c055e2-72ac-468d-bc08-1d4b55cc2732",
+      "id": "1ae24519-6c49-46b6-a572-fb22e5df6887",
       "name": "Sheet Router"
     },
     {
@@ -1181,10 +1181,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        768,
-        -2336
+        432,
+        -144
       ],
-      "id": "1d322e76-4c6d-418a-ab0a-bbd07b2ffedc",
+      "id": "69a9b1a3-8af6-4b17-b64f-aca213684381",
       "name": "Code in JavaScript1"
     },
     {
@@ -1199,10 +1199,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -1104,
-        -736
+        -1456,
+        1472
       ],
-      "id": "2926495b-1500-4db8-bfc5-fb635f7ef9e5",
+      "id": "31d614b8-e882-4490-95f6-18782f296e0f",
       "name": "OpenAI Chat Model6",
       "credentials": {
         "openAiApi": {
@@ -1216,10 +1216,10 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        -976,
-        -704
+        -1328,
+        1504
       ],
-      "id": "d4b967fd-862d-4921-a374-3441202ece95",
+      "id": "808239de-1f51-4f51-b377-5ed146da2602",
       "name": "Simple Memory3",
       "disabled": true
     },
@@ -1235,10 +1235,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        80,
-        -1824
+        -272,
+        384
       ],
-      "id": "3da7381e-0c8b-4884-878c-da0eafda0b82",
+      "id": "857b1914-83a3-47d3-94c1-ca68c5e05919",
       "name": "OpenAI Chat Model7",
       "credentials": {
         "openAiApi": {
@@ -1252,10 +1252,10 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        208,
-        -1792
+        -144,
+        416
       ],
-      "id": "9e614dde-5150-430c-b7b7-3ac7cb68eb31",
+      "id": "a288a6c7-bcb3-4576-8643-040d278b0eb9",
       "name": "Simple Memory4",
       "disabled": true
     },
@@ -1266,10 +1266,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        -832,
-        -720
+        -1184,
+        1488
       ],
-      "id": "1c3f7457-8b16-49c5-af50-876e593fc6ff",
+      "id": "eb9b5e0f-7663-4ec2-b124-dd77c69a01a5",
       "name": "Structured Output Parser4"
     },
     {
@@ -1279,10 +1279,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        352,
-        -1824
+        16,
+        384
       ],
-      "id": "aa2e376b-2931-4337-a290-9caf5cc8d772",
+      "id": "17710210-7f31-4c1e-8da4-61d569eaf425",
       "name": "Structured Output Parser5"
     },
     {
@@ -1294,11 +1294,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -3472,
-        -2288
+        -3824,
+        -96
       ],
       "typeVersion": 1,
-      "id": "3a21bbcc-28cd-43f7-9d59-bafa3cb90357",
+      "id": "14823934-0342-4fb1-8963-4ad50a2afdb1",
       "name": "Sticky Note"
     },
     {
@@ -1314,10 +1314,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -2080,
-        -128
+        -2432,
+        2080
       ],
-      "id": "a23b8650-b0a6-4e7b-9826-51e7278125b5",
+      "id": "e3ec40cd-112a-4071-bcd5-7ffe3e73cdc1",
       "name": "OpenAI Chat Model8",
       "credentials": {
         "openAiApi": {
@@ -1334,11 +1334,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -3488,
-        -1504
+        -3840,
+        704
       ],
       "typeVersion": 1,
-      "id": "93eced43-555f-4571-93d8-75a342b64b79",
+      "id": "0007c7cc-2c76-40e7-bfc5-364811be795f",
       "name": "Sticky Note2"
     },
     {
@@ -1349,11 +1349,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1360,
-        -1008
+        -1712,
+        1200
       ],
       "typeVersion": 1,
-      "id": "da86281d-eeaa-4203-ac33-1b9cc1f183b6",
+      "id": "7ce7d08f-dcd4-477b-8e61-290ec4141777",
       "name": "Sticky Note3"
     },
     {
@@ -1367,10 +1367,10 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -2848,
-        48
+        -3200,
+        2256
       ],
-      "id": "e6a9ee41-d762-4129-b867-50c75ecc33c7",
+      "id": "c0d6751d-c447-482c-adc1-181ffbb69eaf",
       "name": "Retrieve Expensegood.xls",
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -1393,10 +1393,10 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -2672,
-        48
+        -3024,
+        2256
       ],
-      "id": "44e86adb-dbd9-4e53-abc2-873c31616464",
+      "id": "a6734dac-36e8-49a6-a7e9-d3d3c05db9b7",
       "name": "Download Excel File",
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -1414,10 +1414,10 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        -2464,
-        48
+        -2816,
+        2256
       ],
-      "id": "f0c4697f-f0d0-4fd2-aeac-f92b15db6a47",
+      "id": "ffdcadd9-a986-493f-8b84-43e23cafebae",
       "name": "Convert excel file to json",
       "disabled": true
     },
@@ -1428,10 +1428,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -2256,
-        48
+        -2608,
+        2256
       ],
-      "id": "5553edfa-d29f-40ff-b664-0d4f019f3b72",
+      "id": "14949546-a230-4d12-aa1f-47bb28623196",
       "name": "Convert data into single json array",
       "disabled": true
     },
@@ -1442,10 +1442,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -688,
-        -768
+        -1040,
+        1440
       ],
-      "id": "9f95a0a3-2f46-424e-ba2b-5f34174c650c",
+      "id": "5a58b0cc-f6c6-4092-9b3d-cc7a8314b72a",
       "name": "SubTasks Split Function"
     },
     {
@@ -1460,10 +1460,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        112,
-        528
+        -240,
+        2736
       ],
-      "id": "7be73047-16d6-42f3-a22c-c92ef5801e45",
+      "id": "b87747fb-7c83-4939-8bf6-ccfcf98beb94",
       "name": "OpenAI Chat Model3",
       "credentials": {
         "openAiApi": {
@@ -1487,10 +1487,10 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
       "typeVersion": 1.3,
       "position": [
-        224,
-        544
+        -128,
+        2752
       ],
-      "id": "aca9cadc-7bf0-4b83-9beb-1a1efad27dfb",
+      "id": "de7d8234-8922-4806-a7f2-4776786e4d90",
       "name": "Qdrant Vector Store2",
       "credentials": {
         "qdrantApi": {
@@ -1506,10 +1506,10 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
       "typeVersion": 1.2,
       "position": [
-        224,
-        688
+        -128,
+        2896
       ],
-      "id": "6bd6a6e4-1cb8-4384-833c-fc364bb6a160",
+      "id": "f3a7b909-9a57-4a79-bfbc-45983ba2ae51",
       "name": "Embeddings OpenAI",
       "credentials": {
         "openAiApi": {
@@ -1535,10 +1535,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        32,
-        352
+        -320,
+        2560
       ],
-      "id": "c85834cf-bca7-4446-a47a-ea52547def2b",
+      "id": "5705197a-c5f0-4eb2-87ed-fa09c5eccb2a",
       "name": "Edit Fields"
     },
     {
@@ -1562,10 +1562,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -1808,
-        -704
+        -2160,
+        1504
       ],
-      "id": "0dd7ca51-af46-4b7b-9833-82959c3b1f04",
+      "id": "3b0a9ef2-9f56-468d-9903-e4635d1405bc",
       "name": "No Prompt Injection Detected Log"
     },
     {
@@ -1589,10 +1589,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -2224,
-        -288
+        -2576,
+        1920
       ],
-      "id": "66d25eb1-cbca-489c-92d2-f92aaf51953f",
+      "id": "4b3f0160-3cb4-42da-8ded-0f2d1fcf7158",
       "name": "Prompt Injection Detected Log",
       "alwaysOutputData": false
     },
@@ -1624,10 +1624,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -2032,
-        -544
+        -2384,
+        1664
       ],
-      "id": "e34eab75-5066-413f-86f6-813f118d5ecf",
+      "id": "7ecfd1f0-b56d-4be4-b7e9-5f151a4b589e",
       "name": "If No prompt Injection "
     },
     {
@@ -1639,10 +1639,10 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.7,
       "position": [
-        -2064,
-        -288
+        -2416,
+        1920
       ],
-      "id": "b6f405b4-c46f-4c83-878b-023b941f22d3",
+      "id": "95729e93-e60a-402c-a123-e0e37c3835c2",
       "name": "LLM To answer malicious questions",
       "alwaysOutputData": false
     },
@@ -1656,10 +1656,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3,
       "position": [
-        176,
-        -512
+        -176,
+        1696
       ],
-      "id": "76dde3eb-f89d-427c-b3c8-d75cd03f5dbb",
+      "id": "500fe0d4-040e-4123-b50e-c8457c92d12c",
       "name": "Gmail Agent"
     },
     {
@@ -1672,10 +1672,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3,
       "position": [
-        96,
-        -1296
+        -256,
+        912
       ],
-      "id": "d7061c4e-adf1-4e8e-844c-e735e50a9b09",
+      "id": "a57c100c-92d0-4c14-ae73-527be468676c",
       "name": "Google Drive Agent"
     },
     {
@@ -1688,10 +1688,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3,
       "position": [
-        160,
-        -2016
+        -192,
+        192
       ],
-      "id": "a21e3a21-b433-4be4-8161-7ed500a89768",
+      "id": "33880c0e-1ff2-4fe4-ae42-553e3884f0b1",
       "name": "Expense Management Agent"
     },
     {
@@ -1703,10 +1703,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3,
       "position": [
-        176,
-        352
+        -176,
+        2560
       ],
-      "id": "479d8df2-57b7-4f07-8763-c0ed67b96303",
+      "id": "f2f44800-318e-4934-869a-38cb9434190f",
       "name": "RAG Agent",
       "retryOnFail": false
     },
@@ -1719,10 +1719,10 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        -1744,
-        -160
+        -2096,
+        2048
       ],
-      "id": "35f79707-efce-4fc9-9bf0-72bd1320945d",
+      "id": "5a868338-c47d-4d23-aeb9-4a8887fca28a",
       "name": "Respond to Webhook",
       "alwaysOutputData": false
     },
@@ -1735,10 +1735,10 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        512,
-        448
+        176,
+        2656
       ],
-      "id": "535ef961-be73-4e4b-8ad7-23b3c6d1f4c1",
+      "id": "5aba6ae5-d842-45be-9102-8d2a788360c7",
       "name": "Respond to Webhook1",
       "alwaysOutputData": false
     },
@@ -1770,10 +1770,10 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        768,
-        -1840
+        432,
+        368
       ],
-      "id": "401cce30-443d-49c3-aba8-0063d1a8c624",
+      "id": "8e4496cc-cd76-4197-88f4-a26b1627de3a",
       "name": "Get row(s) in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -1784,15 +1784,18 @@
     },
     {
       "parameters": {
+        "sendTo": "csen296b@gmail.com",
+        "subject": "=New Expense Submission - {{ $json.employeeId }} ({{ $json.expenseCount }} expenses)",
+        "message": "=<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;\">\n  <h2 style=\"color: #2563eb;\">New Expense Submission</h2>\n  \n  <p><strong>Employee {{ $json.employeeId }}</strong> has submitted <strong>{{ $json.expenseCount }} expense(s)</strong> totaling <strong>{{ $json.currency }} {{ $json.totalAmount }}</strong>.</p>\n  \n  <h3>Expenses Submitted:</h3>\n  <pre style=\"background: #f3f4f6; padding: 15px; border-radius: 6px;\">{{ $json.expenseList }}</pre>\n  \n  <p style=\"margin: 20px 0;\">\n    <a href=\"http://localhost:3001/admin/dashboard\" \n       style=\"background-color: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;\">\n      Review in Dashboard\n    </a>\n  </p>\n  \n  <p style=\"color: #6b7280; font-size: 12px;\">\n    This is an automated notification from Lighthouse AI Expense Management.\n  </p>\n</div>",
         "options": {}
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        1440,
-        -2096
+        1072,
+        -144
       ],
-      "id": "d466ef33-b63a-43a5-a18e-4e71f60edd1f",
+      "id": "b1c65ed5-1528-4d5c-b0b1-96eb6f71c461",
       "name": "Send a message1",
       "webhookId": "37186cf5-3ad1-402c-9204-f603910eb7fb",
       "credentials": {
@@ -1800,8 +1803,7 @@
           "id": "ea7jSlHYi60T6XaV",
           "name": "Gmail account"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
@@ -1812,10 +1814,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -3024,
-        -496
+        -3376,
+        1712
       ],
-      "id": "eb1efe6a-0198-49b4-bdaf-0d8539db4a05",
+      "id": "17ceab27-5fdc-4ed0-aaec-30e2ce7ef114",
       "name": "Normalize Chat Input"
     },
     {
@@ -1827,10 +1829,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -2416,
-        -672
+        -2768,
+        1536
       ],
-      "id": "ea30fcdc-d2d8-4710-863a-2bb9095f221b",
+      "id": "1238cefd-a126-401a-8917-2024436643d1",
       "name": "Normalize Webhook Input"
     },
     {
@@ -1840,10 +1842,10 @@
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
       "typeVersion": 1.3,
       "position": [
-        -3424,
-        -496
+        -3776,
+        1712
       ],
-      "id": "de9c5150-f097-4b58-ba16-82f1fee28ff9",
+      "id": "28c30f32-0720-49c8-8932-2388182a29d1",
       "name": "Terminal Chat Input",
       "webhookId": "e953628c-5cd3-4d83-a3de-ff8ede523bfd",
       "alwaysOutputData": true,
@@ -1870,10 +1872,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -1744,
-        -320
+        -2096,
+        1888
       ],
-      "id": "d7401816-b584-4415-a043-7b58857d6752",
+      "id": "9570b5a9-7c51-4726-806d-e66f4e988e45",
       "name": "Log Model Output",
       "alwaysOutputData": true
     },
@@ -1895,10 +1897,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -2208,
-        -544
+        -2560,
+        1664
       ],
-      "id": "6f1941cb-3c1b-427c-b333-72ac3dad9f17",
+      "id": "5fadfb9c-2c4e-45c7-80bd-06759f678433",
       "name": "Prompt Filtering Check"
     },
     {
@@ -1922,10 +1924,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -3216,
-        -496
+        -3568,
+        1712
       ],
-      "id": "dd6ef3a4-ee57-4074-9f98-49708988882c",
+      "id": "9937cb27-a72b-49ed-b824-9cb125a72a0c",
       "name": "Chat Input Log"
     },
     {
@@ -1949,10 +1951,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -2608,
-        -672
+        -2960,
+        1536
       ],
-      "id": "40e81446-c45a-48ed-8fcd-0363e1ed2f90",
+      "id": "9a9edc8e-6315-4e08-b85e-b65e2b03d703",
       "name": "Chat Webhook Input Log",
       "alwaysOutputData": false
     },
@@ -1966,10 +1968,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -3040,
-        -672
+        -3392,
+        1536
       ],
-      "id": "1b4e9ac2-1efc-4576-997c-bfdeb59706b4",
+      "id": "1d6a4c93-4b97-42df-ad44-0b335d010433",
       "name": "Webhook Chat Input",
       "webhookId": "595ac7f1-2649-44ed-9657-144bdf0b72d4",
       "disabled": true
@@ -1995,10 +1997,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -2480,
-        -1296
+        -2832,
+        912
       ],
-      "id": "0964026d-59c0-4247-8a7a-a2e67aac4a4c",
+      "id": "11e59687-e53b-46e5-98f1-3352cfee82b0",
       "name": "File Webhook Input Log"
     },
     {
@@ -2022,10 +2024,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -464,
-        -928
+        -816,
+        1280
       ],
-      "id": "1af5e623-2ba2-46c2-b26e-2c637b9a8a89",
+      "id": "718ef24e-2b35-46ea-865a-9e4601192aff",
       "name": "Task Decomp Log 1",
       "alwaysOutputData": true
     },
@@ -2036,10 +2038,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -688,
-        -928
+        -1040,
+        1280
       ],
-      "id": "cbba0c32-5fb2-4d96-9475-3ee081497bb6",
+      "id": "fea1cc46-5f59-4b22-9e1e-c4609a56736a",
       "name": "Code in JavaScript"
     },
     {
@@ -2063,10 +2065,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        864,
-        224
+        528,
+        2432
       ],
-      "id": "ceb50f1d-2a99-40c8-b799-f7fc53bfe46f",
+      "id": "4789b0f8-8af1-491d-bfe7-46961ab12956",
       "name": "Log Model Output 2",
       "alwaysOutputData": true
     },
@@ -2229,10 +2231,10 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1008,
-        -2336
+        672,
+        -144
       ],
-      "id": "98219b33-93e4-4a27-a2cd-5f58ad5a3e9d",
+      "id": "290c4df2-42e6-4a34-a5c2-7434c45609fa",
       "name": "Append row in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -2249,11 +2251,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        928,
-        -2096
+        592,
+        112
       ],
       "typeVersion": 1,
-      "id": "e6449432-5e2b-4619-a9e6-61caa99d21d2",
+      "id": "6edcf00f-2b50-4001-bfdc-e244a175b330",
       "name": "Sticky Note6"
     },
     {
@@ -2265,11 +2267,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -192,
-        -2352
+        -592,
+        -240
       ],
       "typeVersion": 1,
-      "id": "7e8a81b4-4b67-4152-8c59-c2d99a0c6844",
+      "id": "bebcf5a8-1b3f-45e2-adf1-784afd541364",
       "name": "Sticky Note7"
     },
     {
@@ -2281,11 +2283,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -192,
-        -1536
+        -544,
+        672
       ],
       "typeVersion": 1,
-      "id": "55198e24-aa6d-492a-a8cb-8e4b02354abb",
+      "id": "66597576-cf6e-4306-bf7c-e2b6bbe5ccfa",
       "name": "Sticky Note8"
     },
     {
@@ -2299,10 +2301,10 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        528,
-        -1024
+        192,
+        1184
       ],
-      "id": "21170e19-cbec-432f-aaec-99627df06b35",
+      "id": "409ab1b9-06e3-4d25-9ce7-79195594e13d",
       "name": "Search files and folders1",
       "alwaysOutputData": true,
       "credentials": {
@@ -2340,10 +2342,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        672,
-        -1024
+        336,
+        1184
       ],
-      "id": "4cd55253-a114-46ca-bd83-46d1da8cd944",
+      "id": "9f121032-1b72-40cf-bc0d-909d0a711f11",
       "name": "If"
     },
     {
@@ -2363,10 +2365,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        928,
-        -1152
+        592,
+        1056
       ],
-      "id": "3b278363-8464-4d29-b12d-874701d9f34c",
+      "id": "5ec1d5fd-56b3-4169-94ba-a6420421799a",
       "name": "File Found"
     },
     {
@@ -2386,10 +2388,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        928,
-        -976
+        592,
+        1232
       ],
-      "id": "dc217ac3-58c9-414c-8329-b8c9e76159f9",
+      "id": "158b9e78-703b-4480-8f7b-2eaf5ded8288",
       "name": "File Not Found"
     },
     {
@@ -2399,10 +2401,10 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        1408,
-        -1360
+        1072,
+        848
       ],
-      "id": "6ae2db8a-7571-409e-bea0-1e5c9ceb9db0",
+      "id": "8ecb41b3-1cd4-4014-8fca-358b64ab2e7a",
       "name": "Send a message2",
       "webhookId": "37186cf5-3ad1-402c-9204-f603910eb7fb",
       "credentials": {
@@ -2421,11 +2423,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        896,
-        -1360
+        560,
+        848
       ],
       "typeVersion": 1,
-      "id": "64f617a2-c82b-4c3e-af35-2cfd89612814",
+      "id": "bcc01d49-a166-4ba4-a3c5-eb719493ac1c",
       "name": "Sticky Note9"
     },
     {
@@ -2437,11 +2439,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -192,
-        -720
+        -544,
+        1488
       ],
       "typeVersion": 1,
-      "id": "8ff4442f-f7aa-4bb9-af8c-887b18eafdf6",
+      "id": "32a5e75d-d157-466f-9863-d372f327d149",
       "name": "Sticky Note10"
     },
     {
@@ -2453,11 +2455,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -192,
-        112
+        -544,
+        2320
       ],
       "typeVersion": 1,
-      "id": "8dc464bc-7335-4403-8ae3-52acc50641db",
+      "id": "fcb39e0b-3925-487f-aa93-7cedb7342502",
       "name": "Sticky Note11"
     },
     {
@@ -2481,10 +2483,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -1872,
-        -928
+        -2224,
+        1280
       ],
-      "id": "9aab5073-18e1-43d5-b488-419cb668ceaa",
+      "id": "e1c739c0-0a44-46c4-aebd-6a6ef49818d6",
       "name": "Bad Document Detected"
     },
     {
@@ -2508,10 +2510,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -1680,
-        -1344
+        -2032,
+        864
       ],
-      "id": "24aa66d5-044f-4632-abe4-a66dc0f0a00f",
+      "id": "2f8c98c6-feb6-4467-a5dd-3250ddbd7b3c",
       "name": "Good Document Detected"
     },
     {
@@ -2542,10 +2544,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        496,
-        -512
+        160,
+        1696
       ],
-      "id": "326681b1-3dde-450c-ba59-ccbaed36a869",
+      "id": "40737e9b-f62e-492c-bc9e-9c69011017aa",
       "name": "If3"
     },
     {
@@ -2566,10 +2568,10 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        1328,
-        -608
+        992,
+        1600
       ],
-      "id": "691a1f49-8b4e-4478-b0ea-1a4ad79bf05b",
+      "id": "61de679f-c115-445f-b525-c5c7f4b05145",
       "name": "Send a message3",
       "webhookId": "091e86df-71dc-4958-9e73-656f72e2a98a",
       "credentials": {
@@ -2594,10 +2596,10 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        1152,
-        -608
+        816,
+        1600
       ],
-      "id": "29847c5c-e1a9-4732-aa13-a3c23d1f460c",
+      "id": "7b7731d0-879f-4521-9d1f-c979ff51444b",
       "name": "Download file",
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -2617,10 +2619,10 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        768,
-        -608
+        432,
+        1600
       ],
-      "id": "f4c5185d-511e-4751-b547-c49d2d2a095c",
+      "id": "f1f3e029-f2eb-4f43-be71-2e33948e843a",
       "name": "Search files and folders2",
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -2637,11 +2639,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -112,
-        -624
+        -464,
+        1584
       ],
       "typeVersion": 1,
-      "id": "da8ea7fb-ce02-4e7f-a1f2-bb4d2cdde440",
+      "id": "782249c4-b6e6-4113-9783-a56f2926b294",
       "name": "Sticky Note12"
     },
     {
@@ -2672,10 +2674,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -3184,
-        -816
+        -3536,
+        1392
       ],
-      "id": "40aedfe8-3a0e-4ef1-8401-e7d1a7062d42",
+      "id": "7891f414-d5a0-4c07-a43a-8232f3dcf51f",
       "name": "If4"
     },
     {
@@ -2687,11 +2689,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2800,
-        -1440
+        -3152,
+        768
       ],
       "typeVersion": 1,
-      "id": "715462b1-315a-4636-abd3-09eedc1274ff",
+      "id": "f34fec10-742d-4311-9699-2be48672c060",
       "name": "Sticky Note1"
     },
     {
@@ -2703,11 +2705,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2848,
-        -736
+        -3200,
+        1472
       ],
       "typeVersion": 1,
-      "id": "ac8fbe52-8cb5-4da6-9a79-132cc94b1fcd",
+      "id": "d48b5583-977c-4c5a-b6b8-12149959f782",
       "name": "Sticky Note4"
     },
     {
@@ -2717,10 +2719,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        576,
-        224
+        240,
+        2432
       ],
-      "id": "ae669c50-7037-4fbf-95eb-c5e3e46c44c7",
+      "id": "7f755bb3-7135-4b4c-a42f-9f9c88dedcc7",
       "name": "Code in JavaScript2"
     },
     {
@@ -2733,10 +2735,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -3472,
-        -816
+        -3824,
+        1392
       ],
-      "id": "f43f21ee-bf65-476c-b9ee-6f4da6ec521b",
+      "id": "55d07fbb-82c0-4a6c-bbbe-407f763ed915",
       "name": "Data Input",
       "webhookId": "595ac7f1-2649-44ed-9657-144bdf0b72d4"
     },
@@ -2748,10 +2750,10 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        -1584,
-        -1104
+        -1936,
+        1104
       ],
-      "id": "a380462d-b7a5-4232-bf80-9a954900af75",
+      "id": "f73893be-2d61-4aff-899f-e076faa2f768",
       "name": "Respond to Webhook2"
     },
     {
@@ -2763,10 +2765,10 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        1584,
-        -432
+        1248,
+        1776
       ],
-      "id": "bc3cc186-736e-454d-b461-2e28072b532f",
+      "id": "c01b946c-4e18-466b-89d2-1470e169a81b",
       "name": "Respond to Webhook3",
       "alwaysOutputData": false
     },
@@ -2777,10 +2779,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1344,
-        -1472
+        -1696,
+        736
       ],
-      "id": "313f0170-5ca0-46b0-9acf-41be392b491e",
+      "id": "3644237f-22ff-45ae-85d6-e55c9daeb152",
       "name": "Code in JavaScript3"
     },
     {
@@ -2790,10 +2792,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -2128,
-        -1344
+        -2480,
+        864
       ],
-      "id": "0afd9911-9fb8-43d8-b2ef-1bf2c5f7d168",
+      "id": "d4927132-a4dd-4be5-bb36-4985c14fdfa2",
       "name": "Code in JavaScript4"
     },
     {
@@ -2825,10 +2827,10 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        -3264,
-        -1200
+        -3616,
+        1008
       ],
-      "id": "12b66f49-98cd-4330-a491-b0d41a18f0c2",
+      "id": "609b5997-20df-4fb5-abf3-dfac72c5bb87",
       "name": "Get row(s) in sheet1",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -2841,16 +2843,16 @@
       "parameters": {
         "httpMethod": "POST",
         "path": "fetch-expenses",
-        "responseMode": "lastNode",
+        "responseMode": "responseNode",
         "options": {}
       },
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -3472,
-        -1200
+        -3824,
+        1008
       ],
-      "id": "449f0830-d856-4493-85bf-0142d791dee3",
+      "id": "7eaf5131-6451-410d-8338-dda9ea0e4ce0",
       "name": "Fetch WebHook",
       "webhookId": "cce0af36-0b5e-4c4f-82db-426f1ced0eea"
     },
@@ -2864,10 +2866,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -3472,
-        -1024
+        -3824,
+        1184
       ],
-      "id": "2afe437d-a52f-4cc3-84bf-8c813be3c125",
+      "id": "35881d50-6609-4cdb-a9de-cd2cc6b86d45",
       "name": "Submit Expense",
       "webhookId": "a09347a3-5d67-4d06-aa07-f8d59f6b8105"
     },
@@ -3033,10 +3035,10 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        -3232,
-        -1024
+        -3584,
+        1184
       ],
-      "id": "d94c2f3b-587b-467f-8afa-07fdc83a793a",
+      "id": "1a2ae08b-a3bd-43a9-b503-0b1df6fc34e0",
       "name": "Append row in sheet1",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -3068,56 +3070,171 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -2992,
-        -1024
+        -3248,
+        1184
       ],
-      "id": "1c949634-da69-4e08-9889-210dd9e4cc37",
+      "id": "79271787-75e5-48a2-974b-c266be3fe267",
       "name": "Edit Fields1"
-    }
-  ],
-  "pinData": {
-    "Data Input": [
-      {
-        "json": {
-          "headers": {
-            "host": "localhost:5678",
-            "connection": "keep-alive",
-            "content-length": "2329",
-            "sec-ch-ua-platform": "\"Android\"",
-            "user-agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Mobile Safari/537.36",
-            "sec-ch-ua": "\"Chromium\";v=\"142\", \"Google Chrome\";v=\"142\", \"Not_A Brand\";v=\"99\"",
-            "content-type": "multipart/form-data; boundary=----WebKitFormBoundarymXrUWTD4BsdnogHs",
-            "sec-ch-ua-mobile": "?1",
-            "accept": "*/*",
-            "origin": "http://localhost:3001",
-            "sec-fetch-site": "same-site",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-dest": "empty",
-            "referer": "http://localhost:3001/",
-            "accept-encoding": "gzip, deflate, br, zstd",
-            "accept-language": "en-US,en;q=0.9,mr;q=0.8"
-          },
-          "params": {},
-          "query": {},
-          "body": {
-            "idToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjQ1YTZjMGMyYjgwMDcxN2EzNGQ1Y2JiYmYzOWI4NGI2NzYxMjgyNjUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vbGlnaHRob3VzZS1haS1iM2Y0NSIsImF1ZCI6ImxpZ2h0aG91c2UtYWktYjNmNDUiLCJhdXRoX3RpbWUiOjE3NjQyMDgzNjIsInVzZXJfaWQiOiJaMHJmbzc0clpYVFJsdHhBMUNZUk9aRnlBZTIzIiwic3ViIjoiWjByZm83NHJaWFRSbHR4QTFDWVJPWkZ5QWUyMyIsImlhdCI6MTc2NDIwODQ5NywiZXhwIjoxNzY0MjEyMDk3LCJlbWFpbCI6Im5pYnJ1dHR5Z0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsibmlicnV0dHlnQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.i7v1MhB3iVOGGVypvZbQ5ZO0MpRsZ4gHYYW-2qPoym2RaaL_aFkq8PKGkxX-wdGlQ9AI7eKngVMnf-J3wwoS3feC1kHv7kt-GnSnlaMsmFvE75DAZ6uvkhQY7x1eIufB2Cd6ijnDq4oXHpAGwuWz_CN1sg8fytBP6v2piGsUuDL5ZtZBzSrRvtFakFNUKvRAAym3s4taYdeCYUlARQlPA_xJWKmHc9P0yZpTTNDz7LfjSiGGnfF5TSlBZS676esePKL68rUoFoS78Wi-SPhjXoF4YVsXDoDD45PpxKIOYaU0sj0abxaflWnZpQ0ZwoeP9LCIl3wN_Gn6iqCPVdCMZw",
-            "role": "employee"
-          },
-          "webhookUrl": "http://localhost:5678/webhook/Lighthouse-input",
-          "executionMode": "production"
-        },
-        "binary": {
-          "data": {
-            "mimeType": "application/vnd.ms-excel",
-            "fileExtension": "xls",
-            "data": "VHJhbnNhY3Rpb25JRCxFbXBsb3llZUlELERhdGVJbmN1cnJlZCxEYXRlU3VibWl0dGVkLERlc2NyaXB0aW9uLFZlbmRvcixQYXltZW50TWV0aG9kLEN1cnJlbmN5LEFtb3VudCxBbW91bnRVU0QsQ2F0ZWdvcnksUmVjZWlwdEF0dGFjaGVkLFJlaW1idXJzZW1lbnRUeXBlClQtMDAxLEVNUC00MDEsMjAyNS0wOS0xMCwsRmxpZ2h0IHRvIE5ZQyxEZWx0YSBBaXJsaW5lcyxDb3Jwb3JhdGUgQ2FyZCxVU0QsNDUwLjc1LCxUcmF2ZWwsWSxDb3Jwb3JhdGUgQ2FyZCBJc3N1ZXIKVC0wMDIsRU1QLTQwMSwyMDI1LTA5LTExLCxEaW5uZXIgd2l0aCBDbGllbnQsTG9jYWwgQmlzdHJvLFBlcnNvbmFsIENhcmQsRVVSLDg1LjUwLCxNZWFscyAmIEVudGVydGFpbm1lbnQsWSxFbXBsb3llZQpULTAwMyxFTVAtNDAyLDIwMjUtMTAtMDEsLE1vbnRobHkgU29mdHdhcmUgU3ViLCxDb3Jwb3JhdGUgQ2FyZCxHQlAsMTIuOTksLFNvZnR3YXJlLE4sQ29ycG9yYXRlIENhcmQgSXNzdWVyClQtMDA0LEVNUC00MDMsMjAyNS0xMC0yNSwyMDI1LTEwLTI2LFRheGkgdG8gQWlycG9ydCxMb2NhbCBUYXhpLENoZWNrLEpQWSwyMDAwLDE0LjUwLFRyYXZlbCxZLEVtcGxveWVlClQtMDA1LEVNUC00MDQsMjAyNS0xMS0wNSwsTHVuY2gsLENhcmQsVVNELDEwMDAwMCwsTWVhbHMgJiBFbnRlcnRhaW5tZW50LFksRW1wbG95ZWUKVC0wMDYsRU1QLTQwNSwyMDI1LTExLTA1LDIwMjUtMTEtMDEsRnVlbCBmb3IgUmVudGFsLFNoZWxsLFBlcnNvbmFsIENhcmQsQ0FELDc1LjAwLCxUcmF2ZWwsTixFbXBsb3llZQpULTAwNyxFTVAtNDA3LDIwMjUtMTEtMDIsLENvbmZlcmVuY2UgRmVlLEV2ZW50IENvcnAsQ29ycG9yYXRlIENhcmQsVVNELDEyMDAuMDAsQ2hlY2ssVHJhaW5pbmcsWSxDb3Jwb3JhdGUgQ2FyZCBJc3N1ZXIKVC0wMDgsRU1QLTQwNiwyMDI1LTExLTAzLDIwMjUtMTEtMDQsT2ZmaWNlIFN1cHBsaWVzLFN0YXBsZXMsUGVyc29uYWwgQ2FyZCxBVUQsLTEwLjAwLCxTdXBwbGllcyxZLEVtcGxveWVl",
-            "fileName": "expensegood.xls",
-            "fileSize": "999 B"
-          }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Aggregate all expense rows into a single array response\nconst allExpenses = $input.all().map(item => item.json);\nreturn [{ json: { expenses: allExpenses } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3472,
+        1008
+      ],
+      "id": "bb326d6c-afd5-4ea1-a80b-f95d9d102fdb",
+      "name": "Aggregate Expenses"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        -3312,
+        1008
+      ],
+      "id": "f61c78bc-6c1a-47c7-8ba7-fe141a42dc71",
+      "name": "Respond to Webhook4"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Debug: Log all input\nconsole.log(\"=== AGGREGATE FOR EMAIL ===\");\nconsole.log(\"Number of items received:\", $input.all().length);\nconsole.log(\"Input data:\", JSON.stringify($input.all(), null, 2));\n\n// Get all items that were just appended\nconst items = $input.all();\n\n// Handle case where there are no items\nif (items.length === 0) {\n  console.log(\"ERROR: No items received!\");\n  return [];\n}\n\n// Get the employee ID from the first item\nconst employeeId = items[0].json.EmployeeID || items[0].json.employeeId;\nconsole.log(\"Employee ID:\", employeeId);\n\n// Build expense summary\nconst expenses = items.map(item => ({\n  transactionId: item.json.TransactionID || item.json.transactionId,\n  category: item.json.Category || item.json.category,\n  amount: item.json.Amount || item.json.amount,\n  currency: item.json.Currency || item.json.currency || 'USD',\n  description: item.json.Description || item.json.description,\n  vendor: item.json.Vendor || item.json.vendor\n}));\n\nconsole.log(\"Expenses:\", JSON.stringify(expenses, null, 2));\n\n// Calculate total\nconst total = expenses.reduce((sum, exp) => sum + parseFloat(exp.amount || 0), 0);\nconsole.log(\"Total:\", total);\n\n// Return single item for one email\nconst result = {\n  json: {\n    employeeId: employeeId,\n    expenseCount: items.length,\n    totalAmount: total.toFixed(2),\n    currency: expenses[0].currency,\n    expenses: expenses,\n    expenseList: expenses.map(e => \n      `• ${e.category}: ${e.currency} ${e.amount} - ${e.description} (${e.vendor})`\n    ).join('\\n')\n  }\n};\n\nconsole.log(\"Output for email:\", JSON.stringify(result, null, 2));\nreturn [result];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        864,
+        -144
+      ],
+      "id": "460ae817-1a09-4090-a561-53482347c05e",
+      "name": "Aggregate for Email"
+    },
+    {
+      "parameters": {
+        "sendTo": " csen296b@gmail.com",
+        "subject": "=New Expense Submission - {{ $json.EmployeeID }} - {{ $json.Category }}",
+        "message": "=<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;\">   <h2 style=\"color: #2563eb;\">New Expense Submitted</h2>      <p>Employee <strong>{{ $json.EmployeeID }}</strong> has submitted a new expense.</p>      <table style=\"width: 100%; border-collapse: collapse; margin: 20px 0;\">     <tr style=\"background-color: #f3f4f6;\">       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\"><strong>Transaction ID</strong></td>       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\">{{ $json.TransactionID }}</td>     </tr>     <tr>       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\"><strong>Category</strong></td>       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\">{{ $json.Category }}</td>     </tr>     <tr style=\"background-color: #f3f4f6;\">       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\"><strong>Amount</strong></td>       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\">{{ $json.Currency }} {{ $json.Amount }}</td>     </tr>     <tr>       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\"><strong>Description</strong></td>       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\">{{ $json.Description }}</td>     </tr>     <tr style=\"background-color: #f3f4f6;\">       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\"><strong>Vendor</strong></td>       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\">{{ $json.Vendor }}</td>     </tr>     <tr>       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\"><strong>Date</strong></td>       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\">{{ $json.DateIncurred }}</td>     </tr>   </table>      <p>     <a href=\"http://localhost:3001/admin/dashboard\"         style=\"background-color: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px;\">       Review in Dashboard     </a>   </p> </div>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -3424,
+        1216
+      ],
+      "id": "260b3abd-b751-42e9-ade2-5d4d8a7c823b",
+      "name": "Send a message4",
+      "webhookId": "839d9fc5-f908-412c-9f7f-f13b19e6ccc3",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ea7jSlHYi60T6XaV",
+          "name": "Gmail account"
         }
       }
-    ]
-  },
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "fetch-logs",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -4896,
+        1168
+      ],
+      "id": "5355ec52-3c92-4319-833c-6ceed627e7ea",
+      "name": "WebhoFetch Logs Webhookok",
+      "webhookId": "7709f4cc-f255-470a-a5cd-a21ef336b18e"
+    },
+    {
+      "parameters": {
+        "url": "http://loki:3100/loki/api/v1/query_range",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "={{ $json.query }}"
+            },
+            {
+              "name": "start",
+              "value": "={{ $json.start }}"
+            },
+            {
+              "name": "end",
+              "value": "={{ $json.end }}"
+            },
+            {
+              "name": "limit",
+              "value": "={{ $json.limit }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -4688,
+        1168
+      ],
+      "id": "ff63fa79-0396-4308-b052-5d7d89e215da",
+      "name": "HTTP Request Query Loki"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        -4464,
+        1168
+      ],
+      "id": "01876e0e-35bb-489e-a889-80fbd33f2f89",
+      "name": "Respond to Webhook5"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://loki:3100/loki/api/v1/push",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"streams\": [\n    {\n      \"stream\": {\n        \"workflow\": \"expense submission\",\n        \"node\": \"Submit Expense\",\n        \"event_type\": \"Expense Submitted\",\n        \"execution_id\": \"{{ $execution.id }}\",\n        \"user_id\": \"{{ $json.body.expense.employeeId }}\"\n      },\n      \"values\": [\n        [\n          \"{{ Date.now() * 1000000 }}\",\n          \"Expense submitted: TransactionID={{ $json.body.expense.transactionId }}, Category={{ $json.body.expense.category }}, Amount={{ $json.body.expense.amount }} {{ $json.body.expense.currency }}, Employee={{ $json.body.expense.employeeId }}, Vendor={{ $json.body.expense.vendor }}, Description={{ $json.body.expense.description }}\"\n        ]\n      ]\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -3040,
+        1296
+      ],
+      "id": "43a5426a-9dbc-4ead-b3cf-96805658eabb",
+      "name": "Logs for Submit exp",
+      "alwaysOutputData": false
+    }
+  ],
+  "pinData": {},
   "connections": {
     "Simple Memory": {
       "ai_memory": [
@@ -3265,11 +3382,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "Create file from text": {
-      "main": [
-        []
       ]
     },
     "Switch": {
@@ -3477,11 +3589,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "Merge": {
-      "main": [
-        []
       ]
     },
     "Sheet Router": {
@@ -3703,11 +3810,6 @@
         ]
       ]
     },
-    "No Prompt Injection Detected Log": {
-      "main": [
-        []
-      ]
-    },
     "Prompt Injection Detected Log": {
       "main": [
         [
@@ -3807,11 +3909,6 @@
         ]
       ]
     },
-    "Respond to Webhook": {
-      "main": [
-        []
-      ]
-    },
     "Normalize Chat Input": {
       "main": [
         [
@@ -3843,11 +3940,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "Log Model Output": {
-      "main": [
-        []
       ]
     },
     "Prompt Filtering Check": {
@@ -3894,16 +3986,6 @@
         ]
       ]
     },
-    "File Webhook Input Log": {
-      "main": [
-        []
-      ]
-    },
-    "Task Decomp Log 1": {
-      "main": [
-        []
-      ]
-    },
     "Code in JavaScript": {
       "main": [
         [
@@ -3913,11 +3995,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "Log Model Output 2": {
-      "main": [
-        []
       ]
     },
     "Search files and folders1": {
@@ -4045,16 +4122,6 @@
         ]
       ]
     },
-    "Respond to Webhook2": {
-      "main": [
-        []
-      ]
-    },
-    "Good Document Detected": {
-      "main": [
-        []
-      ]
-    },
     "Code in JavaScript3": {
       "main": [
         [
@@ -4073,6 +4140,11 @@
             "node": "Respond to Webhook2",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Aggregate for Email",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -4086,11 +4158,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "Get row(s) in sheet1": {
-      "main": [
-        []
       ]
     },
     "Fetch WebHook": {
@@ -4111,6 +4178,11 @@
             "node": "Append row in sheet1",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Logs for Submit exp",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -4122,8 +4194,78 @@
             "node": "Edit Fields1",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Send a message4",
+            "type": "main",
+            "index": 0
           }
         ]
+      ]
+    },
+    "Get row(s) in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Expenses",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Expenses": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message1": {
+      "main": [
+        []
+      ]
+    },
+    "Aggregate for Email": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WebhoFetch Logs Webhookok": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request Query Loki",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request Query Loki": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message4": {
+      "main": [
+        []
       ]
     }
   },
@@ -4134,7 +4276,7 @@
     "callerPolicy": "workflowsFromSameOwner",
     "availableInMCP": false
   },
-  "versionId": "901d994f-c12b-4a2c-9733-8f58fd01aa31",
+  "versionId": "0bebab7a-ce8d-4463-945f-69573cfd1591",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "85d73db211a1ee441813cdc78eebb0b7077e5f916b93a773754214d36365beb5"
