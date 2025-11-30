@@ -33,3 +33,10 @@ coverage/
 # Misc
 *.log
 .cache/
+
+# n8n persistent data (each dev should import workflows manually)
+n8n/package/n8n_data/
+n8n/package/qdrant_data/
+n8n/package/grafana_data/
+n8n/package/grafana_logs/
+n8n/package/alloy_positions/
