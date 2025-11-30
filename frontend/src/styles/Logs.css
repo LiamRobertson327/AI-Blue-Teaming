@@ -1,0 +1,290 @@
+/**
+ * =============================================================================
+ * LOGS PAGE STYLES
+ * =============================================================================
+ * Styles for the admin logs viewing page.
+ * =============================================================================
+ */
+
+/* === Logs Page === */
+.logs-page {
+  max-width: 1600px;
+}
+
+/* === Header Actions === */
+.header-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.refresh-button {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.refresh-button:hover {
+  background-color: var(--bg-secondary);
+}
+
+.refresh-button.active {
+  background-color: var(--color-success-light);
+  border-color: var(--color-success);
+  color: #166534;
+}
+
+.retry-button {
+  margin-left: auto;
+  padding: var(--spacing-xs) var(--spacing-md);
+  font-size: var(--font-size-sm);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-sm);
+  color: var(--color-danger);
+  cursor: pointer;
+}
+
+.retry-button:hover {
+  background-color: var(--color-danger);
+  color: var(--color-white);
+}
+
+/* === Filters === */
+.logs-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  min-width: 150px;
+}
+
+.filter-group label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.search-input {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  min-width: 250px;
+  transition: border-color var(--transition-fast);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.filter-select {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-primary);
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+/* === Logs Stats === */
+.logs-stats {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-sm) 0;
+  margin-bottom: var(--spacing-md);
+}
+
+.stat-item {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.stat-item strong {
+  color: var(--text-primary);
+}
+
+.auto-refresh-indicator {
+  color: var(--color-success);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* === Logs Container === */
+.logs-container {
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.logs-list {
+  max-height: calc(100vh - 400px);
+  overflow-y: auto;
+}
+
+/* === Log Entry === */
+.log-entry {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color var(--transition-fast);
+}
+
+.log-entry:hover {
+  background-color: var(--bg-secondary);
+}
+
+.log-entry:last-child {
+  border-bottom: none;
+}
+
+.log-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
+  flex-wrap: wrap;
+}
+
+.log-timestamp {
+  font-family: 'Fira Code', 'Consolas', monospace;
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  min-width: 140px;
+}
+
+.log-workflow {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.log-node {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.log-message {
+  font-family: 'Fira Code', 'Consolas', monospace;
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  line-height: 1.6;
+  padding: var(--spacing-sm);
+  background-color: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+  margin: var(--spacing-xs) 0;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.log-meta {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-xs);
+}
+
+.log-meta-item {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+.log-meta-item strong {
+  color: var(--text-secondary);
+}
+
+/* === Log Badges === */
+.log-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.log-badge--info {
+  background-color: var(--color-info-light);
+  color: #1e40af;
+}
+
+.log-badge--success {
+  background-color: var(--color-success-light);
+  color: #166534;
+}
+
+.log-badge--warning {
+  background-color: var(--color-warning-light);
+  color: #92400e;
+}
+
+.log-badge--error {
+  background-color: var(--color-danger-light);
+  color: #991b1b;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .logs-filters {
+    flex-direction: column;
+  }
+
+  .filter-group {
+    width: 100%;
+  }
+
+  .search-input {
+    min-width: 100%;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .log-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .log-timestamp {
+    min-width: auto;
+  }
+
+  .logs-list {
+    max-height: calc(100vh - 500px);
+  }
+}

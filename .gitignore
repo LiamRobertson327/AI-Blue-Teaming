@@ -1,8 +1,38 @@
-*.pyc
-*.env
-package/
-n8n_backup
-Update Images.txt
-docker-compose-liam.yml
-docs/deprecated/config/CSEN 296B Blue Team Model.json
-streamlit-service
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Build outputs
+dist/
+build/
+.next/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Testing
+coverage/
+
+# Misc
+*.log
+.cache/
+
+# n8n persistent data (each dev should import workflows manually)
+package
