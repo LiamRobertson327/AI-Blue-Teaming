@@ -904,7 +904,9 @@ export async function sendChatMessage(
   let employeeId = "unknown";
   if (auth.currentUser?.uid) {
     const profile = await getUserProfile(auth.currentUser.uid);
-    employeeId = profile?.employeeId || auth.currentUser.uid;
+    console.log("User profile for logging:", profile);
+    console.log("Employee ID from profile:", profile?.employeeId);
+    employeeId = profile?.employeeId || `User-${auth.currentUser.uid.substring(0, 8)}`;
   }
 
   // The n8n workflow expects { text: "..." } for chat messages
