@@ -2,8 +2,8 @@ import requests
 import os
 
 # --- CONFIGURATION ---
-WEBHOOK_URL = "http://localhost:5678/webhook/Lighthouse-input"
-EXCEL_FILE_PATH = "expensebest.xls"
+WEBHOOK_URL = "http://localhost:5678/webhook-test/submit-expense"
+EXCEL_FILE_PATH = "expenseUpload.xls"
 FORM_DATA_KEY = "excel_file"
 
 
