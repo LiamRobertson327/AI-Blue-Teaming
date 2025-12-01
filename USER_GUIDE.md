@@ -308,10 +308,8 @@ The system logs to Grafana Loki:
 
 | Service | URL |
 |---------|-----|
-| Frontend App | http://YOUR_SERVER_IP |
-| n8n Workflows | http://YOUR_SERVER_IP:5678 |
-| Grafana Dashboards | http://YOUR_SERVER_IP:3000 |
-| Loki Logs API | http://YOUR_SERVER_IP:3100 |
+| Frontend App | http://195.35.37.202 |
+| Grafana Dashboards | http://195.35.37.202:3000 |
 
 ---
 
