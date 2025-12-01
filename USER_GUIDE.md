@@ -309,7 +309,6 @@ The system logs to Grafana Loki:
 | Service | URL |
 |---------|-----|
 | Frontend App | http://195.35.37.202 |
-| Grafana Dashboards | http://195.35.37.202:3000 |
 
 ---
 
