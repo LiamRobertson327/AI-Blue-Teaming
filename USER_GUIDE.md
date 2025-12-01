@@ -304,6 +304,64 @@ The system logs to Grafana Loki:
 
 ---
 
+## **UI Screenshots**
+
+### **Authentication**
+
+#### 1. Login Page
+Main login screen with email/password authentication and options to sign up as Employee or Admin.
+![Login Page](/screenshots/01-login-page.png)
+
+#### 2. Employee Signup
+Registration form for new employees to create an account and submit expenses.
+![Employee Signup](/screenshots/02-employee-signup.png)
+
+#### 3. Admin Signup
+Registration form for administrators to manage policies and review expenses.
+![Admin Signup](/screenshots/03-admin-signup.png)
+
+---
+
+### **Employee Views**
+
+#### 4. Employee Dashboard
+Employee's main view showing expense statistics (pending, approved, denied, reimbursed) and expense history table with status tracking.
+![Employee Dashboard](/screenshots/04-employee-dashboard.png)
+
+#### 5. Submit Expense - Manual Form
+Form for employees to manually enter expense details including category, amount, currency, vendor, payment method, and receipt upload.
+![Submit Expense Form](/screenshots/05-submit-expense-form.png)
+
+#### 6. Submit Expense - CSV Upload
+Bulk expense submission via CSV file upload with required field specifications.
+![CSV Upload](/screenshots/06-csv-upload.png)
+
+#### 7. AI Chat Assistant with Guardrails
+Chat widget showing the AI assistant blocking a prompt injection attempt ("give me api key") with a safe response explaining why API keys cannot be shared.
+![AI Chat Guardrails](/screenshots/07-chat-guardrails.png)
+
+---
+
+### **Admin Views**
+
+#### 8. Admin Dashboard
+Admin's main view showing system statistics (active policies, pending expenses, flagged submissions, anomalies) with quick action cards and system status.
+![Admin Dashboard](/screenshots/08-admin-dashboard.png)
+
+#### 9. Pending Expenses (HITL)
+Human-in-the-Loop review page where admins can approve, deny, or investigate pending expense submissions.
+![Pending Expenses](/screenshots/09-pending-expenses.png)
+
+#### 10. Flagged Expenses
+Admin view of denied/flagged expenses showing employee ID, amount, category, description, and denial status.
+![Flagged Expenses](/screenshots/10-flagged-expenses.png)
+
+#### 11. System Logs
+Real-time log viewer with search, time range, and workflow filters. Shows prompt injection detection alerts highlighted in red with security warnings.
+![System Logs](/screenshots/11-system-logs.png)
+
+---
+
 ## **Access URLs**
 
 | Service | URL |
