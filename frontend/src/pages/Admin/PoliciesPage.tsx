@@ -5,26 +5,64 @@
  * Admin page for managing expense policies.
  * 
  * Features:
- * - Upload new policy documents (JSON/PDF)
+ * - Create new policies via form
  * - View list of existing policies
  * - Activate/deactivate policies
  * 
  * DATA SOURCE:
- * Currently uses mock data from mockData.ts.
- * TODO: Replace with fetchPolicies(), uploadPolicy(), updatePolicyStatus() from n8nClient.ts
+ * Sends policy data to n8n webhook which stores in Firestore.
  * =============================================================================
  */
 
-import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
+import React, { useEffect, useState, FormEvent } from "react";
 import { MainLayout } from "../../layouts/MainLayout";
 import { Policy } from "../../types";
 import {
   fetchPolicies,
-  uploadPolicy,
+  createPolicy,
   updatePolicyStatus,
 } from "../../services/n8nClient";
 import "../../styles/Dashboard.css";
 import "../../styles/Forms.css";
+
+// Expense categories matching the employee form
+const EXPENSE_CATEGORIES = [
+  "Global",
+  "Travel",
+  "Meals & Entertainment",
+  "Office Supplies",
+  "Software & Subscriptions",
+  "Equipment",
+  "Training & Education",
+  "Utilities",
+  "Marketing",
+  "Other",
+];
+
+/**
+ * PolicyFormData - Form data for creating a new policy
+ */
+interface PolicyFormData {
+  name: string;
+  category: string;
+  maxAmount: number;
+  currency: string;
+  requiresReceipt: boolean;
+  requiresApproval: boolean;
+  approvalThreshold: number;
+  description: string;
+}
+
+const initialFormData: PolicyFormData = {
+  name: "",
+  category: "Global",
+  maxAmount: 0,
+  currency: "USD",
+  requiresReceipt: true,
+  requiresApproval: true,
+  approvalThreshold: 100,
+  description: "",
+};
 
 /**
  * PoliciesPage - Admin page for policy management.
@@ -36,10 +74,13 @@ export function PoliciesPage(): JSX.Element {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  // Upload form state
-  const [policyName, setPolicyName] = useState("");
-  const [policyFile, setPolicyFile] = useState<File | null>(null);
-  const [uploading, setUploading] = useState(false);
+  // Form state
+  const [formData, setFormData] = useState<PolicyFormData>(initialFormData);
+  const [submitting, setSubmitting] = useState(false);
+  
+  // Edit mode state
+  const [editingPolicy, setEditingPolicy] = useState<Policy | null>(null);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   /**
    * Fetch policies on component mount.
@@ -66,60 +107,111 @@ export function PoliciesPage(): JSX.Element {
   };
 
   /**
-   * Handle file selection for policy upload.
+   * Handle form input changes
    */
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
-    setPolicyFile(file);
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value, type } = e.target;
+    
+    if (type === "checkbox") {
+      const checked = (e.target as HTMLInputElement).checked;
+      setFormData((prev) => ({ ...prev, [name]: checked }));
+    } else if (type === "number") {
+      // Round to 2 decimal places to avoid floating-point precision issues
+      const numValue = parseFloat(value) || 0;
+      const roundedValue = Math.round(numValue * 100) / 100;
+      setFormData((prev) => ({ ...prev, [name]: roundedValue }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   /**
-   * Handle policy upload form submission.
-   * 
-   * TODO: Replace stub call with real n8n webhook.
-   * The payload should include the policy file and metadata.
+   * Handle edit button click - populate form with policy data
    */
-  const handleUpload = async (e: FormEvent) => {
+  const handleEditClick = (policy: Policy) => {
+    setEditingPolicy(policy);
+    setIsEditMode(true);
+    setFormData({
+      name: policy.name,
+      category: policy.category || "Global",
+      maxAmount: Math.round(Number(policy.maxAmount || 0) * 100) / 100,
+      currency: policy.currency || "USD",
+      requiresReceipt: policy.requiresReceipt || false,
+      requiresApproval: policy.requiresApproval || false,
+      approvalThreshold: Math.round(Number(policy.approvalThreshold || 100) * 100) / 100,
+      description: policy.description || "",
+    });
+    // Scroll to form
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  /**
+   * Cancel edit mode
+   */
+  const handleCancelEdit = () => {
+    setEditingPolicy(null);
+    setIsEditMode(false);
+    setFormData(initialFormData);
+  };
+
+  /**
+   * Handle policy form submission (create or update).
+   */
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
 
-    if (!policyName.trim()) {
+    // Validation
+    if (!formData.name.trim()) {
       setError("Please enter a policy name.");
       return;
     }
 
-    if (!policyFile) {
-      setError("Please select a policy file.");
+    if (formData.maxAmount <= 0) {
+      setError("Please enter a valid maximum amount.");
       return;
     }
 
-    setUploading(true);
+    setSubmitting(true);
 
     try {
-      const result = await uploadPolicy(policyFile, policyName.trim());
+      // Round numeric values to avoid floating-point precision issues
+      const cleanedFormData = {
+        ...formData,
+        maxAmount: Math.round(Number(formData.maxAmount)),
+        approvalThreshold: Math.round(Number(formData.approvalThreshold)),
+      };
+      
+      // If editing, include the existing policy ID
+      const policyData = isEditMode && editingPolicy 
+        ? { ...cleanedFormData, id: editingPolicy.id }
+        : cleanedFormData;
+      
+      const result = await createPolicy(policyData as any);
 
       if (result.success) {
-        setSuccess(result.message);
-        setPolicyName("");
-        setPolicyFile(null);
+        setSuccess(isEditMode ? "Policy updated successfully!" : "Policy created successfully!");
+        setFormData(initialFormData);
+        setEditingPolicy(null);
+        setIsEditMode(false);
         // Refresh policies list
         await loadPolicies();
       } else {
-        setError(result.message);
+        setError(result.message || "Failed to save policy.");
       }
     } catch (err) {
-      console.error("Error uploading policy:", err);
-      setError("Failed to upload policy. Please try again.");
+      console.error("Error saving policy:", err);
+      setError("Failed to save policy. Please try again.");
     } finally {
-      setUploading(false);
+      setSubmitting(false);
     }
   };
 
   /**
    * Toggle policy status (active/inactive).
-   * 
-   * TODO: Replace stub call with real n8n webhook.
    */
   const handleToggleStatus = async (policy: Policy) => {
     const newStatus = policy.status === "active" ? "inactive" : "active";
@@ -128,7 +220,6 @@ export function PoliciesPage(): JSX.Element {
       const result = await updatePolicyStatus(policy.id, newStatus);
 
       if (result.success) {
-        // Update local state
         setPolicies((prev) =>
           prev.map((p) =>
             p.id === policy.id ? { ...p, status: newStatus } : p
@@ -162,7 +253,7 @@ export function PoliciesPage(): JSX.Element {
         <div className="page-header">
           <h1 className="page-title">Policy Management</h1>
           <p className="page-subtitle">
-            Upload and manage expense policies
+            Create and manage expense policies
           </p>
         </div>
 
@@ -193,61 +284,193 @@ export function PoliciesPage(): JSX.Element {
           </div>
         )}
 
-        {/* === Upload Section === */}
+        {/* === Create/Edit Policy Form === */}
         <div className="card">
-          <h2 className="card-title">Upload New Policy</h2>
+          <div className="card-header-row">
+            <h2 className="card-title">
+              {isEditMode ? `Edit Policy: ${editingPolicy?.name}` : "Create New Policy"}
+            </h2>
+            {isEditMode && (
+              <button
+                type="button"
+                className="secondary-button"
+                onClick={handleCancelEdit}
+              >
+                Cancel Edit
+              </button>
+            )}
+          </div>
           
-          <form onSubmit={handleUpload} className="upload-form">
+          <form onSubmit={handleSubmit} className="policy-form">
+            {/* Row 1: Name and Category */}
             <div className="form-row">
               <div className="form-group">
-                <label htmlFor="policyName" className="form-label">
+                <label htmlFor="name" className="form-label">
                   Policy Name *
                 </label>
                 <input
                   type="text"
-                  id="policyName"
+                  id="name"
+                  name="name"
                   className="form-input"
-                  value={policyName}
-                  onChange={(e) => setPolicyName(e.target.value)}
-                  placeholder="e.g., Travel Expense Policy 2024"
-                  disabled={uploading}
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  placeholder="e.g., Global Expense Limit Policy"
+                  disabled={submitting}
                 />
               </div>
 
               <div className="form-group">
-                <label htmlFor="policyFile" className="form-label">
-                  Policy File (JSON or PDF) *
+                <label htmlFor="category" className="form-label">
+                  Category *
+                </label>
+                <select
+                  id="category"
+                  name="category"
+                  className="form-select"
+                  value={formData.category}
+                  onChange={handleInputChange}
+                  disabled={submitting}
+                >
+                  {EXPENSE_CATEGORIES.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Row 2: Max Amount and Currency */}
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="maxAmount" className="form-label">
+                  Maximum Amount *
                 </label>
                 <input
-                  type="file"
-                  id="policyFile"
-                  className="form-file-input"
-                  onChange={handleFileChange}
-                  accept=".json,.pdf"
-                  disabled={uploading}
+                  type="number"
+                  id="maxAmount"
+                  name="maxAmount"
+                  className="form-input"
+                  value={formData.maxAmount || ""}
+                  onChange={handleInputChange}
+                  placeholder="e.g., 5000"
+                  min="0"
+                  step="0.01"
+                  disabled={submitting}
                 />
               </div>
 
-              <div className="form-group form-group--button">
-                <button
-                  type="submit"
-                  className="primary-button"
-                  disabled={uploading}
+              <div className="form-group">
+                <label htmlFor="currency" className="form-label">
+                  Currency
+                </label>
+                <select
+                  id="currency"
+                  name="currency"
+                  className="form-select"
+                  value={formData.currency}
+                  onChange={handleInputChange}
+                  disabled={submitting}
                 >
-                  {uploading ? "Uploading..." : "Upload Policy"}
-                </button>
+                  <option value="USD">USD</option>
+                  <option value="EUR">EUR</option>
+                  <option value="GBP">GBP</option>
+                  <option value="INR">INR</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="approvalThreshold" className="form-label">
+                  Approval Threshold
+                </label>
+                <input
+                  type="number"
+                  id="approvalThreshold"
+                  name="approvalThreshold"
+                  className="form-input"
+                  value={formData.approvalThreshold || ""}
+                  onChange={handleInputChange}
+                  placeholder="e.g., 100"
+                  min="0"
+                  step="0.01"
+                  disabled={submitting}
+                />
+                <span className="form-hint">Expenses above this require approval</span>
               </div>
             </div>
-          </form>
 
-          {/* Integration notice */}
-          <p className="form-hint">
-            {/* 
-              TODO: Connect to n8n webhook for policy upload.
-              The webhook should validate the policy format and store it.
-            */}
-            Accepted formats: JSON (structured rules) or PDF (document)
-          </p>
+            {/* Row 3: Checkboxes */}
+            <div className="form-row">
+              <div className="form-group form-group--checkbox">
+                <label className="checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="requiresReceipt"
+                    checked={formData.requiresReceipt}
+                    onChange={handleInputChange}
+                    disabled={submitting}
+                  />
+                  <span>Requires Receipt</span>
+                </label>
+              </div>
+
+              <div className="form-group form-group--checkbox">
+                <label className="checkbox-label">
+                  <input
+                    type="checkbox"
+                    name="requiresApproval"
+                    checked={formData.requiresApproval}
+                    onChange={handleInputChange}
+                    disabled={submitting}
+                  />
+                  <span>Requires Approval</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Row 4: Description */}
+            <div className="form-row">
+              <div className="form-group form-group--full">
+                <label htmlFor="description" className="form-label">
+                  Description
+                </label>
+                <textarea
+                  id="description"
+                  name="description"
+                  className="form-textarea"
+                  value={formData.description}
+                  onChange={handleInputChange}
+                  placeholder="Describe the policy rules and conditions..."
+                  rows={3}
+                  disabled={submitting}
+                />
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <div className="form-actions">
+              <button
+                type="submit"
+                className="primary-button"
+                disabled={submitting}
+              >
+                {submitting 
+                  ? (isEditMode ? "Updating..." : "Creating...") 
+                  : (isEditMode ? "Update Policy" : "Create Policy")}
+              </button>
+              {isEditMode && (
+                <button
+                  type="button"
+                  className="secondary-button"
+                  onClick={handleCancelEdit}
+                  disabled={submitting}
+                >
+                  Cancel
+                </button>
+              )}
+            </div>
+          </form>
         </div>
 
         {/* === Policies Table === */}
@@ -263,7 +486,7 @@ export function PoliciesPage(): JSX.Element {
             <div className="empty-state">
               <span className="empty-icon">📋</span>
               <p className="empty-text">No policies found.</p>
-              <p className="empty-hint">Upload your first policy above.</p>
+              <p className="empty-hint">Create your first policy above.</p>
             </div>
           ) : (
             <div className="table-container">
@@ -272,9 +495,9 @@ export function PoliciesPage(): JSX.Element {
                   <tr>
                     <th>Policy ID</th>
                     <th>Name</th>
-                    <th>Date Uploaded</th>
+                    <th>Category</th>
+                    <th>Max Amount</th>
                     <th>Status</th>
-                    <th>Limits / Rules Summary</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -285,7 +508,8 @@ export function PoliciesPage(): JSX.Element {
                         <code className="policy-id">{policy.id}</code>
                       </td>
                       <td>{policy.name}</td>
-                      <td>{formatDate(policy.dateUploaded)}</td>
+                      <td>{policy.category || "Global"}</td>
+                      <td>{policy.limitsSummary}</td>
                       <td>
                         <span
                           className={`status-badge status-badge--${policy.status}`}
@@ -293,8 +517,14 @@ export function PoliciesPage(): JSX.Element {
                           {policy.status}
                         </span>
                       </td>
-                      <td className="limits-cell">{policy.limitsSummary}</td>
-                      <td>
+                      <td className="actions-cell">
+                        <button
+                          className="edit-button"
+                          onClick={() => handleEditClick(policy)}
+                          title="Edit policy"
+                        >
+                          ✏️ Edit
+                        </button>
                         <button
                           className={`toggle-button ${
                             policy.status === "active"
@@ -314,19 +544,6 @@ export function PoliciesPage(): JSX.Element {
               </table>
             </div>
           )}
-        </div>
-
-        {/* === Data Source Notice === */}
-        <div className="data-notice">
-          <p>
-            <strong>Note:</strong> Policy management is currently using mock data.
-            {/* 
-              TODO: Connect to n8n webhooks:
-              - GET /webhook/admin/policies - Fetch all policies
-              - POST /webhook/admin/policy-upload - Upload new policy
-              - POST /webhook/admin/policy-status - Update policy status
-            */}
-          </p>
         </div>
       </div>
     </MainLayout>

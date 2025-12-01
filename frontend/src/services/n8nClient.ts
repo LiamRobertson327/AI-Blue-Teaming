@@ -41,7 +41,8 @@
  * =============================================================================
  */
 
-import { auth } from "../config/firebase";
+import { auth, db } from "../config/firebase";
+import { doc, setDoc } from "firebase/firestore";
 import {
   Expense,
   Policy,
@@ -56,6 +57,7 @@ import {
   mockEmployeeDashboardStats,
   mockAdminDashboardStats,
 } from "./mockData";
+import { getUserProfile } from "./authService";
 
 /**
  * Base URL for n8n webhooks.
@@ -477,64 +479,156 @@ export async function fetchAdminDashboard(): Promise<
 }
 
 /**
- * Fetch all pending expenses for admin review.
+ * Fetch all pending expenses (HITL) for admin review.
  * 
  * @returns Promise with list of pending expenses
- * 
- * TODO: Create n8n webhook endpoint for this
- * EXPECTED N8N WEBHOOK: GET /webhook/admin/pending-expenses
  */
 export async function fetchPendingExpenses(): Promise<Expense[]> {
   const idToken = await getIdToken();
 
-  console.log("=== STUB: fetchPendingExpenses ===");
-  console.log("ID Token:", idToken ? "Present" : "Missing");
+  console.log("=== fetchPendingExpenses ===");
   console.log("Target URL:", `${N8N_BASE_URL}/webhook/admin/pending-expenses`);
 
-  // TODO: Implement actual API call
-  // STUB: Return mock data
-  return mockPendingExpenses;
+  try {
+    const response = await fetch(`${N8N_BASE_URL}/webhook/admin/pending-expenses`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ idToken }),
+    });
+
+    if (!response.ok) {
+      console.error("Failed to fetch pending expenses:", response.status);
+      return [];
+    }
+
+    const data = await response.json();
+    console.log("Pending expenses response:", data);
+
+    // Handle different response formats:
+    // 1. [{ data: [...] }] - from Code node wrapped in array
+    // 2. { data: [...] } - from Code node
+    // 3. [...] - direct array
+    // 4. { ... } - single object
+    let dataArray: any[];
+    if (Array.isArray(data) && data.length > 0 && data[0].data) {
+      // Format: [{ data: [...] }]
+      dataArray = data[0].data;
+    } else if (data && data.data && Array.isArray(data.data)) {
+      // Format: { data: [...] }
+      dataArray = data.data;
+    } else if (Array.isArray(data)) {
+      dataArray = data;
+    } else if (data && typeof data === 'object') {
+      dataArray = [data];
+    } else {
+      dataArray = [];
+    }
+    
+    console.log("Parsed dataArray:", dataArray);
+    
+    // Map Google Sheets response to Expense format
+    const expenses: Expense[] = dataArray.map((row: any) => ({
+      id: row.TransactionID || row.transactionId,
+      transactionId: row.TransactionID || row.transactionId,
+      employeeId: row.EmployeeID || row.employeeId,
+      dateIncurred: row.DateIncurred || row.dateIncurred,
+      dateSubmitted: row.DateSubmitted || row.dateSubmitted,
+      description: row.Description || row.description,
+      vendor: row.Vendor || row.vendor,
+      paymentMethod: row.PaymentMethod || row.paymentMethod,
+      currency: row.Currency || row.currency || "USD",
+      amount: parseFloat(row.Amount || row.amount) || 0,
+      category: row.Category || row.category,
+      receiptAttached: row.ReceiptAttached || row.receiptAttached || "N",
+      reimbursementType: row.ReimbursementType || row.reimbursementType,
+      status: row.Status || row.status || "HITL",
+    }));
+
+    return expenses;
+  } catch (error) {
+    console.error("Error fetching pending expenses:", error);
+    return [];
+  }
 }
 
 /**
- * Fetch all flagged expenses for admin review.
+ * Fetch all denied expenses for admin review.
  * 
- * @returns Promise with list of flagged expenses
- * 
- * TODO: Create n8n webhook endpoint for this
- * EXPECTED N8N WEBHOOK: GET /webhook/admin/flagged-expenses
+ * @returns Promise with list of denied expenses
  */
 export async function fetchFlaggedExpenses(): Promise<Expense[]> {
   const idToken = await getIdToken();
 
-  console.log("=== STUB: fetchFlaggedExpenses ===");
-  console.log("ID Token:", idToken ? "Present" : "Missing");
-  console.log("Target URL:", `${N8N_BASE_URL}/webhook/admin/flagged-expenses`);
+  console.log("=== fetchFlaggedExpenses (Denied) ===");
+  console.log("Target URL:", `${N8N_BASE_URL}/webhook/admin/denied-expenses`);
 
-  // TODO: Implement actual API call
-  // STUB: Return mock data
-  return mockFlaggedExpenses;
+  try {
+    const response = await fetch(`${N8N_BASE_URL}/webhook/admin/denied-expenses`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ idToken }),
+    });
+
+    if (!response.ok) {
+      console.error("Failed to fetch denied expenses:", response.status);
+      return [];
+    }
+
+    const data = await response.json();
+    console.log("Denied expenses response:", data);
+
+    // Handle different response formats
+    let dataArray: any[];
+    if (Array.isArray(data) && data.length > 0 && data[0].data) {
+      dataArray = data[0].data;
+    } else if (data && data.data && Array.isArray(data.data)) {
+      dataArray = data.data;
+    } else if (Array.isArray(data)) {
+      dataArray = data;
+    } else if (data && typeof data === 'object') {
+      dataArray = [data];
+    } else {
+      dataArray = [];
+    }
+
+    // Map Google Sheets response to Expense format
+    const expenses: Expense[] = dataArray.map((row: any) => ({
+      id: row.TransactionID || row.transactionId,
+      transactionId: row.TransactionID || row.transactionId,
+      employeeId: row.EmployeeID || row.employeeId,
+      dateIncurred: row.DateIncurred || row.dateIncurred,
+      dateSubmitted: row.DateSubmitted || row.dateSubmitted,
+      description: row.Description || row.description,
+      vendor: row.Vendor || row.vendor,
+      paymentMethod: row.PaymentMethod || row.paymentMethod,
+      currency: row.Currency || row.currency || "USD",
+      amount: parseFloat(row.Amount || row.amount) || 0,
+      category: row.Category || row.category,
+      receiptAttached: row.ReceiptAttached || row.receiptAttached || "N",
+      reimbursementType: row.ReimbursementType || row.reimbursementType,
+      status: row.Status || row.status || "Denied",
+      flagReason: "Denied by admin",
+    }));
+
+    return expenses;
+  } catch (error) {
+    console.error("Error fetching denied expenses:", error);
+    return [];
+  }
 }
 
 /**
  * Send admin decision (approve/deny) for an expense.
+ * Updates the expense status in Google Sheets via n8n.
  * 
- * @param expenseId - The expense to approve/deny
+ * @param expenseId - The expense to approve/deny (TransactionID)
  * @param decision - "approve" or "deny"
  * @param reason - Optional reason for the decision
  * @returns Promise with result
- * 
- * TODO: Create n8n webhook endpoint for this
- * EXPECTED N8N WEBHOOK: POST /webhook/admin/decision
- * 
- * PAYLOAD STRUCTURE:
- * {
- *   idToken: string,
- *   role: "admin",
- *   expenseId: string,
- *   decision: "approve" | "deny",
- *   reason?: string
- * }
  */
 export async function sendAdminDecision(
   expenseId: string,
@@ -551,35 +645,42 @@ export async function sendAdminDecision(
     reason,
   };
 
-  console.log("=== STUB: sendAdminDecision ===");
+  console.log("=== sendAdminDecision ===");
   console.log("Payload:", JSON.stringify(payload, null, 2));
   console.log("Target URL:", `${N8N_BASE_URL}/webhook/admin/decision`);
 
-  // TODO: Implement actual API call
-  // try {
-  //   const response = await fetch(`${N8N_BASE_URL}/webhook/admin/decision`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(payload),
-  //   });
-  //
-  //   if (!response.ok) {
-  //     throw new Error(`HTTP error! status: ${response.status}`);
-  //   }
-  //
-  //   return { success: true, message: `Expense ${decision}d successfully` };
-  // } catch (error) {
-  //   console.error("Error sending decision:", error);
-  //   return { success: false, message: "Failed to process decision" };
-  // }
+  try {
+    const response = await fetch(`${N8N_BASE_URL}/webhook/admin/decision`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
 
-  // STUB: Return mock success
-  return {
-    success: true,
-    message: `Expense ${decision}d successfully (MOCK)`,
-  };
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Server error:", errorText);
+      return { 
+        success: false, 
+        message: `Failed to process decision: ${response.status}` 
+      };
+    }
+
+    const result = await response.json();
+    console.log("Decision response:", result);
+
+    return { 
+      success: true, 
+      message: `Expense ${decision === "approve" ? "approved" : "denied"} successfully` 
+    };
+  } catch (error) {
+    console.error("Error sending decision:", error);
+    return { 
+      success: false, 
+      message: "Failed to process decision. Please try again." 
+    };
+  }
 }
 
 // =============================================================================
@@ -595,15 +696,50 @@ export async function sendAdminDecision(
  * EXPECTED N8N WEBHOOK: GET /webhook/admin/policies
  */
 export async function fetchPolicies(): Promise<Policy[]> {
-  const idToken = await getIdToken();
+  console.log("=== fetchPolicies from Firestore ===");
 
-  console.log("=== STUB: fetchPolicies ===");
-  console.log("ID Token:", idToken ? "Present" : "Missing");
-  console.log("Target URL:", `${N8N_BASE_URL}/webhook/admin/policies`);
+  try {
+    const url = `https://firestore.googleapis.com/v1/projects/lighthouse-ai-b3f45/databases/(default)/documents/policies`;
+    
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+      console.error("Failed to fetch policies:", response.status);
+      return [];
+    }
 
-  // TODO: Implement actual API call
-  // STUB: Return mock data
-  return mockPolicies;
+    const data = await response.json();
+    console.log("Firestore response:", data);
+
+    if (!data.documents) {
+      return [];
+    }
+
+    // Parse Firestore documents into Policy objects
+    const policies: Policy[] = data.documents.map((doc: any) => {
+      const fields = doc.fields;
+      return {
+        id: fields.id?.stringValue || doc.name.split('/').pop(),
+        name: fields.name?.stringValue || "",
+        category: fields.category?.stringValue || "Global",
+        uploadedBy: fields.uploadedBy?.stringValue || "admin",
+        dateUploaded: fields.dateCreated?.stringValue || new Date().toISOString(),
+        status: fields.status?.stringValue || "active",
+        limitsSummary: `Max ${fields.currency?.stringValue || "USD"} ${fields.maxAmount?.doubleValue || fields.maxAmount?.integerValue || 0}`,
+        maxAmount: fields.maxAmount?.doubleValue || fields.maxAmount?.integerValue || 0,
+        currency: fields.currency?.stringValue || "USD",
+        requiresReceipt: fields.requiresReceipt?.booleanValue || false,
+        requiresApproval: fields.requiresApproval?.booleanValue || false,
+        approvalThreshold: fields.approvalThreshold?.doubleValue || fields.approvalThreshold?.integerValue || 0,
+        description: fields.description?.stringValue || "",
+      };
+    });
+
+    return policies;
+  } catch (error) {
+    console.error("Error fetching policies:", error);
+    return [];
+  }
 }
 
 /**
@@ -638,38 +774,92 @@ export async function uploadPolicy(
 }
 
 /**
+ * Create a new policy via form data.
+ * Writes policy data directly to Firestore.
+ * 
+ * @param policyData - The policy form data
+ * @returns Promise with creation result
+ */
+export async function createPolicy(
+  policyData: {
+    name: string;
+    category: string;
+    maxAmount: number;
+    currency: string;
+    requiresReceipt: boolean;
+    requiresApproval: boolean;
+    approvalThreshold: number;
+    description: string;
+  }
+): Promise<{ success: boolean; message: string; policyId?: string }> {
+  // Check if this is an update (has existing ID) or create (needs new ID)
+  const isUpdate = 'id' in policyData && (policyData as any).id;
+  const policyId = isUpdate ? (policyData as any).id : `POL-${Date.now()}`;
+
+  const policyDocument = {
+    ...policyData,
+    id: policyId,
+    status: "active",
+    dateCreated: new Date().toISOString(),
+  };
+
+  console.log(`=== ${isUpdate ? 'updatePolicy' : 'createPolicy'} (Firestore) ===`);
+  console.log("Policy:", JSON.stringify(policyDocument, null, 2));
+
+  try {
+    // Write directly to Firestore
+    const policyRef = doc(db, "policies", policyId);
+    await setDoc(policyRef, policyDocument);
+
+    console.log("Policy saved to Firestore successfully");
+
+    return {
+      success: true,
+      message: isUpdate ? "Policy updated successfully!" : "Policy created successfully!",
+      policyId: policyId,
+    };
+  } catch (error) {
+    console.error("Error saving policy to Firestore:", error);
+    return {
+      success: false,
+      message: "Failed to save policy. Please try again.",
+    };
+  }
+}
+
+/**
  * Update policy status (activate/deactivate).
+ * Updates the policy status directly in Firestore.
  * 
  * @param policyId - The policy to update
  * @param status - New status ("active" or "inactive")
  * @returns Promise with result
- * 
- * TODO: Create n8n webhook endpoint for this
- * EXPECTED N8N WEBHOOK: POST /webhook/admin/policy-status
  */
 export async function updatePolicyStatus(
   policyId: string,
   status: "active" | "inactive"
 ): Promise<{ success: boolean; message: string }> {
-  const idToken = await getIdToken();
+  console.log("=== updatePolicyStatus (Firestore) ===");
+  console.log("Policy ID:", policyId);
+  console.log("New Status:", status);
 
-  const payload = {
-    idToken,
-    role: "admin",
-    policyId,
-    status,
-  };
+  try {
+    const policyRef = doc(db, "policies", policyId);
+    await setDoc(policyRef, { status }, { merge: true });
 
-  console.log("=== STUB: updatePolicyStatus ===");
-  console.log("Payload:", JSON.stringify(payload, null, 2));
-  console.log("Target URL:", `${N8N_BASE_URL}/webhook/admin/policy-status`);
+    console.log("Policy status updated in Firestore successfully");
 
-  // TODO: Implement actual API call
-  // STUB: Return mock success
-  return {
-    success: true,
-    message: `Policy ${status === "active" ? "activated" : "deactivated"} successfully (MOCK)`,
-  };
+    return {
+      success: true,
+      message: `Policy ${status === "active" ? "activated" : "deactivated"} successfully`,
+    };
+  } catch (error) {
+    console.error("Error updating policy status in Firestore:", error);
+    return {
+      success: false,
+      message: "Failed to update policy status. Please try again.",
+    };
+  }
 }
 
 // =============================================================================
@@ -691,6 +881,15 @@ export async function sendChatMessage(
   role: "employee" | "admin"
 ): Promise<{ success: boolean; message: string }> {
   const idToken = await getIdToken();
+  const userEmail = auth.currentUser?.email || "unknown";
+  const userName = auth.currentUser?.displayName || userEmail;
+  
+  // Get employee ID from Firestore profile
+  let employeeId = "unknown";
+  if (auth.currentUser?.uid) {
+    const profile = await getUserProfile(auth.currentUser.uid);
+    employeeId = profile?.employeeId || auth.currentUser.uid;
+  }
 
   // The n8n workflow expects { text: "..." } for chat messages
   const payload = {
@@ -698,6 +897,10 @@ export async function sendChatMessage(
     // Include additional context that n8n can use
     role,
     idToken,
+    // Include user info for logging
+    userEmail,
+    userName,
+    userId: employeeId, // Use employeeId (EMP-001) instead of Firebase UID
   };
 
   console.log("=== sendChatMessage ===");

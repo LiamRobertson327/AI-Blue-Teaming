@@ -156,13 +156,6 @@ export function FlaggedExpensesPage(): JSX.Element {
         </div>
 
         {/* === Warning Banner === */}
-        <div className="warning-banner">
-          <span className="warning-icon">⚠️</span>
-          <span>
-            These expenses have been flagged by the AI for potential policy
-            violations or anomalies. Please review carefully before approving.
-          </span>
-        </div>
 
         {/* === Messages === */}
         {error && (
@@ -206,58 +199,24 @@ export function FlaggedExpensesPage(): JSX.Element {
                     <th>Employee</th>
                     <th>Amount</th>
                     <th>Category</th>
-                    <th>Risk Score</th>
-                    <th>Flag Reason</th>
-                    <th>Actions</th>
+                    <th>Description</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   {expenses.map((expense) => (
                     <tr
-                      key={expense.id}
-                      onClick={() => handleRowClick(expense)}
-                      className="clickable-row"
+                      key={expense.id || expense.transactionId}
+                      className="data-row"
                     >
                       <td>{expense.employeeId}</td>
                       <td>{formatCurrency(expense.amount, expense.currency)}</td>
                       <td>{expense.category}</td>
+                      <td>{expense.description || "-"}</td>
                       <td>
-                        <span
-                          className={`risk-score ${getRiskClass(
-                            expense.riskScore || 0
-                          )}`}
-                        >
-                          {expense.riskScore || 0}%
+                        <span className="status-badge status-badge--denied">
+                          {expense.status}
                         </span>
-                      </td>
-                      <td className="flag-reason-cell">
-                        {expense.flagReason || "-"}
-                      </td>
-                      <td>
-                        <div className="action-buttons">
-                          <button
-                            className="icon-button icon-button--approve"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setSelectedExpense(expense);
-                              handleDecision("approve");
-                            }}
-                            title="Approve"
-                          >
-                            ✓
-                          </button>
-                          <button
-                            className="icon-button icon-button--deny"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setSelectedExpense(expense);
-                              handleDecision("deny");
-                            }}
-                            title="Deny"
-                          >
-                            ✕
-                          </button>
-                        </div>
                       </td>
                     </tr>
                   ))}
@@ -406,17 +365,6 @@ export function FlaggedExpensesPage(): JSX.Element {
           </div>
         )}
 
-        {/* === Data Source Notice === */}
-        <div className="data-notice">
-          <p>
-            <strong>Note:</strong> This page is currently showing mock data.
-            {/* 
-              TODO: Connect to n8n webhooks:
-              - GET /webhook/admin/flagged-expenses - Fetch flagged expenses
-              - POST /webhook/admin/decision - Send approve/deny decision
-            */}
-          </p>
-        </div>
       </div>
     </MainLayout>
   );

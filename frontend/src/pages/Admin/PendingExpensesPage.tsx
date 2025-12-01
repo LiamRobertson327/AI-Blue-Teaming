@@ -98,7 +98,7 @@ export function PendingExpensesPage(): JSX.Element {
 
     try {
       const result = await sendAdminDecision(
-        selectedExpense.id,
+        selectedExpense.transactionId || selectedExpense.id,
         decision,
         decisionReason || undefined
       );
@@ -107,9 +107,39 @@ export function PendingExpensesPage(): JSX.Element {
         setSuccess(result.message);
         // Remove the expense from the list
         setExpenses((prev) =>
-          prev.filter((e) => e.id !== selectedExpense.id)
+          prev.filter((e) => (e.transactionId || e.id) !== (selectedExpense.transactionId || selectedExpense.id))
         );
         closeModal();
+      } else {
+        setError(result.message);
+      }
+    } catch (err) {
+      console.error("Error processing decision:", err);
+      setError("Failed to process decision. Please try again.");
+    } finally {
+      setProcessing(false);
+    }
+  };
+
+  /**
+   * Handle quick approve/deny from table buttons.
+   */
+  const handleQuickDecision = async (expense: Expense, decision: "approve" | "deny") => {
+    setProcessing(true);
+    setError(null);
+
+    try {
+      const result = await sendAdminDecision(
+        expense.transactionId || expense.id,
+        decision
+      );
+
+      if (result.success) {
+        setSuccess(`Expense ${decision === "approve" ? "approved" : "denied"} successfully!`);
+        // Remove the expense from the list
+        setExpenses((prev) =>
+          prev.filter((e) => (e.transactionId || e.id) !== (expense.transactionId || expense.id))
+        );
       } else {
         setError(result.message);
       }
@@ -195,35 +225,52 @@ export function PendingExpensesPage(): JSX.Element {
                     <th>Employee</th>
                     <th>Amount</th>
                     <th>Category</th>
-                    <th>Policy Used</th>
+                    <th>Description</th>
                     <th>Status</th>
-                    <th>Flag</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {expenses.map((expense) => (
                     <tr
-                      key={expense.id}
-                      onClick={() => handleRowClick(expense)}
-                      className="clickable-row"
+                      key={expense.id || expense.transactionId}
+                      className="data-row"
                     >
                       <td>{expense.employeeId}</td>
                       <td>{formatCurrency(expense.amount, expense.currency)}</td>
                       <td>{expense.category}</td>
-                      <td>{expense.policyUsed || "-"}</td>
+                      <td>{expense.description || "-"}</td>
                       <td>
                         <span className="status-badge status-badge--pending">
                           {expense.status}
                         </span>
                       </td>
                       <td>
-                        {expense.flagReason ? (
-                          <span className="flag-indicator" title={expense.flagReason}>
-                            🚩
-                          </span>
-                        ) : (
-                          "-"
-                        )}
+                        <div className="action-buttons">
+                          <button
+                            className="btn-approve"
+                            onClick={() => handleQuickDecision(expense, "approve")}
+                            disabled={processing}
+                            title="Approve"
+                          >
+                            ✓
+                          </button>
+                          <button
+                            className="btn-deny"
+                            onClick={() => handleQuickDecision(expense, "deny")}
+                            disabled={processing}
+                            title="Deny"
+                          >
+                            ✕
+                          </button>
+                          <button
+                            className="btn-details"
+                            onClick={() => handleRowClick(expense)}
+                            title="View Details"
+                          >
+                            ⋯
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -357,17 +404,6 @@ export function PendingExpensesPage(): JSX.Element {
           </div>
         )}
 
-        {/* === Data Source Notice === */}
-        <div className="data-notice">
-          <p>
-            <strong>Note:</strong> This page is currently showing mock data.
-            {/* 
-              TODO: Connect to n8n webhooks:
-              - GET /webhook/admin/pending-expenses - Fetch pending expenses
-              - POST /webhook/admin/decision - Send approve/deny decision
-            */}
-          </p>
-        </div>
       </div>
     </MainLayout>
   );
