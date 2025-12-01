@@ -51,7 +51,7 @@ interface LokiResponse {
 }
 
 // Loki endpoint - using nginx proxy with CORS enabled
-const LOKI_PROXY_URL = "http://localhost:3101"; // Nginx proxy with CORS
+const LOKI_PROXY_URL = process.env.REACT_APP_LOKI_URL || `${window.location.protocol}//${window.location.hostname}:3101`;
 // Auth token not needed for local Loki access via nginx proxy
 
 /**
