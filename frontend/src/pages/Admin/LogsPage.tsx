@@ -501,10 +501,10 @@ export function LogsPage(): JSX.Element {
                         {log.message}
                       </div>
                       <div className="log-meta">
-                        {log.userId && (
+                        {log.userId && log.userId !== "unknown" && (
                           <span className="log-meta-item log-meta-employee">
                             <span className="employee-icon">👤</span>
-                            <strong>Employee:</strong> {log.userId}
+                            <strong>User ID:</strong> {log.userId.length > 20 ? `${log.userId.substring(0, 8)}...${log.userId.substring(log.userId.length - 4)}` : log.userId}
                           </span>
                         )}
                       </div>
