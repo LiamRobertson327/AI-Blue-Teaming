@@ -79,8 +79,8 @@ services:
     image: grafana/loki:2.9.3
     container_name: loki
     restart: always
-    # ports:
-    #   - "3100:3100"
+    ports:
+      - "3100:3100"
     volumes:
       - ./package/loki_data:/loki
       - ./loki-config.yaml:/etc/loki/local-config.yaml
