@@ -28,10 +28,17 @@ export type PolicyStatus = "active" | "inactive";
 export interface Policy {
   id: string;
   name: string;
+  category?: string;
   uploadedBy: string;
   dateUploaded: string;
   status: PolicyStatus;
   limitsSummary: string;
+  maxAmount?: number;
+  currency?: string;
+  requiresReceipt?: boolean;
+  requiresApproval?: boolean;
+  approvalThreshold?: number;
+  description?: string;
 }
 
 /**

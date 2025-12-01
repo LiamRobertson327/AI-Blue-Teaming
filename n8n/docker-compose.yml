@@ -16,8 +16,10 @@ services:
       - N8N_PORT=5678
       - N8N_PROTOCOL=http
       # CORS - Allow frontend to call webhooks
-      - N8N_CORS_ALLOWED_ORIGINS=http://localhost:3001
-      - N8N_CORS_ENABLED=true
+      - N8N_ENDPOINT_WEBHOOK=webhook
+      - N8N_ENDPOINT_WEBHOOK_TEST=webhook-test
+      - N8N_PUSH_BACKEND=websocket
+      - N8N_RUNNERS_ENABLED=false
       - N8N_LOG_OUTPUT=file
       - N8N_LOG_FILE_LOCATION=/home/node/.n8n/logs/n8n.log
       # Execution Data

@@ -228,13 +228,105 @@ export function LogsPage(): JSX.Element {
   };
 
   /**
+   * Security threat tags that should be highlighted in red/danger style
+   * Note: Only match when it's an ACTUAL threat detection, not "not detected"
+   */
+  const SECURITY_THREAT_TAGS = [
+    "injection detected",
+    "injection_detected",
+    "prompt injection",
+    "prompt_injection",
+    "filtering detected",
+    "blacklisted",
+    "blacklist",
+    "blacklisted_word",
+    "blacklisted word",
+    "bad_prompt",
+    "bad prompt",
+    "malicious",
+    "blocked",
+    "threat detected",
+    "security_alert",
+    "flagged_dangerous",
+    "vulnerability",
+    "exploit",
+    "attack",
+  ];
+
+  /**
+   * Check if event type is a security threat
+   * Excludes "not detected" or "no ... detected" patterns
+   */
+  const isSecurityThreat = (eventType: string): boolean => {
+    const type = eventType.toLowerCase();
+    
+    // If it says "not detected", "no prompt", "no filtering", "safe" - it's NOT a threat
+    if (type.includes("not detected") || type.includes("no prompt") || type.includes("not_detected") || 
+        type.includes("no filtering") || type.includes("safe model") || type.includes("passed")) {
+      return false;
+    }
+    
+    // Check for actual threat patterns
+    return SECURITY_THREAT_TAGS.some(tag => type.includes(tag));
+  };
+
+  /**
+   * Get display label for security tags (more readable)
+   */
+  const getSecurityTagLabel = (eventType: string): string => {
+    const type = eventType.toLowerCase();
+    
+    // Skip if not a real threat
+    if (type.includes("not detected") || type.includes("no prompt") || type.includes("not_detected") ||
+        type.includes("no filtering") || type.includes("safe model") || type.includes("passed")) {
+      return eventType.toUpperCase();
+    }
+    
+    if (type.includes("prompt injection") || type.includes("prompt_injection") || 
+        type.includes("injection detected") || type.includes("filtering detected")) {
+      return "⚠️ PROMPT INJECTION DETECTED";
+    }
+    if (type.includes("blacklist")) {
+      return "⚠️ BLACKLISTED WORD DETECTED";
+    }
+    if (type.includes("bad_prompt") || type.includes("bad prompt")) {
+      return "⚠️ BAD PROMPT DETECTED";
+    }
+    if (type.includes("malicious")) {
+      return "⚠️ MALICIOUS CONTENT";
+    }
+    if (type.includes("blocked")) {
+      return "🚫 BLOCKED";
+    }
+    if (type.includes("vulnerability")) {
+      return "⚠️ VULNERABILITY DETECTED";
+    }
+    if (type.includes("exploit")) {
+      return "⚠️ EXPLOIT ATTEMPT";
+    }
+    if (type.includes("attack")) {
+      return "⚠️ ATTACK DETECTED";
+    }
+    if (type.includes("threat") || type.includes("security_alert")) {
+      return "⚠️ SECURITY THREAT";
+    }
+    return eventType.toUpperCase();
+  };
+
+  /**
    * Get CSS class for event type badge
    */
   const getEventTypeClass = (eventType: string): string => {
     const type = eventType.toLowerCase();
+    
+    // Security threats get critical/danger styling
+    if (isSecurityThreat(type)) {
+      return "log-badge log-badge--critical";
+    }
+    
     if (type.includes("error") || type.includes("fail")) return "log-badge log-badge--error";
     if (type.includes("warn") || type.includes("detected") || type.includes("flag")) return "log-badge log-badge--warning";
-    if (type.includes("success") || type.includes("complete")) return "log-badge log-badge--success";
+    if (type.includes("success") || type.includes("complete") || type.includes("passed") || type.includes("clean")) return "log-badge log-badge--success";
     return "log-badge log-badge--info";
   };
 
@@ -369,29 +461,50 @@ export function LogsPage(): JSX.Element {
                           {formatTimestamp(log.timestamp)}
                         </span>
                         <span className={getEventTypeClass(log.eventType)}>
-                          {log.eventType}
+                          {isSecurityThreat(log.eventType) ? (
+                            <>
+                              <span className="security-icon">🚨</span>
+                              {getSecurityTagLabel(log.eventType)}
+                            </>
+                          ) : (
+                            log.eventType
+                          )}
                         </span>
-                        <span className="log-workflow">
-                          {log.workflow}
-                        </span>
-                        {log.node && log.node !== "unknown" && (
-                          <span className="log-node">
-                            → {log.node}
+                        {/* Check if workflow name contains security threat */}
+                        {isSecurityThreat(log.workflow) ? (
+                          <span className="log-badge log-badge--critical">
+                            <span className="security-icon">🚨</span>
+                            {getSecurityTagLabel(log.workflow)}
+                          </span>
+                        ) : (
+                          <span className="log-workflow">
+                            {log.workflow}
                           </span>
                         )}
+                        {log.node && log.node !== "unknown" && (
+                          <>
+                            {/* Check if node contains security threat info */}
+                            {isSecurityThreat(log.node) ? (
+                              <span className="log-badge log-badge--critical">
+                                <span className="security-icon">🚨</span>
+                                {getSecurityTagLabel(log.node)}
+                              </span>
+                            ) : (
+                              <span className="log-node">
+                                → {log.node}
+                              </span>
+                            )}
+                          </>
+                        )}
                       </div>
-                      <div className="log-message">
+                      <div className={`log-message ${isSecurityThreat(log.message) || isSecurityThreat(log.node) || isSecurityThreat(log.workflow) ? 'log-message--threat' : ''}`}>
                         {log.message}
                       </div>
                       <div className="log-meta">
-                        {log.executionId && (
-                          <span className="log-meta-item">
-                            <strong>Execution:</strong> {log.executionId}
-                          </span>
-                        )}
                         {log.userId && (
-                          <span className="log-meta-item">
-                            <strong>User:</strong> {log.userId}
+                          <span className="log-meta-item log-meta-employee">
+                            <span className="employee-icon">👤</span>
+                            <strong>Employee:</strong> {log.userId}
                           </span>
                         )}
                       </div>

@@ -225,6 +225,19 @@
   color: var(--text-secondary);
 }
 
+.log-meta-employee {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: var(--bg-tertiary);
+  padding: 4px 10px;
+  border-radius: var(--radius-md);
+}
+
+.employee-icon {
+  font-size: 14px;
+}
+
 /* === Log Badges === */
 .log-badge {
   display: inline-block;
@@ -254,6 +267,58 @@
 .log-badge--error {
   background-color: var(--color-danger-light);
   color: #991b1b;
+}
+
+/* === Critical Security Badge (Prompt Injection, Blacklisted, etc.) === */
+.log-badge--critical {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 4px 12px;
+  font-size: 11px;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
+  border: 1px solid #991b1b;
+  animation: critical-pulse 2s ease-in-out infinite;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.log-badge--critical .security-icon {
+  font-size: 12px;
+  animation: shake 0.5s ease-in-out infinite;
+}
+
+@keyframes critical-pulse {
+  0%, 100% {
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
+  }
+  50% {
+    box-shadow: 0 2px 16px rgba(220, 38, 38, 0.7);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-1px); }
+  75% { transform: translateX(1px); }
+}
+
+/* Security threat log entry highlight */
+.log-entry:has(.log-badge--critical) {
+  background-color: rgba(220, 38, 38, 0.05);
+  border-left: 4px solid #dc2626;
+}
+
+.log-entry:has(.log-badge--critical):hover {
+  background-color: rgba(220, 38, 38, 0.1);
+}
+
+/* Threat message styling */
+.log-message--threat {
+  background-color: rgba(220, 38, 38, 0.08) !important;
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  border-left: 3px solid #dc2626;
 }
 
 /* === Responsive === */

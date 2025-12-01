@@ -65,6 +65,7 @@ export function FlaggedExpensesPage(): JSX.Element {
   /**
    * Handle expense row click - open detail modal.
    */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleRowClick = (expense: Expense) => {
     setSelectedExpense(expense);
     setDecisionReason("");

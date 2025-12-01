@@ -51,11 +51,7 @@ import {
 } from "../types";
 import {
   mockEmployeeExpenses,
-  mockPendingExpenses,
-  mockFlaggedExpenses,
-  mockPolicies,
   mockEmployeeDashboardStats,
-  mockAdminDashboardStats,
 } from "./mockData";
 import { getUserProfile } from "./authService";
 
@@ -451,31 +447,51 @@ export async function fetchEmployeeDashboard(employeeId?: string): Promise<{
   };
 }
 
-// =============================================================================
 // ADMIN ENDPOINTS
 // =============================================================================
 
 /**
- * Fetch admin dashboard data.
+ * Fetch admin dashboard statistics.
  * Returns summary statistics for the admin dashboard.
  * 
  * @returns Promise with dashboard statistics
- * 
- * TODO: Create n8n webhook endpoint for this
- * EXPECTED N8N WEBHOOK: GET /webhook/admin-dashboard
  */
-export async function fetchAdminDashboard(): Promise<
-  typeof mockAdminDashboardStats
-> {
-  const idToken = await getIdToken();
+export async function fetchAdminDashboard(): Promise<{
+  activePolicies: number;
+  pendingExpenses: number;
+  flaggedSubmissions: number;
+  anomaliesDetected: number;
+}> {
+  console.log("=== fetchAdminDashboard ===");
 
-  console.log("=== STUB: fetchAdminDashboard ===");
-  console.log("ID Token:", idToken ? "Present" : "Missing");
-  console.log("Target URL:", `${N8N_BASE_URL}/webhook/admin-dashboard`);
+  try {
+    // Fetch real data from multiple sources
+    const [policies, pendingExpenses, flaggedExpenses] = await Promise.all([
+      fetchPolicies(),
+      fetchPendingExpenses(),
+      fetchFlaggedExpenses(),
+    ]);
 
-  // TODO: Implement actual API call
-  // STUB: Return mock data
-  return mockAdminDashboardStats;
+    const activePolicies = policies.filter(p => p.status === "active").length;
+    const pendingCount = pendingExpenses.length;
+    const flaggedCount = flaggedExpenses.length;
+
+    return {
+      activePolicies,
+      pendingExpenses: pendingCount,
+      flaggedSubmissions: flaggedCount,
+      anomaliesDetected: 0, // No anomaly detection yet
+    };
+  } catch (error) {
+    console.error("Error fetching admin dashboard:", error);
+    // Return zeros on error
+    return {
+      activePolicies: 0,
+      pendingExpenses: 0,
+      flaggedSubmissions: 0,
+      anomaliesDetected: 0,
+    };
+  }
 }
 
 /**

@@ -194,7 +194,7 @@ export function AdminDashboardPage(): JSX.Element {
                 <div className="status-item">
                   <span className="status-indicator status-indicator--active"></span>
                   <span className="status-text">n8n Backend</span>
-                  <span className="status-value">Connected (Mock)</span>
+                  <span className="status-value">Connected</span>
                 </div>
                 
                 <div className="status-item">
@@ -211,13 +211,6 @@ export function AdminDashboardPage(): JSX.Element {
               </div>
             </div>
 
-            {/* === Data Source Notice === */}
-            <div className="data-notice">
-              <p>
-                <strong>Note:</strong> This dashboard is currently showing mock data.
-                {/* TODO: Remove this notice when connected to real n8n backend */}
-              </p>
-            </div>
           </>
         )}
       </div>
