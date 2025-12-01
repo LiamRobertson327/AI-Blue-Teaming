@@ -113,12 +113,16 @@ export async function submitExpense(
   role: "employee" | "admin"
 ): Promise<{ success: boolean; message: string; expenseId?: string }> {
   const idToken = await getIdToken();
+  const userEmail = auth.currentUser?.email || "unknown";
+  const userName = auth.currentUser?.displayName || userEmail;
 
-  const payload: ExpenseSubmissionPayload = {
+  const payload = {
     idToken,
     role,
     submissionType: "manual",
     expense: expenseData,
+    userEmail,
+    userName,
   };
 
   console.log("=== submitExpense ===");
