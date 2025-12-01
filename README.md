@@ -37,21 +37,12 @@ AI-Blue-Teaming
 │    ├── markdown/                      # Misc material *Not related to AI Agent*
 │    └── user/                           # Contains the userguide
 │
-├── labs/                               # Labs that demonstrate vulnerabilities and defenses
-│    ├── lab1_prompt_injection/         
-│    ├── lab2_ai_generated_code_vulns/
-│    ├── lab_3_mcp_rce/
-│    └── lab4_agentic_browser
 │
 ├── n8n/                                # Files to run the agent *Will be moved to src*
 │    └── config
-├── src/
-│    ├── app/                           # Currently stored in a docker container *Need to send to this folder*
-│    ├── logs/                          # Currently stored in a docker container *Need to send to this folder*
-│    ├── presentation/
-│    ├── redteam/
-│    ├── report/
-│    └── thread_mode/
+├── presentation/
+├── report/
+└── thread_mode/
 ```
 
 ## 📋 Installation for Windows
