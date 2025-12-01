@@ -91,13 +91,56 @@ def validate_expense_report(df, req):
 def filter_prompt():
     data = request.get_json()
     text = data.get("text", "")
+    text_lower = text.lower()
 
-    # Blocklist
-    banned = ["api key", "credentials", "token", "secret", "client id", "password",
-              "return only", "return type", "reveal your", "ignore previous",
-              "disregard guardrails", "disregard instructions", "disregard safeguards"]
-    if any(word in text.lower() for word in banned):
-        return jsonify({"allowed": False, "reason": "Contains banned terms", "filtered_text": text}), 200
+    # Banned phrases for prompt injection detection
+    banned_phrases = [
+        "ignore previous",
+        "ignore all previous",
+        "disregard previous",
+        "forget previous",
+        "return only",
+        "show me the",
+        "give me the",
+        "give me api",
+        "give api",
+        "what is the api",
+        "what is the secret",
+        "what is the password",
+        "what is the token",
+        "reveal the",
+        "expose the",
+        "display the",
+        "output the",
+        "print the",
+        "api token",
+        "api key",
+        "apikey"
+    ]
+    
+    # Banned individual words
+    banned_words = [
+        "secret",
+        "token",
+        "password",
+        "apikey",
+        "api_key",
+        "credentials",
+        "privatekey",
+        "private_key"
+    ]
+    
+    # Check for banned phrases first
+    for phrase in banned_phrases:
+        if phrase in text_lower:
+            print(f"🚫 Blocked: phrase '{phrase}' in '{text}'")
+            return jsonify({"allowed": False, "reason": f"Contains banned phrase: {phrase}", "filtered_text": text}), 200
+    
+    # Check for banned words
+    for word in banned_words:
+        if word in text_lower:
+            print(f"🚫 Blocked: word '{word}' in '{text}'")
+            return jsonify({"allowed": False, "reason": f"Contains banned word: {word}", "filtered_text": text}), 200
 
     return jsonify({"allowed": True, "filtered_text": text}), 200
 
@@ -124,13 +167,16 @@ def verify_file():
         if not rows:
             return jsonify({"allowed": False, "error": "Expected list of rows"})
         
+        
         df = pd.DataFrame(rows)
         validated_df = validate_expense_report(df, template_stru)
 
         if validated_df['is_valid'] is False:
             return jsonify({"allowed": False, "error":"Required columns were missing"}), 200
         
-        return jsonify({"allowed": True,"validated_data": validated_df["validated_df"].to_dict(orient="records")})
+        # Convert NaN to None for valid JSON
+        clean_df = validated_df["validated_df"].fillna("")
+        return jsonify({"allowed": True,"validated_data": clean_df.to_dict(orient="records")})
 
 
     except Exception as e:

@@ -1,0 +1,5155 @@
+{
+  "name": "CSEN 296B Blue Team Model",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        928,
+        1456
+      ],
+      "id": "389bc78d-55fc-4ccc-9e78-b60ec81fc80c",
+      "name": "Simple Memory",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cd74bb19-89aa-4fb4-b34a-6b484bb18a59",
+              "leftValue": "={{ $json.allowed }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1232,
+        1280
+      ],
+      "id": "49a4d0c6-5151-4bfe-af53-1d0187221d03",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "operation": "xls",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -1760,
+        1392
+      ],
+      "id": "1dedd8a1-4be9-4725-8d0f-3ec6abe6387d",
+      "name": "xls to json"
+    },
+    {
+      "parameters": {
+        "jsCode": "// const finalPayload = JSON.stringify($input.all().map(item => item.json));\n// return [{ json: { bodyString: finalPayload } }];\n\nreturn [\n  {\n    json: {\n      data: $input.all().map(item => item.json)\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1568,
+        1392
+      ],
+      "id": "f5ac3f0a-3fd4-44b7-8030-181015bc51fe",
+      "name": "Format json into json string"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://filter-service:5001/verifyfile",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.data }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true,
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1376,
+        1392
+      ],
+      "id": "924d0350-dcd0-4313-a60b-cacf5fe25d39",
+      "name": "Verify Document",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-3.5-turbo"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        800,
+        1344
+      ],
+      "id": "f1ae152d-4fb5-4264-8097-5ecd58f74331",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "kAQAHUlrXKM9oMfU",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "createFromText",
+        "content": "={{ $json.output.content }}",
+        "name": "={{ $json.output.name }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1504,
+        1136
+      ],
+      "id": "34b315d5-1b9f-4a9e-b720-8455b3be9581",
+      "name": "Create file from text",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "5iuayeDzmPUSzGlK",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"name\": \"name here\",\n\t\"content\": \"string here\",\n    \"operation\": \"op\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1040,
+        1296
+      ],
+      "id": "b33f619f-4ef4-45ab-864c-fdb1d93a85a2",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        944,
+        2192
+      ],
+      "id": "76e3205f-9248-42ad-b308-75a4641b66bf",
+      "name": "Simple Memory1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-3.5-turbo"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        784,
+        2128
+      ],
+      "id": "669390c2-7b70-47fc-a969-e0fe01f4f46b",
+      "name": "OpenAI Chat Model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "kAQAHUlrXKM9oMfU",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"recipient\": \"email\",\n\t\"subject\": \"string here\",\n    \"message\": \"content\",\n    \"attachment\": false,\n    \"attachment_name\": \"file name\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1152,
+        2144
+      ],
+      "id": "609e4eba-a9b7-4d31-be85-e0495e3c71d1",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "={{ $('Google Drive Agent').item.json.output.name }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1408,
+        960
+      ],
+      "id": "199d8fb4-b3f1-44f7-bd11-1eb6927dcd08",
+      "name": "Create folder",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "5iuayeDzmPUSzGlK",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.output.operation }}",
+                    "rightValue": "createf",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "5d123d32-d8a5-4e56-8b16-2c2bef4017e3"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2b5c78f7-8982-439b-9731-22568d75963d",
+                    "leftValue": "={{ $json.output.operation }}",
+                    "rightValue": "create",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "464e7a3d-3257-4fe5-9bc2-52610a41ea7e",
+                    "leftValue": "={{ $json.output.operation }}",
+                    "rightValue": "openf",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "0faf1e57-69ff-4140-9fc2-037a1dd5a9af",
+                    "leftValue": "={{ $json.output.operation }}",
+                    "rightValue": "open",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "36b1f1a1-ba3f-4582-9a9b-d249f4665042",
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        1216,
+        1120
+      ],
+      "id": "5fc77615-a88f-4538-a2ad-6bfbca062f8a",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.output.recipient }}",
+        "subject": "={{ $json.output.subject }}",
+        "emailType": "text",
+        "message": "={{ $json.output.message }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1504,
+        2032
+      ],
+      "id": "273d3473-0cd7-44f4-a832-34d374429ee6",
+      "name": "Send a message",
+      "webhookId": "091e86df-71dc-4958-9e73-656f72e2a98a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ea7jSlHYi60T6XaV",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "textSplittingMode": "custom",
+        "options": {
+          "splitPages": true
+        }
+      },
+      "id": "216a6514-06d1-4eba-a607-84a03b581273",
+      "name": "Default Data Loader1",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "position": [
+        -1664,
+        512
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -1776,
+        688
+      ],
+      "id": "5b4e974c-07da-4c81-a8f0-9bb595ec42d4",
+      "name": "Embeddings OpenAI2",
+      "credentials": {
+        "openAiApi": {
+          "id": "kAQAHUlrXKM9oMfU",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -1936,
+        352
+      ],
+      "id": "379f1201-7663-496b-a7c3-6b940ec7047e",
+      "name": "Download file1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "5iuayeDzmPUSzGlK",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "=knowledge",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        -1680,
+        352
+      ],
+      "id": "1cbe495f-c544-443f-8e3e-2af0ff8ee9be",
+      "name": "Qdrant Vector Store",
+      "notesInFlow": false,
+      "credentials": {
+        "qdrantApi": {
+          "id": "LJTZXDcqvnaM6Phi",
+          "name": "QdrantApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "move",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Loop Over Items').item.json.id }}",
+          "mode": "id"
+        },
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1iA5uhdJ1SWDjN30WOR-_YC8HxqUnTrdL",
+          "mode": "list",
+          "cachedResultName": "Vector DB",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1iA5uhdJ1SWDjN30WOR-_YC8HxqUnTrdL"
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -1280,
+        672
+      ],
+      "id": "74093740-2adf-4581-be95-de5487d357dc",
+      "name": "Move file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "5iuayeDzmPUSzGlK",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -2160,
+        432
+      ],
+      "id": "ff443554-d6cd-493c-87f1-f88fcea2a275",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "http://qdrant:6333/collections/knowledge",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -2672,
+        720
+      ],
+      "id": "77fc2e92-9652-4457-8423-1547cd2b000a",
+      "name": "Delete Qdrant collections",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "chunkSize": 400,
+        "chunkOverlap": 100,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        -1568,
+        672
+      ],
+      "id": "eaf31338-1843-4066-b061-cea3c30e899d",
+      "name": "Recursive Character Text Splitter"
+    },
+    {
+      "parameters": {},
+      "id": "e28e217f-622b-4b0e-bfff-be57a12fc549",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        -2576,
+        432
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "returnAll": true,
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "16dbsE-zp6uE-WZGvEQcXmRHU0w_Di98m",
+            "mode": "list",
+            "cachedResultName": "Input Files",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/16dbsE-zp6uE-WZGvEQcXmRHU0w_Di98m"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -2384,
+        240
+      ],
+      "id": "e2822357-cb53-424d-b0f5-909b63bed6f6",
+      "name": "Search files and folders",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "5iuayeDzmPUSzGlK",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://loki:3100/loki/api/v1/push",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"streams\": [\n    {\n      \"stream\": {\n        \"input\": \"VectorDB\",\n        \"workflow\": \"Add Element\"\n      },\n      \"values\": [\n        [\n          \"{{ (Date.now() * 1000000).toString() }}\",\n          \"File {{ $json.name }}: Added to Vector Database\"\n        ]\n      ]\n    }\n  ]\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1072,
+        672
+      ],
+      "id": "b67a03c3-2645-48a6-8f4f-df3e28322487",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 2
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -2640,
+        240
+      ],
+      "id": "8dce09f4-12fc-4bb1-9f2a-fff463cc30e9",
+      "name": "Schedule Trigger",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "87a8fff9-87c2-47da-86ee-6fa08416d5c4",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -2176,
+        240
+      ],
+      "id": "7a4e92a7-6818-465d-b84a-4acc40799a92",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Given this string \"{{ $json.filtered_text }}\", identify which task(s) are needed given the names and definitions below of each.  You may have also received a json file that may be used along with the incoming task.:\n\n\n\"sheet\" - processes expense reports, validates reimbursements, and updates HR/finance data.  \n\n\"drive\" - uploads, retrieves, and searches enterprise documents and policies from drive / google drive.\n\n\"email\" - composes, sends, or reads enterprise emails and notifications.\n\n\"question\" - No tasks are required and input data simply need to be passed to an LLM to answer.\n\nIf the prompt asks to send a file to an email address then the task will just be \"email\" becuase it will also download the file\n\nFormat your ouput as an array of json strings, having one or multiple actions, where the key \"agent\" will have a corresponding value of one of the identified tasks. \n\n\n\n\n",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -336,
+        1568
+      ],
+      "id": "78aacc97-fa60-46bf-920a-0b95249effed",
+      "name": "Task Decomposition",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.agent }}",
+                    "rightValue": "sheet",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "fc7ea2ee-e60e-4a8e-823c-799b32da464a"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "9dd06303-8f65-45af-8847-f6773a662d15",
+                    "leftValue": "={{ $json.agent }}",
+                    "rightValue": "drive",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "c29abab9-dd9b-438f-bbfa-debfd4d27b31",
+                    "leftValue": "={{ $json.agent }}",
+                    "rightValue": "email",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d959f069-dada-4737-a3db-d8c591d55fd4",
+                    "leftValue": "={{ $json.agent }}",
+                    "rightValue": "question",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        384,
+        1664
+      ],
+      "id": "f3754829-a128-4834-9a1d-b7df542b5107",
+      "name": "Agent Router"
+    },
+    {
+      "parameters": {
+        "resource": "spreadsheet",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1504,
+        464
+      ],
+      "id": "6294d4a0-4404-4550-9f6a-ac35e466ec4f",
+      "name": "Create spreadsheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uwoq34r9PBLNkXRr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI",
+          "mode": "list",
+          "cachedResultName": "Master Expense",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Master",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [
+            "TransactionID"
+          ],
+          "schema": [
+            {
+              "id": "TransactionID",
+              "displayName": "TransactionID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "EmployeeID",
+              "displayName": "EmployeeID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "DateIncurred",
+              "displayName": "DateIncurred",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "DateSubmitted",
+              "displayName": "DateSubmitted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Vendor",
+              "displayName": "Vendor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PaymentMethod",
+              "displayName": "PaymentMethod",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Currency",
+              "displayName": "Currency",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Amount",
+              "displayName": "Amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "AmountUSD",
+              "displayName": "AmountUSD",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Category",
+              "displayName": "Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ReceiptAttached",
+              "displayName": "ReceiptAttached",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ReimbursementType",
+              "displayName": "ReimbursementType",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1504,
+        304
+      ],
+      "id": "d44042b3-23be-472f-80c8-5823fc0c0116",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uwoq34r9PBLNkXRr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.output.action }}",
+                    "rightValue": "append",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "0f104b6d-0bf8-40e1-93e5-fe13c6cc355f"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "ebd20169-d9bd-499b-88c3-d65e56ef27b9",
+                    "leftValue": "={{ $json.output.action }}",
+                    "rightValue": "update ",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "c43216e1-c7eb-4ede-84db-e84317f2a9d4",
+                    "leftValue": "={{ $json.output.action }}",
+                    "rightValue": "create",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6f45ef7b-8ee8-45b0-857d-c5b12514b1d8",
+                    "leftValue": "={{ $json.output.action }}",
+                    "rightValue": "retrieve",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        1216,
+        416
+      ],
+      "id": "3b2c31a6-7de5-4fcf-8732-d15b79ce771c",
+      "name": "Sheet Router"
+    },
+    {
+      "parameters": {
+        "jsCode": "const a = JSON.stringify($('Convert data into single json array').first().json.rows);\nreturn JSON.parse(a).map(item => ({ json: item }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1504,
+        112
+      ],
+      "id": "db14688c-f22b-4a65-bb84-9c9b5371ca08",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -384,
+        1728
+      ],
+      "id": "4f3fa19c-c9c2-4fd0-8316-3bc2862fd733",
+      "name": "OpenAI Chat Model6",
+      "credentials": {
+        "openAiApi": {
+          "id": "kAQAHUlrXKM9oMfU",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -256,
+        1760
+      ],
+      "id": "d4942207-bad1-49ef-bfa2-cc53f121e6fc",
+      "name": "Simple Memory3",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        800,
+        640
+      ],
+      "id": "6898e0b2-3ce2-49b1-a3a0-439a2e6a683b",
+      "name": "OpenAI Chat Model7",
+      "credentials": {
+        "openAiApi": {
+          "id": "kAQAHUlrXKM9oMfU",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        928,
+        672
+      ],
+      "id": "1f274ef3-e023-488b-9d5e-605b5cbfc054",
+      "name": "Simple Memory4",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"actions\": [\n    {\n      \"agent\": \"sheets\",\n      \"action\": \"<short action phrase>\",\n      \"reason\": \"<why this agent was chosen or what it will do>\"\n    }\n  ]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -112,
+        1744
+      ],
+      "id": "905a2df7-7683-474c-9a50-ad59632a4a94",
+      "name": "Structured Output Parser4"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\"action\" : \"\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1088,
+        640
+      ],
+      "id": "c97d89b2-a891-4711-b2e5-46eb964e1a41",
+      "name": "Structured Output Parser5"
+    },
+    {
+      "parameters": {
+        "content": "# Vector Database Manager\n\n",
+        "height": 736,
+        "width": 1968,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2752,
+        160
+      ],
+      "typeVersion": 1,
+      "id": "6cbe0a1b-6720-4249-af85-a2ac08001eb7",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-3.5-turbo"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -1360,
+        2336
+      ],
+      "id": "c39e107e-9a99-4362-a3c1-88357a50e918",
+      "name": "OpenAI Chat Model8",
+      "credentials": {
+        "openAiApi": {
+          "id": "kAQAHUlrXKM9oMfU",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Input Data - Text and Files\n\n",
+        "height": 1504,
+        "width": 2480
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3280,
+        976
+      ],
+      "typeVersion": 1,
+      "id": "9a739dec-0d3c-4128-9936-8bfd374ecfd6",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "# Task Decomposition and Flow Separating \n",
+        "height": 480,
+        "width": 1008
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -640,
+        1456
+      ],
+      "typeVersion": 1,
+      "id": "fbeda19b-c536-40d1-87af-bde8e9e728f6",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "jsCode": "// const subtasks = $input.first().json.output.actions || [];\n// return subtasks.map(t => ({ json: t }));\n\nconst subtasks = $input.first().json.output.actions || [];\nreturn subtasks.map(t => t);"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        32,
+        1696
+      ],
+      "id": "2347edad-f215-4e58-9a2f-80a4b067015c",
+      "name": "SubTasks Split Function"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        784,
+        2912
+      ],
+      "id": "3acde351-cc8f-4462-bfe4-cd2def5aa570",
+      "name": "OpenAI Chat Model3",
+      "credentials": {
+        "openAiApi": {
+          "id": "kAQAHUlrXKM9oMfU",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "This tool holds information that you can search via RAG to help answer questions prompted by the user.",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "knowledge",
+          "mode": "list",
+          "cachedResultName": "knowledge"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        896,
+        2928
+      ],
+      "id": "ec67b87a-d76b-419a-8030-f70d9343e790",
+      "name": "Qdrant Vector Store2",
+      "credentials": {
+        "qdrantApi": {
+          "id": "LJTZXDcqvnaM6Phi",
+          "name": "QdrantApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        896,
+        3072
+      ],
+      "id": "2e694058-a283-494c-83cc-315933ffa0e9",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "kAQAHUlrXKM9oMfU",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8fa9c97d-ba14-4223-aabf-68d1fdd6f035",
+              "name": "chatinput",
+              "value": "={{ $('Prompt Filtering Check').item.json.filtered_text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        704,
+        2736
+      ],
+      "id": "d4529198-a79e-494d-bfdd-315a832b835e",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://loki:3100/loki/api/v1/push",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"streams\": [\n    {\n      \"stream\": {\n        \"workflow\": \"prompt filtering\",\n        \"node\": \"Prompt Injection Not Detected\",\n        \"event_type\": \"Running prompt filter check\",\n        \"execution_id\": \"{{ $execution.id }}\",\n\"user_id\": \"{{ $('Data Input').item.json.body.userId || 'unknown' }}\"\n      },\n      \"values\": [\n        [\n          \"{{ (Date.now() * 1000000).toString() }}\",\n          \"Received String: {{ $json.filtered_text }} - No prompt filtering detected\"\n        ]\n      ]\n    }\n  ]\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1088,
+        1760
+      ],
+      "id": "c88e7bfe-5908-40cc-9313-0125722ee63f",
+      "name": "No Prompt Injection Detected Log"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://loki:3100/loki/api/v1/push",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"streams\": [\n    {\n      \"stream\": {\n        \"workflow\": \"prompt filtering\",\n        \"node\": \"Prompt Injection Detected\",\n        \"event_type\": \"Running prompt filter check\",\n        \"execution_id\": \"{{ $execution.id }}\",\n\"user_id\": \"{{ $('Data Input').item.json.body.userId || 'unknown' }}\"\n      },\n      \"values\": [\n        [\n          \"{{ (Date.now() * 1000000).toString() }}\",\n          \"Received String: {{ $json.filtered_text }} - Prompt filtering detected!\"\n        ]\n      ]\n    }\n  ]\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1504,
+        2176
+      ],
+      "id": "586b359c-fe7c-405d-a2cb-3271fa22ddbb",
+      "name": "Prompt Injection Detected Log",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4f13d079-22cb-4f96-baf6-5a561c5600f7",
+              "leftValue": "={{ $json.allowed }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1312,
+        1920
+      ],
+      "id": "ab38ffee-c52c-480a-98b4-ac7c73fe5933",
+      "name": "If No prompt Injection "
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Prompt Filtering Check').item.json.filtered_text }}",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        -1344,
+        2176
+      ],
+      "id": "940e4949-b320-45ac-8c87-fa564f170a91",
+      "name": "LLM To answer malicious questions",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You will parse a message to then send an email.  Parse the incoming message and fill out the json that I have provided.  The incoming message will either include the recipient email or you will need to do an SQL lookup of their name to get their email address. If an attachment needs to be provided, fill the \"attachment\" field with a bool value and then the \"attachment_name\" field with the user-specified name. Here is the message:\n\n{{ $('If No prompt Injection ').item.json.filtered_text }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        896,
+        1952
+      ],
+      "id": "29041124-1bb4-4127-91d3-816f8d952695",
+      "name": "Gmail Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Given this user input, parse it and fill out the json below and output it.  Name will represent either a file/folder name.  Content will be used if the user is trying to make a new file and are supplying text or json to you: {{ $('If No prompt Injection ').item.json.filtered_text }}\"\n{\n\t\"name\": \"name here\",\n\t\"content\": \"string here\",\n    \"operation\": \"op\"\n}\n\nIf the operation involves creating a folder, \"operation\" = \"createf\".\nIf the operation involves creating a file, \"operation\" = \"create\".\nIf the operation involves opening/reading a folder, \"operation\" = \"openf\".\nIf the operation involves opening/reading a file, \"operation\" = \"open\".\nIf the operation involves searching for a file/folder, \"operation\" = \"search\".",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        816,
+        1168
+      ],
+      "id": "fd68f744-84e6-44db-8eb7-f6b3da3f207c",
+      "name": "Google Drive Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=First detect the \"action\" received from the agent rounter. \n\nIf the action is adding / appending output \"append\" in json\nIf the action is upadting / chaning output \"update\" in json\nIf the action is creating output \"create\" in json\nIf the action is returning data AND an employee id is given output \"retrieve\" and \"employeeID\" in json\n\n{{ $('If No prompt Injection ').item.json.filtered_text }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        880,
+        448
+      ],
+      "id": "5d0b162c-dfb1-422b-8b36-7a71375faffd",
+      "name": "Expense Management Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Answer this prompt and only use the vector store if the prompt involves company expense document's or other emplyoee financial information: {{ $json.chatinput }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        848,
+        2736
+      ],
+      "id": "b2ded67e-1241-49aa-9a72-0c72a35884dd",
+      "name": "RAG Agent",
+      "retryOnFail": false
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $('LLM To answer malicious questions').item.json.text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        -1024,
+        2304
+      ],
+      "id": "5a2231aa-e179-41ed-af00-a417420285ce",
+      "name": "Respond to Webhook",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $('RAG Agent').item.json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1248,
+        2912
+      ],
+      "id": "a7da0ece-ad1e-46a1-ae7d-f85da4168928",
+      "name": "Respond to Webhook1",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI",
+          "mode": "list",
+          "cachedResultName": "Master Expense",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Master",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "EmployeeID"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1504,
+        624
+      ],
+      "id": "cf3d90aa-907d-4afb-ab0d-63e239aa2f61",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uwoq34r9PBLNkXRr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "csen296b@gmail.com",
+        "subject": "=New Expense Submission - {{ $json.employeeId }} ({{ $json.expenseCount }} expenses)",
+        "message": "=<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;\">\n  <h2 style=\"color: #2563eb;\">New Expense Submission</h2>\n  \n  <p><strong>Employee {{ $json.employeeId }}</strong> has submitted <strong>{{ $json.expenseCount }} expense(s)</strong> totaling <strong>{{ $json.currency }} {{ $json.totalAmount }}</strong>.</p>\n  \n  <h3>Expenses Submitted:</h3>\n  <pre style=\"background: #f3f4f6; padding: 15px; border-radius: 6px;\">{{ $json.expenseList }}</pre>\n  \n  <p style=\"margin: 20px 0;\">\n    <a href=\"http://localhost:3001/admin/dashboard\" \n       style=\"background-color: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;\">\n      Review in Dashboard\n    </a>\n  </p>\n  \n  <p style=\"color: #6b7280; font-size: 12px;\">\n    This is an automated notification from Lighthouse AI Expense Management.\n  </p>\n</div>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2144,
+        112
+      ],
+      "id": "c55088be-4ed2-4130-a2a0-4010f01bad14",
+      "name": "Send a message1",
+      "webhookId": "37186cf5-3ad1-402c-9204-f603910eb7fb",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ea7jSlHYi60T6XaV",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"text\": \"{{ $('Terminal Chat Input').item.json.chatInput }}\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1792,
+        2000
+      ],
+      "id": "16399477-29a4-4320-9335-d63ce0e23524",
+      "name": "Normalize Chat Input"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"text\": \"{{ $('Data Input').item.json.body.text }}\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1696,
+        1792
+      ],
+      "id": "28909738-fa09-4a7b-b169-9a1c50929dcb",
+      "name": "Normalize Webhook Input"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -2096,
+        2000
+      ],
+      "id": "9af7224d-6cc6-4158-bdec-2205eace337e",
+      "name": "Terminal Chat Input",
+      "webhookId": "e953628c-5cd3-4d83-a3de-ff8ede523bfd",
+      "alwaysOutputData": true,
+      "notes": "Accepts user input\n"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://loki:3100/loki/api/v1/push",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"streams\": [\n    {\n      \"stream\": {\n        \"workflow\": \"Safe model Output\",\n        \"node\": \"Prompt Injection Safe model output\",\n        \"event_type\": \"Prompting LLM (no tool use)\",\n        \"execution_id\": \"{{ $execution.id }}\",\n\"user_id\": \"{{ $('Data Input').item.json.body.userId || 'unknown' }}\"\n      },\n      \"values\": [\n        [\n          \"{{ (Date.now() * 1000000).toString() }}\",\n          \"Received Prompt: {{ $('Prompt Filtering Check').item.json.filtered_text }} - Model Output - {{ $json.text }}\"\n        ]\n      ]\n    }\n  ]\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1024,
+        2144
+      ],
+      "id": "ce165618-f1d5-49d2-b3c9-3106f0517b3f",
+      "name": "Log Model Output",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://filter-service:5001/filter",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "={{ $json.text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1488,
+        1920
+      ],
+      "id": "43d9fa10-7431-4649-b162-2aab96c679ac",
+      "name": "Prompt Filtering Check"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://loki:3100/loki/api/v1/push",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"streams\": [\n    {\n      \"stream\": {\n        \"workflow\": \"data input\",\n        \"node\": \"Chat Input Log\",\n        \"event_type\": \"data input chat trigger\",\n        \"execution_id\": \"{{ $execution.id }}\",\n \"user_id\": \"{{ $json.body.userId || 'unknown' }}\"\n      },\n      \"values\": [\n        [\n          \"{{ (Date.now() * 1000000).toString() }}\",\n          \"Chat input received from Chat Trigger\"\n        ]\n      ]\n    }\n  ]\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1952,
+        2000
+      ],
+      "id": "d7f5ad7e-d6da-4c2f-b57a-328c2f278c09",
+      "name": "Chat Input Log"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://loki:3100/loki/api/v1/push",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"streams\": [\n    {\n      \"stream\": {\n        \"workflow\": \"data input\",\n        \"node\": \"Chat webhook input node\",\n        \"event_type\": \"data input webhook\",\n        \"execution_id\": \"{{ $execution.id }}\",\n\"user_id\": \"{{ $json.body.userId || 'unknown' }}\"\n      },\n      \"values\": [\n        [\n          \"{{ (Date.now() * 1000000).toString() }}\",\n          \"Chat input received from webhook\"\n        ]\n      ]\n    }\n  ]\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1888,
+        1792
+      ],
+      "id": "5a3e97f4-a383-4be5-b953-fe0352c27591",
+      "name": "Chat Webhook Input Log",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://loki:3100/loki/api/v1/push",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"streams\": [\n    {\n      \"stream\": {\n        \"workflow\": \"data input\",\n        \"node\": \"File Webhook Input Log\",\n        \"event_type\": \"data input webhook\",\n        \"execution_id\": \"{{ $execution.id }}\",\n        \"user_id\": \"123\"\n      },\n      \"values\": [\n        [\n          \"{{ (Date.now() * 1000000).toString() }}\",\n          \"File input received from webhook\"\n        ]\n      ]\n    }\n  ]\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1760,
+        1168
+      ],
+      "id": "058d9b2a-7fdd-4442-95a0-20eb0ad21c6d",
+      "name": "File Webhook Input Log"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://loki:3100/loki/api/v1/push",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"streams\": [\n    {\n      \"stream\": {\n        \"workflow\": \"task decomposition\",\n        \"node\": \"Task Decomposition LLM Node\",\n        \"event_type\": \"Task Decomposition\",\n        \"execution_id\": \"{{ $execution.id }}\",\n        \"user_id\": \"123\"\n      },\n      \"values\": [\n        [\n          \"{{ (Date.now() * 1000000).toString() }}\",\n          \"Received Prompt: {{ $('Prompt Filtering Check').item.json.filtered_text }} - Model Output - {{ $json.safeActionsString }}\"\n        ]\n      ]\n    }\n  ]\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        256,
+        1536
+      ],
+      "id": "c5b8a6bc-fc4b-4274-9e5e-34036bae6fd2",
+      "name": "Task Decomp Log 1",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Input: The data from the previous node\nconst item = $json;\n\n// 1. Safely access the actions array\nconst actions = item.output?.actions ?? [];\n\n// 2. Stringify the array\nconst actionsString = JSON.stringify(actions);\n\n// 3. ESCAPE the double quotes in the resulting string \n//    Replace \" with \\\" (Note: The second \\ is to escape the first \\)\nconst safeActionsString = actionsString.replace(/\"/g, '\\\\\"');\n\n// Store the final, double-quote-escaped string\nitem.safeActionsString = safeActionsString;\n\nreturn [item];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        32,
+        1536
+      ],
+      "id": "c4364199-41ea-4000-aa04-31a245feb36a",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://loki:3100/loki/api/v1/push",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"streams\": [\n    {\n      \"stream\": {\n        \"workflow\": \"Safe model Output\",\n        \"node\": \"RAG enabled LLM\",\n        \"event_type\": \"Prompting LLM (no tool use)\",\n        \"execution_id\": \"{{ $execution.id }}\",\n        \"user_id\": \"123\"\n      },\n      \"values\": [\n        [\n          \"{{ (Date.now() * 1000000).toString() }}\",\n          {{ JSON.stringify('Received Prompt: ' + $('Edit Fields').item.json.chatinput + ' Model Output - ' + $json.output) }}\n        ]\n      ]\n    }\n  ]\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1600,
+        2688
+      ],
+      "id": "97f19fd9-9713-402f-9d7e-b07e2089509a",
+      "name": "Log Model Output 2",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI",
+          "mode": "list",
+          "cachedResultName": "Master Expense",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Master",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "TransactionID",
+              "displayName": "TransactionID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "EmployeeID",
+              "displayName": "EmployeeID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DateIncurred",
+              "displayName": "DateIncurred",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DateSubmitted",
+              "displayName": "DateSubmitted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Vendor",
+              "displayName": "Vendor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PaymentMethod",
+              "displayName": "PaymentMethod",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Currency",
+              "displayName": "Currency",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Amount",
+              "displayName": "Amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "AmountUSD",
+              "displayName": "AmountUSD",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Category",
+              "displayName": "Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ReceiptAttached",
+              "displayName": "ReceiptAttached",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ReimbursementType",
+              "displayName": "ReimbursementType",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1744,
+        112
+      ],
+      "id": "64242546-6b66-42d6-8306-861f8f19699b",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uwoq34r9PBLNkXRr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Need to find employee or user email adress to notifcy them of the status of these actions\n",
+        "height": 192,
+        "width": 400
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1808,
+        368
+      ],
+      "typeVersion": 1,
+      "id": "1b4b5ee9-a03d-4cfc-8cc9-cb0f3ff5d9ed",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "## Expense Management Agent",
+        "height": 704,
+        "width": 1792,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        480,
+        80
+      ],
+      "typeVersion": 1,
+      "id": "864e6d53-74dc-4526-9894-cf71dbfa68d5",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "# Google Drive Management Agent",
+        "height": 704,
+        "width": 1792,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        528,
+        928
+      ],
+      "typeVersion": 1,
+      "id": "3183eeee-a766-44dd-961c-293e2275471e",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $json.output.name }}",
+        "returnAll": true,
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1264,
+        1440
+      ],
+      "id": "751fca41-396d-4972-a4ca-4d8321e2e22f",
+      "name": "Search files and folders1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "5iuayeDzmPUSzGlK",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d8741ca2-af80-4803-b6bf-7834e2312770",
+              "leftValue": "={{ $item(\"0\").$node[\"Search files and folders1\"].json }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1408,
+        1440
+      ],
+      "id": "7bab50b6-f897-491d-9058-aa96f17254c3",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a94f538c-10f3-47b4-ac6b-120bce8e7f6e",
+              "name": "text",
+              "value": "={{ $json.name }} sucessfully found",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1664,
+        1344
+      ],
+      "id": "1a844b07-cbf2-4691-a328-7873cfbb160a",
+      "name": "File Found"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a94f538c-10f3-47b4-ac6b-120bce8e7f6e",
+              "name": "text",
+              "value": "={{ $json.name }} not found",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1664,
+        1488
+      ],
+      "id": "9e033ed3-f403-424a-ae30-7c8542362642",
+      "name": "File Not Found"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2144,
+        1184
+      ],
+      "id": "e3a3076f-f249-46c3-8500-7fdacf45015e",
+      "name": "Send a message2",
+      "webhookId": "37186cf5-3ad1-402c-9204-f603910eb7fb",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ea7jSlHYi60T6XaV",
+          "name": "Gmail account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Need to find employee or user email adress to notifcy them of the status of these actions\n",
+        "height": 192,
+        "width": 400
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2336,
+        928
+      ],
+      "typeVersion": 1,
+      "id": "b8e1bbc9-a390-420b-a1f4-b5c0f085274a",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "content": "# Email Management Agent",
+        "height": 704,
+        "width": 1792,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        528,
+        1744
+      ],
+      "typeVersion": 1,
+      "id": "53b492ee-5ab5-48b8-9395-9448c8cef57d",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "# RAG Agent for Strictly Answering questions (no tools)\n",
+        "height": 704,
+        "width": 1792,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        528,
+        2576
+      ],
+      "typeVersion": 1,
+      "id": "859e07be-faaa-427b-ad3c-7c56de51e8be",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://loki:3100/loki/api/v1/push",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"streams\": [\n    {\n      \"stream\": {\n        \"workflow\": \"data input\",\n        \"node\": \"File Webhook Input Log\",\n        \"event_type\": \"file input webhook\",\n        \"execution_id\": \"{{ $execution.id }}\",\n        \"user_id\": \"123\"\n      },\n      \"values\": [\n        [\n          \"{{ (Date.now() * 1000000).toString() }}\",\n          \"File input blocked\"\n        ]\n      ]\n    }\n  ]\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1152,
+        1536
+      ],
+      "id": "34d57aa9-3785-4958-a735-107a262a307d",
+      "name": "Bad Document Detected"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://loki:3100/loki/api/v1/push",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"streams\": [\n    {\n      \"stream\": {\n        \"workflow\": \"data input\",\n        \"node\": \"File Webhook Input Log\",\n        \"event_type\": \"file input webhook\",\n        \"execution_id\": \"{{ $execution.id }}\",\n        \"user_id\": \"123\"\n      },\n      \"values\": [\n        [\n          \"{{ (Date.now() * 1000000).toString() }}\",\n          \"File input allowed\"\n        ]\n      ]\n    }\n  ]\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1040,
+        1088
+      ],
+      "id": "985c1b51-591a-46f1-892f-38ac1aaa0a6a",
+      "name": "Good Document Detected"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "fe9aaaad-3673-40da-8cfd-b0e68ba08da0",
+              "leftValue": "={{ $json.output.attachment }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1232,
+        1952
+      ],
+      "id": "8f76a642-2be2-4149-baf7-1309c4159da2",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Gmail Agent').item.json.output.recipient }}",
+        "subject": "={{ $('Gmail Agent').item.json.output.subject }}",
+        "emailType": "text",
+        "message": "={{ $('Gmail Agent').item.json.output.message }}",
+        "options": {
+          "appendAttribution": false,
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {}
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2016,
+        1856
+      ],
+      "id": "d7498764-bc12-4e31-98cf-7ced7637b464",
+      "name": "Send a message3",
+      "webhookId": "091e86df-71dc-4958-9e73-656f72e2a98a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ea7jSlHYi60T6XaV",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {
+          "binaryPropertyName": "data"
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1808,
+        1856
+      ],
+      "id": "826d9025-b108-40af-bb0a-e463bb90bcff",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "5iuayeDzmPUSzGlK",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $('Gmail Agent').item.json.output.attachment_name }}",
+        "limit": 1,
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1504,
+        1856
+      ],
+      "id": "3fe5c6d2-9032-45b0-95e0-c4c097f9987d",
+      "name": "Search files and folders2",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "5iuayeDzmPUSzGlK",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "56c6e851-f9f9-4e83-b008-ae5dd58c875b",
+              "leftValue": "={{ Object.keys($binary) }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "array",
+                "operation": "lengthGt",
+                "rightType": "number"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -2304,
+        1680
+      ],
+      "id": "af9c15a3-55f8-4669-9277-5fee0b167483",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "content": "# File handling\n",
+        "height": 672,
+        "width": 1184,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2080,
+        1024
+      ],
+      "typeVersion": 1,
+      "id": "26107770-1de9-431b-8395-3d6bea3bf616",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "# Text handling\n",
+        "height": 704,
+        "width": 1248,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2128,
+        1728
+      ],
+      "typeVersion": 1,
+      "id": "1201a9f9-6866-4622-8c22-1e9260399cac",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "jsCode": "const rawOutput = $('RAG Agent').first().json.output; \n\nconst sanitizedOutput = rawOutput.replace(/\\n/g, '\\\\n');\n\nconst logPayload = {\n    log_message: sanitizedOutput,\n    timestamp: new Date().toISOString()\n};\n\n\n\nreturn {\"output\": sanitizedOutput};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1312,
+        2688
+      ],
+      "id": "15cb8b06-51ca-4be6-ae33-7854c8d7d645",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "Lighthouse-input",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -2464,
+        1680
+      ],
+      "id": "1419dc00-45be-4568-85e7-5ff325d0b032",
+      "name": "Data Input",
+      "webhookId": "595ac7f1-2649-44ed-9657-144bdf0b72d4"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        -864,
+        1360
+      ],
+      "id": "24ea0416-c24f-4fda-a889-cf26b7b3f1ed",
+      "name": "Respond to Webhook2"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "=Email Sent with id {{ $json.id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        2176,
+        2032
+      ],
+      "id": "8bd44505-133a-40b5-b2b1-92984060bf19",
+      "name": "Respond to Webhook3",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "jsCode": "const validatedData = $input.first().json.validated_data || [];\n\n// Return each expense row as a separate item\nreturn validatedData.map(row => ({\n  json: {\n    TransactionID: row.TransactionID,\n    EmployeeID: row.EmployeeID,\n    DateIncurred: row.DateIncurred,\n    DateSubmitted: row.DateSubmitted,\n    Description: row.Description,\n    Vendor: row.Vendor,\n    PaymentMethod: row.PaymentMethod,\n    Currency: row.Currency,\n    Amount: row.Amount,\n    AmountUSD: row.AmountUSD,\n    Category: row.Category,\n    ReceiptAttached: row.ReceiptAttached,\n    ReimbursementType: row.ReimbursementType\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -624,
+        992
+      ],
+      "id": "252dd509-898e-40dd-bacf-33e5e957a6af",
+      "name": "Code in JavaScript3"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Replace NaN with null before parsing\nconst dataStr = $input.first().json.data.replace(/NaN/g, 'null');\nconst responseData = JSON.parse(dataStr);\n\nreturn [{\n  json: {\n    allowed: responseData.allowed,\n    validated_data: responseData.validated_data\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1408,
+        1120
+      ],
+      "id": "f136022d-b133-4a1a-a1d5-34ab924b1628",
+      "name": "Code in JavaScript4"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI",
+          "mode": "list",
+          "cachedResultName": "Master Expense",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Master",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "EmployeeID",
+              "lookupValue": "={{ $json.body.employeeId }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -2512,
+        1216
+      ],
+      "id": "c3496936-0b73-4b11-91f1-6792eef373d1",
+      "name": "Get row(s) in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uwoq34r9PBLNkXRr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "fetch-expenses",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -2720,
+        1216
+      ],
+      "id": "a0cfe02f-eda9-4daa-b934-aa2974e0cf99",
+      "name": "Fetch WebHook",
+      "webhookId": "cce0af36-0b5e-4c4f-82db-426f1ced0eea"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "submit-expense",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -3232,
+        1552
+      ],
+      "id": "79654e9e-79b9-4f9a-b886-0118cd9d15be",
+      "name": "Submit Expense",
+      "webhookId": "a09347a3-5d67-4d06-aa07-f8d59f6b8105"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI",
+          "mode": "list",
+          "cachedResultName": "Master Expense",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Master",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "TransactionID": "={{ $json.body.expense.transactionId }}",
+            "EmployeeID": "={{ $json.body.expense.employeeId }}",
+            "DateIncurred": "={{ $json.body.expense.dateIncurred }}",
+            "DateSubmitted": "={{ $json.body.expense.dateSubmitted }}",
+            "Description": "={{ $json.body.expense.description }}",
+            "Vendor": "={{ $json.body.expense.vendor }}",
+            "PaymentMethod": "={{ $json.body.expense.paymentMethod }}",
+            "Currency": "={{ $json.body.expense.currency }}",
+            "Amount": "={{ $json.body.expense.amount }}",
+            "AmountUSD": "=",
+            "Category": "={{ $json.body.expense.category }}",
+            "ReimbursementType": "={{ $json.body.expense.reimbursementType }}",
+            "ReceiptAttached": "={{ $json.body.expense.receiptAttached }}",
+            "Auto Approve": "={{ $json.Status }}",
+            "Status": "={{ $json.Status }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "TransactionID",
+              "displayName": "TransactionID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "EmployeeID",
+              "displayName": "EmployeeID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "DateIncurred",
+              "displayName": "DateIncurred",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "DateSubmitted",
+              "displayName": "DateSubmitted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Vendor",
+              "displayName": "Vendor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PaymentMethod",
+              "displayName": "PaymentMethod",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Currency",
+              "displayName": "Currency",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Amount",
+              "displayName": "Amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "AmountUSD",
+              "displayName": "AmountUSD",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Category",
+              "displayName": "Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ReceiptAttached",
+              "displayName": "ReceiptAttached",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ReimbursementType",
+              "displayName": "ReimbursementType",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Auto Approve",
+              "displayName": "Auto Approve",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -2512,
+        1440
+      ],
+      "id": "7c0118f0-f09d-4cfd-a662-d3a927fa83f9",
+      "name": "Append row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uwoq34r9PBLNkXRr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "eb518794-2136-4645-8a0f-d244d9c1eeec",
+              "name": "success",
+              "value": "true",
+              "type": "string"
+            },
+            {
+              "id": "05efed2b-c59f-4c50-8b0a-8d4f4ad2e9b3",
+              "name": "message",
+              "value": "Expense submitted successfully",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2192,
+        1440
+      ],
+      "id": "282cc4ca-52b6-4455-92c8-f82447d9036b",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Aggregate all expense rows into a single array response\nconst allExpenses = $input.all().map(item => item.json);\nreturn [{ json: { expenses: allExpenses } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2368,
+        1216
+      ],
+      "id": "0d5c4919-4348-478b-afc8-ed35080e41ee",
+      "name": "Aggregate Expenses"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        -2208,
+        1216
+      ],
+      "id": "28fdc710-2374-4e8f-872c-ac4826754d9f",
+      "name": "Respond to Webhook4"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Debug: Log all input\nconsole.log(\"=== AGGREGATE FOR EMAIL ===\");\nconsole.log(\"Number of items received:\", $input.all().length);\nconsole.log(\"Input data:\", JSON.stringify($input.all(), null, 2));\n\n// Get all items that were just appended\nconst items = $input.all();\n\n// Handle case where there are no items\nif (items.length === 0) {\n  console.log(\"ERROR: No items received!\");\n  return [];\n}\n\n// Get the employee ID from the first item\nconst employeeId = items[0].json.EmployeeID || items[0].json.employeeId;\nconsole.log(\"Employee ID:\", employeeId);\n\n// Build expense summary\nconst expenses = items.map(item => ({\n  transactionId: item.json.TransactionID || item.json.transactionId,\n  category: item.json.Category || item.json.category,\n  amount: item.json.Amount || item.json.amount,\n  currency: item.json.Currency || item.json.currency || 'USD',\n  description: item.json.Description || item.json.description,\n  vendor: item.json.Vendor || item.json.vendor\n}));\n\nconsole.log(\"Expenses:\", JSON.stringify(expenses, null, 2));\n\n// Calculate total\nconst total = expenses.reduce((sum, exp) => sum + parseFloat(exp.amount || 0), 0);\nconsole.log(\"Total:\", total);\n\n// Return single item for one email\nconst result = {\n  json: {\n    employeeId: employeeId,\n    expenseCount: items.length,\n    totalAmount: total.toFixed(2),\n    currency: expenses[0].currency,\n    expenses: expenses,\n    expenseList: expenses.map(e => \n      `• ${e.category}: ${e.currency} ${e.amount} - ${e.description} (${e.vendor})`\n    ).join('\\n')\n  }\n};\n\nconsole.log(\"Output for email:\", JSON.stringify(result, null, 2));\nreturn [result];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1936,
+        112
+      ],
+      "id": "0a7e4905-39b9-4deb-8de1-2fc5e7e4241c",
+      "name": "Aggregate for Email"
+    },
+    {
+      "parameters": {
+        "sendTo": " csen296b@gmail.com",
+        "subject": "=New Expense Submission - {{ $json.EmployeeID }} - {{ $json.Category }}",
+        "message": "=<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;\">   <h2 style=\"color: #2563eb;\">New Expense Submitted</h2>      <p>Employee <strong>{{ $json.EmployeeID }}</strong> has submitted a new expense.</p>      <table style=\"width: 100%; border-collapse: collapse; margin: 20px 0;\">     <tr style=\"background-color: #f3f4f6;\">       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\"><strong>Transaction ID</strong></td>       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\">{{ $json.TransactionID }}</td>     </tr>     <tr>       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\"><strong>Category</strong></td>       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\">{{ $json.Category }}</td>     </tr>     <tr style=\"background-color: #f3f4f6;\">       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\"><strong>Amount</strong></td>       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\">{{ $json.Currency }} {{ $json.Amount }}</td>     </tr>     <tr>       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\"><strong>Description</strong></td>       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\">{{ $json.Description }}</td>     </tr>     <tr style=\"background-color: #f3f4f6;\">       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\"><strong>Vendor</strong></td>       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\">{{ $json.Vendor }}</td>     </tr>     <tr>       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\"><strong>Date</strong></td>       <td style=\"padding: 10px; border: 1px solid #e5e7eb;\">{{ $json.DateIncurred }}</td>     </tr>   </table>      <p>     <a href=\"http://localhost:3001/admin/dashboard\"         style=\"background-color: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px;\">       Review in Dashboard     </a>   </p> </div>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -2352,
+        1520
+      ],
+      "id": "e9db5e88-bd90-42b3-968a-e832dbdc7899",
+      "name": "Send a message4",
+      "webhookId": "839d9fc5-f908-412c-9f7f-f13b19e6ccc3",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ea7jSlHYi60T6XaV",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "fetch-logs",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -3888,
+        1264
+      ],
+      "id": "4ea63c08-ffc2-4e6d-bd1b-7387ec620ba4",
+      "name": "WebhoFetch Logs Webhookok",
+      "webhookId": "7709f4cc-f255-470a-a5cd-a21ef336b18e"
+    },
+    {
+      "parameters": {
+        "url": "http://loki:3100/loki/api/v1/query_range",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "={{ $json.query }}"
+            },
+            {
+              "name": "start",
+              "value": "={{ $json.start }}"
+            },
+            {
+              "name": "end",
+              "value": "={{ $json.end }}"
+            },
+            {
+              "name": "limit",
+              "value": "={{ $json.limit }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -3680,
+        1264
+      ],
+      "id": "b62721e4-24b9-41ea-b1f4-b1753ea586c1",
+      "name": "HTTP Request Query Loki"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        -3456,
+        1264
+      ],
+      "id": "6e3accc4-2412-4f58-9edc-383787602b98",
+      "name": "Respond to Webhook5"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://loki:3100/loki/api/v1/push",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"streams\": [\n    {\n      \"stream\": {\n        \"workflow\": \"expense submission\",\n        \"node\": \"Submit Expense\",\n        \"event_type\": \"Expense Submitted\",\n        \"execution_id\": \"{{ $execution.id }}\",\n        \"user_id\": \"{{ $json.body.expense.employeeId }}\"\n      },\n      \"values\": [\n        [\n          \"{{ Date.now() * 1000000 }}\",\n          \"Expense submitted: TransactionID={{ $json.body.expense.transactionId }}, Category={{ $json.body.expense.category }}, Amount={{ $json.body.expense.amount }} {{ $json.body.expense.currency }}, Employee={{ $json.body.expense.employeeId }}, Vendor={{ $json.body.expense.vendor }}, Description={{ $json.body.expense.description }}\"\n        ]\n      ]\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -3216,
+        1824
+      ],
+      "id": "9f771696-8447-4587-ab4d-87f72469527f",
+      "name": "Logs for Submit exp",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "update-policy",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -3200,
+        1056
+      ],
+      "id": "7da57ae2-edcf-4cc8-9b75-cb053f08b7ab",
+      "name": "Update Policy",
+      "webhookId": "ed08fc94-6c5d-48bf-b331-4c66dddf7f35"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "fe4216d7-6591-458c-87a8-abf847d08399",
+              "leftValue": "={{ $json.Amount }}",
+              "rightValue": "={{ $json.threshold }}",
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -2880,
+        1440
+      ],
+      "id": "cccc6c7c-ecdb-4af4-a2a7-71e33146094f",
+      "name": "If5"
+    },
+    {
+      "parameters": {
+        "operation": "xls",
+        "binaryPropertyName": "excel_file",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -3184,
+        1360
+      ],
+      "id": "112cea49-f5d2-4dbd-b17b-17187bff5b46",
+      "name": "xls to json1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2688,
+        1376
+      ],
+      "id": "cdbae72a-e86c-40c2-8295-901ec4ce7790",
+      "name": "Code in JavaScript6"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2688,
+        1520
+      ],
+      "id": "145b0a2a-3c22-4629-94eb-13c0001c3a08",
+      "name": "Code in JavaScript7"
+    },
+    {
+      "parameters": {
+        "jsCode": "// input: many items (each item = one row)\n// output: one combined item containing all rows for Task Decomposition\n\nconst rows = $input.all().map(i => i.json);\n\nreturn [\n  {\n    json: {\n      text: \"Process employee expense report and update master sheet, then notify.\",\n      file_present: true,\n      file_type: \"application/vnd.ms-excel\",\n      rows, // full array of expense rows\n    },\n  },\n];\n\nconst items = $input.all();\nif (!items.length) {\n  return [{ json: { file_present: false, file_type: \"\", rows: [] } }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1536,
+        2512
+      ],
+      "id": "c4c4687a-8b2e-4f64-b61b-399bc8433053",
+      "name": "Convert data into single json array",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "xls",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -1744,
+        2512
+      ],
+      "id": "bbd60652-95a6-49ea-99ed-fecfb9ca1a69",
+      "name": "Convert excel file to json",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -1952,
+        2512
+      ],
+      "id": "9c0a1ae3-b25e-42a3-b3e8-7d34aaac1579",
+      "name": "Download Excel File",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "5iuayeDzmPUSzGlK",
+          "name": "Google Drive account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "queryString": "name = 'expensegood.xls' and '1OiXdYxV0FQykhjHk-dgf0CVnuheYpUS8' in parents and trashed = false",
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -2128,
+        2512
+      ],
+      "id": "cde031d4-ee7a-4654-92ac-95103b67c97d",
+      "name": "Retrieve Expensegood.xls",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "5iuayeDzmPUSzGlK",
+          "name": "Google Drive account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -1328,
+        2528
+      ],
+      "id": "a6b33efe-f3b2-4a39-bfaa-ecdbe5523c09",
+      "name": "Merge",
+      "alwaysOutputData": true,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://firestore.googleapis.com/v1/projects/lighthouse-ai-b3f45/databases/(default)/documents/policies/{{ $json.body.policy.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"fields\": {\n    \"id\": { \"stringValue\": \"{{ $json.body.policy.id }}\" },\n    \"name\": { \"stringValue\": \"{{ $json.body.policy.name }}\" },\n    \"category\": { \"stringValue\": \"{{ $json.body.policy.category }}\" },\n    \"maxAmount\": { \"doubleValue\": {{ $json.body.policy.maxAmount }} },\n    \"currency\": { \"stringValue\": \"{{ $json.body.policy.currency }}\" },\n    \"requiresReceipt\": { \"booleanValue\": {{ $json.body.policy.requiresReceipt }} },\n    \"requiresApproval\": { \"booleanValue\": {{ $json.body.policy.requiresApproval }} },\n    \"approvalThreshold\": { \"doubleValue\": {{ $json.body.policy.approvalThreshold }} },\n    \"description\": { \"stringValue\": \"{{ $json.body.policy.description }}\" },\n    \"status\": { \"stringValue\": \"{{ $json.body.policy.status }}\" },\n    \"dateCreated\": { \"stringValue\": \"{{ $json.body.policy.dateCreated }}\" }\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -3008,
+        1056
+      ],
+      "id": "2b0bc42c-1fdf-4bbf-a38e-5589eedc2638",
+      "name": "Update Policy in Firestore"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -2992,
+        1232
+      ],
+      "id": "30c2c9f9-9228-4f81-99bf-a5f9116290fa",
+      "name": "Get Policy",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "excel_file",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -2352,
+        1904
+      ],
+      "id": "cd4b166e-4bda-4ca2-8ec2-2132b06f167d",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "5iuayeDzmPUSzGlK",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://firestore.googleapis.com/v1/projects/lighthouse-ai-b3f45/databases/(default)/documents/policies",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -2928,
+        1728
+      ],
+      "id": "b976c82f-fabf-4dc4-b68d-042447b2a468",
+      "name": "Fetch Global Policy"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -3072,
+        2112
+      ],
+      "id": "50c792a7-540d-4038-a042-cac18febc78e",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c4ad868f-f92f-44f3-8b73-28ffae0d4428",
+              "leftValue": "={{ $json.body.expense.amount }}",
+              "rightValue": "={{ $json.approvalThreshold }}",
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -2864,
+        2016
+      ],
+      "id": "96af7c99-564c-460f-86df-9ef289c0577b",
+      "name": "If6"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5e0f6b28-ee86-4b7e-9745-676b9c9bb5df",
+              "name": "Status",
+              "value": "Approved",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2688,
+        1840
+      ],
+      "id": "6c01fe16-78a0-46a2-b137-6e19b3dcc19b",
+      "name": "Approve"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5e0f6b28-ee86-4b7e-9745-676b9c9bb5df",
+              "name": "Status",
+              "value": "HITL",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2608,
+        2096
+      ],
+      "id": "9c72b6bb-548b-4edd-aa82-8525edcc5817",
+      "name": "Deny"
+    },
+    {
+      "parameters": {
+        "jsCode": "const policyResponse = $input.first().json;\n\nlet approvalThreshold = 0;\n\nif (policyResponse && policyResponse.documents && policyResponse.documents.length > 0) {\n  const fields = policyResponse.documents[0].fields;\n  approvalThreshold = fields.approvalThreshold?.doubleValue || \n                      fields.approvalThreshold?.integerValue || \n                      0;\n}\n\nreturn {\n  json: {\n    approvalThreshold: approvalThreshold\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2976,
+        1920
+      ],
+      "id": "ed57af9f-b0cb-42a1-97b4-085ba80a9cbf",
+      "name": "Extract Policy"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "admin/pending-expenses",
+        "responseMode": "lastNode",
+        "responseData": "allEntries",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -3504,
+        2704
+      ],
+      "id": "0d85be5f-3e74-4255-9a91-4098531ffcbd",
+      "name": "Fetch HITL Expenses",
+      "webhookId": "273648f3-ec7f-4c5b-bb88-46085a88bc3d"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "admin/decision",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -3504,
+        2896
+      ],
+      "id": "d0b4d02e-6307-49de-9ec2-2533f340d60a",
+      "name": "Admin Decision",
+      "webhookId": "8c944f23-320c-4f10-90cc-1781167880f0"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI",
+          "mode": "list",
+          "cachedResultName": "Master Expense",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Master",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Status": "={{ $json.body.decision === \"approve\" ? \"Approved\" : \"Denied\" }}",
+            "TransactionID": "={{ $json.body.expenseId }}"
+          },
+          "matchingColumns": [
+            "TransactionID"
+          ],
+          "schema": [
+            {
+              "id": "TransactionID",
+              "displayName": "TransactionID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "EmployeeID",
+              "displayName": "EmployeeID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "DateIncurred",
+              "displayName": "DateIncurred",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "DateSubmitted",
+              "displayName": "DateSubmitted",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Vendor",
+              "displayName": "Vendor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PaymentMethod",
+              "displayName": "PaymentMethod",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Currency",
+              "displayName": "Currency",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Amount",
+              "displayName": "Amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "AmountUSD",
+              "displayName": "AmountUSD",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Category",
+              "displayName": "Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ReceiptAttached",
+              "displayName": "ReceiptAttached",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ReimbursementType",
+              "displayName": "ReimbursementType",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Auto Approve",
+              "displayName": "Auto Approve",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -3296,
+        2896
+      ],
+      "id": "2dacd447-6518-419c-a16a-2070c4bd402f",
+      "name": "Update row in sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uwoq34r9PBLNkXRr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI",
+          "mode": "list",
+          "cachedResultName": "Master Expense",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Master",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "HITL"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": false
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -3296,
+        2704
+      ],
+      "id": "5e058221-38c7-4fd8-8f69-04b40ba47936",
+      "name": "Get row(s) in sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uwoq34r9PBLNkXRr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const allRows = $input.all().map(item => item.json);\nreturn [{ json: { data: allRows } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3072,
+        2704
+      ],
+      "id": "d83db0ea-6788-4322-a306-44fc865bc721",
+      "name": "Code in JavaScript5"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "admin/denied-expenses",
+        "responseMode": "lastNode",
+        "responseData": "allEntries",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -3472,
+        3104
+      ],
+      "id": "46e20bc4-8b4e-46ff-ba4d-d0bfc82fcb86",
+      "name": "Fetch Denied Expenses",
+      "webhookId": "e64503a8-aeb3-4b51-848d-165006e4e2aa"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI",
+          "mode": "list",
+          "cachedResultName": "Master Expense",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Master",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13-6buw-7Gbm7cMR0aXcWaXUckh51lmymM50bBO1SaoI/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "Denied"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": false
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -3200,
+        3104
+      ],
+      "id": "4cf735c4-b645-4993-98f8-869d817f9855",
+      "name": "Get row(s) in sheet3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "uwoq34r9PBLNkXRr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const allRows = $input.all().map(item => item.json);\nreturn [{ json: { data: allRows } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2992,
+        3104
+      ],
+      "id": "5a7db93c-056f-4ab1-9960-f2d08fcb742f",
+      "name": "Code in JavaScript8"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://loki:3100/loki/api/v1/push",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"streams\": [\n    {\n      \"stream\": {\n        \"workflow\": \"admin_decision\",\n        \"event_type\": \"expense_decision\",\n        \"execution_id\": \"{{ $execution.id }}\"\n      },\n      \"values\": [\n        [\n          \"{{ (Date.now() * 1000000).toString() }}\",\n          \"Admin Decision: ExpenseID={{ $json.body.expenseId }}, Decision={{ $json.body.decision }}\"\n        ]\n      ]\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -2784,
+        3104
+      ],
+      "id": "3e291552-1d96-42e5-b9cc-577342aea909",
+      "name": "Log Admin Decision"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://loki:3100/loki/api/v1/push",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"streams\": [\n    {\n      \"stream\": {\n        \"workflow\": \"admin_decision\",\n        \"event_type\": \"expense_decision\",\n        \"execution_id\": \"{{ $execution.id }}\"\n      },\n      \"values\": [\n        [\n          \"{{ (Date.now() * 1000000).toString() }}\",\n          \"Admin Decision: ExpenseID={{ $('Admin Decision').item.json.body.expenseId }}, Decision={{ $('Admin Decision').item.json.body.decision }}\"\n        ]\n      ]\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -2848,
+        2704
+      ],
+      "id": "3aaed585-b6fd-403a-9ac3-ee1a7315ad56",
+      "name": "Log HITL Fetch"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Google Drive Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Good Document Detected",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code in JavaScript3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Bad Document Detected",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Respond to Webhook2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "xls to json": {
+      "main": [
+        [
+          {
+            "node": "Format json into json string",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format json into json string": {
+      "main": [
+        [
+          {
+            "node": "Verify Document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify Document": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Google Drive Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Google Drive Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "Gmail Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Gmail Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Gmail Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Create folder",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create file from text",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        [],
+        [
+          {
+            "node": "Search files and folders1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader1": {
+      "ai_document": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI2": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file1": {
+      "main": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store": {
+      "main": [
+        [
+          {
+            "node": "Move file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Move file": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Download file1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader1",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Search files and folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search files and folders": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Search files and folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Task Decomposition": {
+      "main": [
+        [
+          {
+            "node": "SubTasks Split Function",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent Router": {
+      "main": [
+        [
+          {
+            "node": "Expense Management Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Drive Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sheet Router": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create spreadsheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model6": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Task Decomposition",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory3": {
+      "ai_memory": [
+        [
+          {
+            "node": "Task Decomposition",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model7": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Expense Management Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory4": {
+      "ai_memory": [
+        [
+          {
+            "node": "Expense Management Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser4": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Task Decomposition",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser5": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Expense Management Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model8": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "LLM To answer malicious questions",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SubTasks Split Function": {
+      "main": [
+        [
+          {
+            "node": "Agent Router",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "RAG Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store2": {
+      "ai_tool": [
+        [
+          {
+            "node": "RAG Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store2",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "RAG Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt Injection Detected Log": {
+      "main": [
+        [
+          {
+            "node": "LLM To answer malicious questions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If No prompt Injection ": {
+      "main": [
+        [
+          {
+            "node": "No Prompt Injection Detected Log",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Task Decomposition",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prompt Injection Detected Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Agent": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive Agent": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Expense Management Agent": {
+      "main": [
+        [
+          {
+            "node": "Sheet Router",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LLM To answer malicious questions": {
+      "main": [
+        [
+          {
+            "node": "Log Model Output",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RAG Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Chat Input": {
+      "main": [
+        [
+          {
+            "node": "Prompt Filtering Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Webhook Input": {
+      "main": [
+        [
+          {
+            "node": "Prompt Filtering Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Terminal Chat Input": {
+      "main": [
+        [
+          {
+            "node": "Chat Input Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt Filtering Check": {
+      "main": [
+        [
+          {
+            "node": "If No prompt Injection ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat Input Log": {
+      "main": [
+        [
+          {
+            "node": "Normalize Chat Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat Webhook Input Log": {
+      "main": [
+        [
+          {
+            "node": "Normalize Webhook Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Task Decomp Log 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search files and folders1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "File Found",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "File Not Found",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Search files and folders2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Send a message3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search files and folders2": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "File Webhook Input Log",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "xls to json",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Chat Webhook Input Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "Log Model Output 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data Input": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message3": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript3": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Aggregate for Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript4": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch WebHook": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Submit Expense": {
+      "main": [
+        [
+          {
+            "node": "Logs for Submit exp",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Fetch Global Policy",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send a message4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Expenses",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Expenses": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate for Email": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WebhoFetch Logs Webhookok": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request Query Loki",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request Query Loki": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Policy": {
+      "main": [
+        [
+          {
+            "node": "Update Policy in Firestore",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "xls to json1": {
+      "main": [
+        [
+          {
+            "node": "Get Policy",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If5": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript6",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code in JavaScript7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript7": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript6": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert excel file to json": {
+      "main": [
+        [
+          {
+            "node": "Convert data into single json array",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Excel File": {
+      "main": [
+        [
+          {
+            "node": "Convert excel file to json",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve Expensegood.xls": {
+      "main": [
+        [
+          {
+            "node": "Download Excel File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert data into single json array": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Get Policy": {
+      "main": [
+        [
+          {
+            "node": "If5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Logs for Submit exp": {
+      "main": [
+        []
+      ]
+    },
+    "Fetch Global Policy": {
+      "main": [
+        [
+          {
+            "node": "Extract Policy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "If6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If6": {
+      "main": [
+        [
+          {
+            "node": "Approve",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Deny",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Approve": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Deny": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Policy": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Fetch HITL Expenses": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Admin Decision": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet2": {
+      "main": [
+        []
+      ]
+    },
+    "Get row(s) in sheet2": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Denied Expenses": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet3": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript8": {
+      "main": [
+        []
+      ]
+    },
+    "Code in JavaScript5": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "saveExecutionProgress": false,
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "28a16947-6d6f-4856-82d4-42a022081efc",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "85d73db211a1ee441813cdc78eebb0b7077e5f916b93a773754214d36365beb5"
+  },
+  "id": "5QkKGRcrv4jjXVf1",
+  "tags": []
+}
