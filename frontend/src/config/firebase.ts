@@ -18,16 +18,17 @@ import { getAnalytics, Analytics } from "firebase/analytics";
 
 /**
  * Firebase configuration object.
- * These are your Firebase project credentials from the Firebase Console.
+ * These are loaded from environment variables for security.
+ * Set these in your .env file.
  */
 const firebaseConfig = {
-  apiKey: "AIzaSyD8qh6HtQiBAxMl0wct1nwQbQHikjYUIIA",
-  authDomain: "lighthouse-ai-b3f45.firebaseapp.com",
-  projectId: "lighthouse-ai-b3f45",
-  storageBucket: "lighthouse-ai-b3f45.firebasestorage.app",
-  messagingSenderId: "1943513045",
-  appId: "1:1943513045:web:518a6f85d4c52cffe9ff5c",
-  measurementId: "G-Q5K8XC5K3K",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY || "",
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN || "",
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID || "",
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET || "",
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID || "",
+  appId: process.env.REACT_APP_FIREBASE_APP_ID || "",
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID || "",
 };
 
 /**
