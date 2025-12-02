@@ -366,7 +366,7 @@ Real-time log viewer with search, time range, and workflow filters. Shows prompt
 
 | Service | URL |
 |---------|-----|
-| Frontend App | http://195.35.37.202 |
+| Frontend App | https://lighthouseai.online |
 
 ---
 
