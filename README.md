@@ -11,7 +11,7 @@
 
 ## **⚠️ WARNING!**
 *This project is built as an Enterprise Copilot that integrates multiple agents, including email, document, and expense management.  It is built with n8n and hosted in docker containers and is meant to be run locally on a machine.*
-Use this link to test the project http://195.35.37.202.  Below are the instructions for self-hosting.
+Use this link to test the project https://lighthouseai.online .  Below are the instructions for self-hosting.
 
 
 ## 📋 Requirements
